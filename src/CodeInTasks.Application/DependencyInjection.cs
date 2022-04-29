@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CodeInTasks.Application.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeInTasks.Application
@@ -7,6 +8,8 @@ namespace CodeInTasks.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ISolutionService, SolutionService>();
 
             return services;
         }
