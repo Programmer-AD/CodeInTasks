@@ -20,7 +20,7 @@ namespace CodeInTasks.Application.Interfaces.Infrastructure
             int skip = 0,
             bool includeDeleted = false);
 
-        Task<IEnumerable<T>> CountAsync(
+        Task<long> CountAsync(
             Expression<Predicate<T>> predicate = null,
             int take = 0,
             int skip = 0,

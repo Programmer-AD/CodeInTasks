@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Domain.Enums
 {
-    public enum TaskSolutionResult
+    public enum TaskSolutionResult : byte
     {
         DownloadError,
         BuildError,

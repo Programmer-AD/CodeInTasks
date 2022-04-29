@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Domain.Enums
 {
-    public enum TaskSolutionStatus
+    public enum TaskSolutionStatus : byte
     {
         Queued,
         Downloading,
