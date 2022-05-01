@@ -23,6 +23,8 @@ namespace CodeInTasks.Infrastructure.EF.EntityConfigs
                 .IsRequired();
 
             builder.HasOne(x => x.Creator).WithMany();
+
+            builder.HasIndex(x => x.CreateDate).IsClustered(false);
         }
     }
 }

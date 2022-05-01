@@ -17,6 +17,8 @@ namespace CodeInTasks.Infrastructure.EF.EntityConfigs
             builder.HasOne(x => x.Task).WithMany();
 
             builder.HasOne(x => x.Sender).WithMany();
+
+            builder.HasIndex(x => x.SendTime).IsClustered(false);
         }
     }
 }
