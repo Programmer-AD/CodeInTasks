@@ -1,4 +1,5 @@
 ﻿using CodeInTasks.Infrastructure.EF;
+using CodeInTasks.Infrastructure.Queues;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ namespace CodeInTasks.Infrastructure
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddQueues();
+
             return services;
         }
 
@@ -27,6 +30,12 @@ namespace CodeInTasks.Infrastructure
             services.AddDbContext<AppDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(EfGenericRepository<>));
             services.Configure(configureEfDbOptions);
+        }
+
+        private static void AddQueues(
+            this IServiceCollection services)
+        {
+            services.AddScoped<ISolutionQueue, SolutionQueue>();
         }
     }
 }
