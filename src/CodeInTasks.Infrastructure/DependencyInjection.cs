@@ -1,4 +1,5 @@
 ﻿using CodeInTasks.Infrastructure.EF;
+using CodeInTasks.Infrastructure.Identity;
 using CodeInTasks.Infrastructure.Queues;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -13,11 +14,7 @@ namespace CodeInTasks.Infrastructure
             IConfiguration config)
         {
             services.AddEfPersistance(options => config.Bind(ConfigSections.EfDbOptions, options));
-
-            services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
-
+            services.AddIdentity();
             services.AddQueues();
 
             return services;
@@ -32,8 +29,19 @@ namespace CodeInTasks.Infrastructure
             services.Configure(configureEfDbOptions);
         }
 
-        private static void AddQueues(
-            this IServiceCollection services)
+        private static void AddIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            //TODO: add authorization (JWT)
+            //TODO: add authentication
+
+            services.AddScoped<IIdentityService, IdentityService>();
+        }
+
+        private static void AddQueues(this IServiceCollection services)
         {
             services.AddScoped<ISolutionQueue, SolutionQueue>();
         }
