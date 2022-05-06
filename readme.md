@@ -7,7 +7,7 @@ Site with coding tasks with such types:
 - Fix bug
 - Add tests
 
-\* Task can contain description of required actions or just provide code that provide required information
+\* Task can contain description of required actions or just provide code
 
 ## Functions
 

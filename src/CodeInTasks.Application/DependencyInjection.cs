@@ -8,6 +8,7 @@ namespace CodeInTasks.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ISolutionService, SolutionService>();
 
