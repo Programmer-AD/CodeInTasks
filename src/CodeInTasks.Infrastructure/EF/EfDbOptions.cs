@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Infrastructure.EF
 {
-    public class EfDbOptions
+    internal class EfDbOptions
     {
         public string ConnectionString { get; set; }
     }

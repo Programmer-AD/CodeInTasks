@@ -3,6 +3,7 @@ using CodeInTasks.Infrastructure.Identity;
 using CodeInTasks.Infrastructure.Queues;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,7 @@ namespace CodeInTasks.Infrastructure
             this IServiceCollection services,
             IConfiguration config)
         {
-            services.AddEfPersistance(options => config.Bind(ConfigSections.EfDbOptions, options));
+            services.AddEfPersistance(config);
             services.AddIdentity(config);
             services.AddQueues();
 
@@ -24,11 +25,17 @@ namespace CodeInTasks.Infrastructure
 
         private static void AddEfPersistance(
             this IServiceCollection services,
-            Action<EfDbOptions> configureOptions)
+            IConfiguration config)
         {
-            services.AddDbContext<AppDbContext>();
+            var dbOptions = config.GetValue<EfDbOptions>(ConfigSections.EfDbOptions);
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    dbOptions.ConnectionString,
+                    options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery));
+            });
             services.AddScoped(typeof(IRepository<>), typeof(EfGenericRepository<>));
-            services.Configure(configureOptions);
         }
 
         private static void AddIdentity(
