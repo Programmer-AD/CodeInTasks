@@ -20,6 +20,7 @@ Functions by roles descibed [here](./RoleFunctions.md)
 - .NET 6
 - ASP.NET Core 6
 - EntityFramework Core 6
+- AutoMapper mapping library
 - NUnit test framework
 - Moq mocking library
 - FluentAssertions assertion library
@@ -27,4 +28,5 @@ Functions by roles descibed [here](./RoleFunctions.md)
 ### Frontend
 
 - Angular 13
-- Karma/Jasmine for testing
+- Karma test runner
+- Jasmine test framework
