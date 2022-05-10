@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CodeInTasks.Infrastructure.EF.EntityConfigs
+namespace CodeInTasks.Infrastructure.Persistence.EF.EntityConfigs
 {
     internal class TaskModelConfig : IEntityTypeConfiguration<TaskModel>
     {

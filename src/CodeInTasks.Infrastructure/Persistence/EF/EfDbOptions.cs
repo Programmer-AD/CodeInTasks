@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Infrastructure.EF
+﻿namespace CodeInTasks.Infrastructure.Persistence.EF
 {
     internal class EfDbOptions
     {

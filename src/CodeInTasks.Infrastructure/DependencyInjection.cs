@@ -1,5 +1,5 @@
-﻿using CodeInTasks.Infrastructure.EF;
-using CodeInTasks.Infrastructure.Identity;
+﻿using CodeInTasks.Infrastructure.Identity;
+using CodeInTasks.Infrastructure.Persistence.EF;
 using CodeInTasks.Infrastructure.Queues;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

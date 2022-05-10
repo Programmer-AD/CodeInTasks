@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CodeInTasks.Infrastructure.EF
+namespace CodeInTasks.Infrastructure.Persistence.EF
 {
     internal class AppDbContext : IdentityDbContext<User, Role, Guid>
     {

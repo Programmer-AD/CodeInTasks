@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace CodeInTasks.Infrastructure
+namespace CodeInTasks.Infrastructure.Persistence
 {
     internal static class ExpressionConvertExtensions
     {
