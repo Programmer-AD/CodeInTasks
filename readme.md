@@ -11,7 +11,7 @@ Site with coding tasks with such types:
 
 ## Functions
 
-!TODO: describe functions
+Functions by roles descibed [here](./RoleFunctions.md)
 
 ## Used technologies
 
