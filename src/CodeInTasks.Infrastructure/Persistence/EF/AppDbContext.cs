@@ -6,7 +6,7 @@ namespace CodeInTasks.Infrastructure.Persistence.EF
     internal class AppDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<TaskModel> Tasks { get; set; }
-        public DbSet<TaskSolution> TaskSolutions { get; set; }
+        public DbSet<Solution> Solutions { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

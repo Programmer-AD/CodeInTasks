@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CodeInTasks.Infrastructure.Persistence.EF.EntityConfigs
 {
-    internal class TaskSolutionConfig : IEntityTypeConfiguration<TaskSolution>
+    internal class SolutionConfig : IEntityTypeConfiguration<Solution>
     {
-        public void Configure(EntityTypeBuilder<TaskSolution> builder)
+        public void Configure(EntityTypeBuilder<Solution> builder)
         {
             builder.Property(x => x.RepositoryName)
                 .HasMaxLength(DomainConstants.RepositoryName_MaxLength)

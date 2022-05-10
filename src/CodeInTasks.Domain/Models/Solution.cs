@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Domain.Models
 {
-    public class TaskSolution : ModelBase
+    public class Solution : ModelBase
     {
         public string RepositoryName { get; set; }
 

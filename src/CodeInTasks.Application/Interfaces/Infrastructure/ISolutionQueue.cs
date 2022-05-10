@@ -2,6 +2,6 @@
 {
     public interface ISolutionQueue
     {
-        Task EnqueueSolution(TaskSolution solution);
+        Task EnqueueSolution(Solution solution);
     }
 }
