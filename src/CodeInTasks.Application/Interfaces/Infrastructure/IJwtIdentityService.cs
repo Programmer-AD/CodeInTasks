@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Application.Interfaces.Infrastructure
 {
-    public interface IIdentityService
+    public interface IJwtIdentityService
     {
         //TODO: add required methods
     }

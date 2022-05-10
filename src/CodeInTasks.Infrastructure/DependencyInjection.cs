@@ -70,7 +70,7 @@ namespace CodeInTasks.Infrastructure
                 };
             });
 
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IJwtIdentityService, JwtIdentityService>();
         }
 
         private static void AddQueues(this IServiceCollection services)
