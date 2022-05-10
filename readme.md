@@ -27,5 +27,4 @@ Functions by roles descibed [here](./RoleFunctions.md)
 ### Frontend
 
 - Angular 13
-- Karma test runner
-- Jasmine test framework
+- Karma/Jasmine for testing
