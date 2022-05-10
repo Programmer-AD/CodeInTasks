@@ -1,10 +1,13 @@
-﻿namespace CodeInTasks.Application.Interfaces.Services
+﻿using CodeInTasks.Application.Dtos.Solution;
+
+namespace CodeInTasks.Application.Interfaces.Services
 {
     public interface ISolutionService
     {
-        Task<Guid> AddAsync(TaskSolution solution);
-        Task<TaskSolution> GetAsync(Guid id);
+        Task<Guid> AddAsync(SolutionCreateDto solution);
+        Task UpdateStatusAsync(SolutionStatusUpdateDto solution);
 
-        //TODO: GetAll with filtration
+        Task<SolutionViewDto> GetAsync(Guid id);
+        Task<IEnumerable<SolutionViewDto>> GetAllAsync(SolutionFilterDto filterDto);
     }
 }

@@ -75,7 +75,7 @@ namespace CodeInTasks.Infrastructure
 
         private static void AddQueues(this IServiceCollection services)
         {
-            services.AddScoped<ISolutionQueue, SolutionQueue>();
+            services.AddScoped<ISolutionCheckQueue, SolutionCheckQueue>();
         }
     }
 }

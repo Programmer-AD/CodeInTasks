@@ -1,13 +1,14 @@
-﻿namespace CodeInTasks.Application.Interfaces.Services
+﻿using CodeInTasks.Application.Dtos.Task;
+
+namespace CodeInTasks.Application.Interfaces.Services
 {
     public interface ITaskService
     {
-        Task<Guid> AddAsync(TaskModel taskModel);
-        Task UpdateAsync(TaskModel taskModel);
+        Task<Guid> AddAsync(TaskCreateDto taskModel);
+        Task UpdateAsync(TaskCreateDto taskModel);
         Task DeleteAsync(Guid id);
 
-        Task<TaskModel> GetAsync(Guid id);
-
-        //TODO: GetAll with filtering variations
+        Task<TaskViewDto> GetAsync(Guid id);
+        Task<IEnumerable<TaskViewDto>> GetAllAsync(TaskFilterDto filterDto);
     }
 }
