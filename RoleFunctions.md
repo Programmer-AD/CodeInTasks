@@ -1,26 +1,39 @@
 # Functions by roles
-## Guest (unauthorized)
+
+## Guest
+
+All users have at least this role. Its primary meaning - unauthorized user.
+
 - View and filter tasks
 - Register
 - Login
 
-## User (authorized)
+## User
+
+All authorized users also have this role. Primary meaning - authorized user.
+
 - Add task solutions
 - View solution check status
 
 ## Creator
+
 - Create task
 - Edit own task
 - Delete own task
 
 ## Manager
+
 - Set/unset Creator role
 - Edit any task
 - Delete any task
 - Ban/unban user
 
 ## Admin
+
 - Set/unset Manager/Admin role
 
-## Builder (special, non-people):
+## Builder
+
+This role is special. It used for builder nodes to publish build and check status of solution.
+
 - Publish solution status
