@@ -30,7 +30,7 @@ All authorized users also have this role. Primary meaning - authorized user.
 
 ## Admin
 
-- Set/unset Manager/Admin role
+- Set/unset any settable role
 
 ## Builder
 
