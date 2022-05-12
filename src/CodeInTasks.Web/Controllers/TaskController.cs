@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CodeInTasks.Web.Models.Task;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Controllers
@@ -14,6 +15,40 @@ namespace CodeInTasks.Web.Controllers
             this.taskService = taskService;
         }
 
-        //TODO: TaskController
+        [AllowAnonymous]
+        [HttpGet("{taskId}")]
+        public async Task<ActionResult<TaskViewModel>> GetAsync(Guid taskId)
+        {
+            //TODO: TaskController.GetAsync
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetFilteredAsync(
+            TaskFilterModel filterModel)
+        {
+            //TODO: TaskController.GetFilteredAsync
+        }
+
+        [Authorize(Roles = $"{RoleNames.Creator}")]
+        [HttpPost]
+        public async Task<ActionResult<TaskCreateResultModel>> AddAsync(TaskCreateModel createModel)
+        {
+            //TODO: TaskController.AddAsync
+        }
+
+        [Authorize(Roles = $"{RoleNames.Creator},{RoleNames.Manager}")]
+        [HttpPut("{taskId}")]
+        public async Task<ActionResult> UpdateAsync(Guid taskId, TaskCreateModel updateModel)
+        {
+            //TODO: TaskController.UpdateAsync
+        }
+
+        [Authorize(Roles = $"{RoleNames.Creator},{RoleNames.Manager}")]
+        [HttpDelete("{taskId}")]
+        public async Task<ActionResult> DeleteAsync(Guid taskId)
+        {
+            //TODO: TaskController.DeleteAsync
+        }
     }
 }
