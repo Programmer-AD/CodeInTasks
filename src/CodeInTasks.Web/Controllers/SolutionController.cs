@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CodeInTasks.Web.Models.Solution;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Controllers
@@ -14,6 +15,27 @@ namespace CodeInTasks.Web.Controllers
             this.solutionService = solutionService;
         }
 
-        //TODO: SolutionController
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> AddAsync(SolutionCreateModel createModel)
+        {
+            //TODO: SolutionController.AddAsync
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<SolutionViewModel>>> GetFilteredAsync(
+            SolutionFilterModel filterModel)
+        {
+            //TODO: SolutionController.GetFilteredAsync
+        }
+
+        [Authorize(Roles = RoleNames.Builder)]
+        [HttpPut]
+        public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
+        {
+            //TODO: SolutionController.UpdateStatusAsync
+        }
+
     }
 }

@@ -13,7 +13,7 @@ All users have at least this role. Its primary meaning - unauthorized user.
 All authorized users also have this role. Primary meaning - authorized user.
 
 - Add task solutions
-- View solution check status
+- View own solutions and thier check statuses
 
 ## Creator
 
@@ -34,6 +34,6 @@ All authorized users also have this role. Primary meaning - authorized user.
 
 ## Builder
 
-This role is special. It used for builder nodes to publish build and check status of solution.
+This role is special. It used for builder nodes to publish build and check statuses of task solution.
 
 - Publish solution status
