@@ -1,6 +1,5 @@
 ﻿using CodeInTasks.Web.Models.User;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Controllers
@@ -16,6 +15,7 @@ namespace CodeInTasks.Web.Controllers
             this.identityService = identityService;
         }
 
+        [AllowAnonymous]
         [HttpPost("/signIn")]
         public async Task<ActionResult<UserSignInResultModel>> SignInAsync(UserSignInModel signInModel)
         {
@@ -40,12 +40,14 @@ namespace CodeInTasks.Web.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(UserCreateModel userCreateModel)
         {
             //TODO: UserController.Register
         }
 
+        [AllowAnonymous]
         [HttpGet("info/{username}")]
         public async Task<ActionResult<UserViewModel>> GetUserInfoAsync(string username)
         {
