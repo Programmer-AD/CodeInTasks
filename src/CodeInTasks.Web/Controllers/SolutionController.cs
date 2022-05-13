@@ -1,4 +1,6 @@
-﻿using CodeInTasks.Web.Models.Solution;
+﻿using AutoMapper;
+using CodeInTasks.Application.Dtos.Solution;
+using CodeInTasks.Web.Models.Solution;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,17 +11,23 @@ namespace CodeInTasks.Web.Controllers
     public class SolutionController : ControllerBase
     {
         private readonly ISolutionService solutionService;
+        private readonly IMapper mapper;
 
-        public SolutionController(ISolutionService solutionService)
+        public SolutionController(ISolutionService solutionService, IMapper mapper)
         {
             this.solutionService = solutionService;
+            this.mapper = mapper;
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> AddAsync(SolutionCreateModel createModel)
+        public async Task<ActionResult> AddAsync(SolutionCreateModel solutionCreateModel)
         {
-            //TODO: SolutionController.AddAsync
+            var solutionCreateDto = mapper.Map<SolutionCreateDto>(solutionCreateModel);
+
+            await solutionService.AddAsync(solutionCreateDto);
+
+            return Ok();
         }
 
         [Authorize]
@@ -27,15 +35,24 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult<IEnumerable<SolutionViewModel>>> GetFilteredAsync(
             SolutionFilterModel filterModel)
         {
-            //TODO: SolutionController.GetFilteredAsync
+            var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
+
+            var solutionViewDtos = await solutionService.GetAllAsync(solutionFilterDto);
+
+            var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutionViewDtos);
+
+            return Ok(solutionViewModels);
         }
 
         [Authorize(Roles = RoleNames.Builder)]
         [HttpPut]
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
-            //TODO: SolutionController.UpdateStatusAsync
-        }
+            var statusUpdateDto = mapper.Map<SolutionStatusUpdateDto>(statusUpdateModel);
 
+            await solutionService.UpdateStatusAsync(statusUpdateDto);
+
+            return Ok();
+        }
     }
 }
