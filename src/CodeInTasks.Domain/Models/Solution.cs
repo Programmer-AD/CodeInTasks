@@ -17,6 +17,5 @@
 
         public Guid SenderId { get; set; }
         public User Sender { get; set; }
-
     }
 }

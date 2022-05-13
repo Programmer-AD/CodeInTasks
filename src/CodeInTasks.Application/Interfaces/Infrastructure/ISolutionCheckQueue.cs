@@ -4,6 +4,6 @@ namespace CodeInTasks.Application.Interfaces.Infrastructure
 {
     public interface ISolutionCheckQueue
     {
-        Task EnqueueSolution(SolutionQueueDto solution);
+        Task EnqueueSolutionCheck(SolutionQueueDto solution);
     }
 }

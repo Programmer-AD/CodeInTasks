@@ -4,10 +4,10 @@ namespace CodeInTasks.Application.Interfaces.Services
 {
     public interface ISolutionService
     {
-        Task<Guid> AddAsync(SolutionCreateDto solution);
-        Task UpdateStatusAsync(SolutionStatusUpdateDto solution);
+        Task<Guid> AddAsync(SolutionCreateDto solutionCreateDto);
+        Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto);
 
-        Task<SolutionViewDto> GetAsync(Guid id);
+        Task<SolutionViewDto> GetAsync(Guid solutionId);
         Task<IEnumerable<SolutionViewDto>> GetAllAsync(SolutionFilterDto filterDto);
     }
 }

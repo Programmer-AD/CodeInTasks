@@ -2,6 +2,7 @@
 {
     public class SolutionCreateModel
     {
-        //TODO: SolutionCreateModel
+        public string RepositoryName { get; set; }
+        public Guid TaskId { get; set; }
     }
 }
