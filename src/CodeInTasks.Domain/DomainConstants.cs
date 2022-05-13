@@ -9,8 +9,8 @@
         public const int TaskModel_Description_MaxLength = 1024;
 
 
-        public const int TaskSolution_ResultAdditionalInfo_MinLength = 0;
-        public const int TaskSolution_ResultAdditionalInfo_MaxLength = 1024;
+        public const int Solution_ResultAdditionalInfo_MinLength = 0;
+        public const int Solution_ResultAdditionalInfo_MaxLength = 1024;
 
 
         public const int RepositoryName_MinLength = 1;

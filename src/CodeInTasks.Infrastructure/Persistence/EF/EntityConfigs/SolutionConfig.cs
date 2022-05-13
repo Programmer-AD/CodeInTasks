@@ -12,7 +12,7 @@ namespace CodeInTasks.Infrastructure.Persistence.EF.EntityConfigs
                 .IsRequired();
 
             builder.Property(x => x.ResultAdditionalInfo)
-                .HasMaxLength(DomainConstants.TaskSolution_ResultAdditionalInfo_MaxLength);
+                .HasMaxLength(DomainConstants.Solution_ResultAdditionalInfo_MaxLength);
 
             builder.HasOne(x => x.Task).WithMany();
 
