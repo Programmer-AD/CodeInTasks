@@ -62,7 +62,7 @@ namespace CodeInTasks.Application.Services
 
             if (solution == null)
             {
-                throw new EntityNotFoundException($"No solution with id \"{solutionId}\"");
+                throw new EntityNotFoundException($"Not found solution with id \"{solutionId}\"");
             }
 
             return solution;

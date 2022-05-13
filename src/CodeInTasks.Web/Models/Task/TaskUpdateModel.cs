@@ -1,6 +1,6 @@
-﻿namespace CodeInTasks.Application.Dtos.Task
+﻿namespace CodeInTasks.Web.Models.Task
 {
-    public class TaskCreateDto
+    public class TaskUpdateModel
     {
         public string Title { get; set; }
         public string Description { get; set; }
@@ -9,7 +9,5 @@
         public RunnerType Runner { get; set; }
         public string BaseRepositoryName { get; set; }
         public string TestRepositoryName { get; set; }
-
-        public Guid CreatorId { get; set; }
     }
 }

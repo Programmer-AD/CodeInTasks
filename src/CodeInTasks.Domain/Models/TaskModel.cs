@@ -4,7 +4,7 @@
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public TaskCategory Categories { get; set; }
+        public TaskCategory Category { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.UtcNow;
 
         public RunnerType Runner { get; set; }

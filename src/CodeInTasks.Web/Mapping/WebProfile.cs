@@ -32,6 +32,7 @@ namespace CodeInTasks.Web.Mapping
             CreateMap<TaskViewDto, TaskViewModel>();
 
             CreateMap<TaskFilterModel, TaskFilterDto>();
+            CreateMap<TaskUpdateModel, TaskUpdateDto>();
         }
 
         private void CreateUserMaps()

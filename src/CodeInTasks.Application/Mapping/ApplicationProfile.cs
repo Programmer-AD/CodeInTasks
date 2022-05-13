@@ -19,11 +19,14 @@ namespace CodeInTasks.Application.Mapping
             CreateBaseDtoMaps<SolutionCreateDto, Solution, SolutionViewDto>();
 
             CreateMap<SolutionStatusUpdateDto, Solution>();
+            CreateMap<Solution, SolutionQueueDto>();
         }
 
         private void CreateTaskMaps()
         {
-            CreateBaseDtoMaps<TaskCreateDto, Task, TaskViewDto>();
+            CreateBaseDtoMaps<TaskCreateDto, TaskModel, TaskViewDto>();
+
+            CreateMap<TaskUpdateDto, TaskModel>();
         }
 
         private void CreateUserMaps()

@@ -39,7 +39,7 @@ namespace CodeInTasks.Web.Controllers
 
         [Authorize(Roles = $"{RoleNames.Creator},{RoleNames.Manager}")]
         [HttpPut("{taskId}")]
-        public async Task<ActionResult> UpdateAsync(Guid taskId, TaskCreateModel updateModel)
+        public async Task<ActionResult> UpdateAsync(Guid taskId, TaskUpdateModel updateModel)
         {
             //TODO: TaskController.UpdateAsync
         }
