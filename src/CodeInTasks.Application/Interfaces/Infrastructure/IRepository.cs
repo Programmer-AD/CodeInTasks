@@ -7,7 +7,7 @@ namespace CodeInTasks.Application.Interfaces.Infrastructure
         where T : ModelBase
     {
         Task<Guid> AddAsync(T entity);
-        Task DeleteAsync(Guid id);
+        Task<bool> DeleteAsync(Guid id);
         Task UpdateAsync(T entity);
 
         Task<T> GetAsync(Guid id, bool includeDeleted = false);

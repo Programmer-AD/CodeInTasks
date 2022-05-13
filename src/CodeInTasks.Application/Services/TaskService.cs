@@ -26,9 +26,12 @@ namespace CodeInTasks.Application.Services
 
         public async Task DeleteAsync(Guid taskId)
         {
-            await taskRepository.DeleteAsync(taskId);
-            //TODO: update repository delete so its return true/false if deleted or not
-            //TODO: throw EntityNotFound exception if not deleted
+            var isDeleted = await taskRepository.DeleteAsync(taskId);
+            
+            if (!isDeleted)
+            {
+                throw new EntityNotFoundException($"Not found task with id \"{taskId}\"");
+            }
         }
 
         public Task<IEnumerable<TaskViewDto>> GetAllAsync(TaskFilterDto filterDto)

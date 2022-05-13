@@ -31,11 +31,18 @@ namespace CodeInTasks.Infrastructure.Persistence.EF
             return result;
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var entity = await dbSet.FindAsync(id);
-            entity.IsDeleted = true;
-            dbSet.Update(entity);
+            var entityExists = entity != null;
+
+            if (entityExists)
+            {
+                entity.IsDeleted = true;
+                dbSet.Update(entity);
+            }
+
+            return entityExists;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(
