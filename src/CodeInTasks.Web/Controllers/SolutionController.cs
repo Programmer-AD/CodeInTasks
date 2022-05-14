@@ -21,13 +21,24 @@ namespace CodeInTasks.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> AddAsync(SolutionCreateModel solutionCreateModel)
+        public async Task<ActionResult<SolutionCreateResultModel>> AddAsync(
+            SolutionCreateModel solutionCreateModel)
         {
             var solutionCreateDto = mapper.Map<SolutionCreateDto>(solutionCreateModel);
+            var solutionId = await solutionService.AddAsync(solutionCreateDto);
 
-            await solutionService.AddAsync(solutionCreateDto);
+            var result = new SolutionCreateResultModel { SolutionId = solutionId };
+            return Ok(result);
+        }
 
-            return Ok();
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<SolutionViewModel>> GetAsync(Guid solutionId)
+        {
+            var solutionViewDto = await solutionService.GetAsync(solutionId);
+
+            var solutionViewModel = mapper.Map<SolutionViewModel>(solutionViewDto);
+            return Ok(solutionViewModel);
         }
 
         [Authorize]
@@ -36,11 +47,9 @@ namespace CodeInTasks.Web.Controllers
             SolutionFilterModel filterModel)
         {
             var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
-
             var solutionViewDtos = await solutionService.GetAllAsync(solutionFilterDto);
 
             var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutionViewDtos);
-
             return Ok(solutionViewModels);
         }
 
@@ -49,7 +58,6 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
             var statusUpdateDto = mapper.Map<SolutionStatusUpdateDto>(statusUpdateModel);
-
             await solutionService.UpdateStatusAsync(statusUpdateDto);
 
             return Ok();

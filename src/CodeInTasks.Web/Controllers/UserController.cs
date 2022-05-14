@@ -32,7 +32,7 @@ namespace CodeInTasks.Web.Controllers
                     Username = username,
                 };
 
-                return result;
+                return Ok(result);
             }
             else
             {
