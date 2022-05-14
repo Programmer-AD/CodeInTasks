@@ -34,9 +34,9 @@ namespace CodeInTasks.Application.Services
             }
         }
 
-        public Task<IEnumerable<TaskViewDto>> GetAllAsync(TaskFilterDto filterDto)
+        public Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto)
         {
-            //TODO: TaskService.GetAllAsync
+            //TODO: TaskService.GetFilteredAsync
             throw new NotImplementedException();
         }
 

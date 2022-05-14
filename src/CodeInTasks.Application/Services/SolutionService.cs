@@ -31,9 +31,9 @@ namespace CodeInTasks.Application.Services
             return solutionId;
         }
 
-        public Task<IEnumerable<SolutionViewDto>> GetAllAsync(SolutionFilterDto filterDto)
+        public Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto)
         {
-            //TODO: SolutionService.GetAllAsync
+            //TODO: SolutionService.GetFilteredAsync
             throw new NotImplementedException();
         }
 

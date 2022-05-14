@@ -47,7 +47,7 @@ namespace CodeInTasks.Web.Controllers
             SolutionFilterModel filterModel)
         {
             var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
-            var solutionViewDtos = await solutionService.GetAllAsync(solutionFilterDto);
+            var solutionViewDtos = await solutionService.GetFilteredAsync(solutionFilterDto);
 
             var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutionViewDtos);
             return Ok(solutionViewModels);

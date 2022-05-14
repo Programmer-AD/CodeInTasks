@@ -35,7 +35,7 @@ namespace CodeInTasks.Web.Controllers
             TaskFilterModel filterModel)
         {
             var filterDto = mapper.Map<TaskFilterDto>(filterModel);
-            var taskViewDtos = await taskService.GetAllAsync(filterDto);
+            var taskViewDtos = await taskService.GetFilteredAsync(filterDto);
 
             var taskViewModels = mapper.Map<IEnumerable<TaskViewModel>>(taskViewDtos);
             return Ok(taskViewModels);

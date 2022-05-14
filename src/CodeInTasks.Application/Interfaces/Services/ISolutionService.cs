@@ -8,6 +8,6 @@ namespace CodeInTasks.Application.Interfaces.Services
         Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto);
 
         Task<SolutionViewDto> GetAsync(Guid solutionId);
-        Task<IEnumerable<SolutionViewDto>> GetAllAsync(SolutionFilterDto filterDto);
+        Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto);
     }
 }

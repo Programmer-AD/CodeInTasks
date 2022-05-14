@@ -9,6 +9,6 @@ namespace CodeInTasks.Application.Interfaces.Services
         Task DeleteAsync(Guid taskId);
 
         Task<TaskViewDto> GetAsync(Guid taskId);
-        Task<IEnumerable<TaskViewDto>> GetAllAsync(TaskFilterDto filterDto);
+        Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto);
     }
 }
