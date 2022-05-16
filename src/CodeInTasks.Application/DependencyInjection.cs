@@ -8,10 +8,21 @@ namespace CodeInTasks.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
         {
-            services.AddScoped<ITaskService, TaskService>();
-            services.AddScoped<ISolutionService, SolutionService>();
+            services.AddServices();
+            services.AddFiltration();
 
             return services;
+        }
+
+        private static void AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ISolutionService, SolutionService>();
+        }
+
+        private static void AddFiltration(this IServiceCollection services)
+        {
+            //TODO: add filtration to DI
         }
     }
 }

@@ -13,7 +13,7 @@ All users have at least this role. Its primary meaning - unauthorized user.
 All authorized users also have this role. Primary meaning - authorized user.
 
 - Add task solutions
-- View own solutions and thier check statuses
+- View own solutions and their check statuses
 
 ## Creator
 
