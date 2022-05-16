@@ -3,7 +3,7 @@
     public class BanManageModel
     {
         [Required]
-        public string Username { get; set; }
+        public Guid UserId { get; set; }
 
         public bool IsBanned { get; set; }
     }
