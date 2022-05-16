@@ -60,7 +60,7 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult<UserViewModel>> GetUserInfoAsync(Guid userId)
         {
             var userViewDto = await identityService.GetUserInfoAsync(userId);
-            
+
             var userViewModel = mapper.Map<UserViewModel>(userViewDto);
 
             return Ok(userViewModel);
@@ -70,13 +70,20 @@ namespace CodeInTasks.Web.Controllers
         [HttpPut("role")]
         public async Task<ActionResult> SetRoleAsync(RoleManageModel roleManageModel)
         {
-            var userId = roleManageModel.UserId;
-            var roleName = roleManageModel.RoleName;
-            var isSetted = roleManageModel.IsSetted;
+            if (CanSetRole(roleManageModel.Role))
+            {
+                var userId = roleManageModel.UserId;
+                var roleName = RoleNames.GetByEnum(roleManageModel.Role);
+                var isSetted = roleManageModel.IsSetted;
 
-            await identityService.SetRoleAsync(userId, roleName, isSetted);
+                await identityService.SetRoleAsync(userId, roleName, isSetted);
 
-            return Ok();
+                return Ok();
+            }
+            else
+            {
+                return Forbid();
+            }
         }
 
         [Authorize(Roles = $"{RoleNames.Manager}")]
@@ -89,6 +96,12 @@ namespace CodeInTasks.Web.Controllers
             await identityService.SetBanAsync(userId, isBanned);
 
             return Ok();
+        }
+
+        private bool CanSetRole(RoleEnum role)
+        {
+            return User.IsInRole(RoleNames.Admin)
+                || User.IsInRole(RoleNames.Manager) && role == RoleEnum.Creator;
         }
     }
 }

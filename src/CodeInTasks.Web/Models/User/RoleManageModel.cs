@@ -6,7 +6,7 @@
         public Guid UserId { get; set; }
 
         [Required]
-        public string RoleName { get; set; }
+        public RoleEnum Role { get; set; }
 
         public bool IsSetted { get; set; }
     }
