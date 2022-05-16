@@ -2,6 +2,9 @@
 {
     public class SolutionFilterModel
     {
-        //TODO: SolutionFilterModel
+        [Required]
+        public IEnumerable<TaskSolutionResult> Results { get; set; }
+
+        public Guid? TaskId { get; set; }
     }
 }

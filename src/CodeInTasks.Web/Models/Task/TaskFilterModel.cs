@@ -2,6 +2,12 @@
 {
     public class TaskFilterModel
     {
-        //TODO: TaskFilterModel
+        [Required]
+        public IEnumerable<TaskCategory> Categories { get; set; }
+
+        [Required]
+        public IEnumerable<RunnerType> Runners { get; set; }
+
+        public Guid? CreatorId { get; set; }
     }
 }

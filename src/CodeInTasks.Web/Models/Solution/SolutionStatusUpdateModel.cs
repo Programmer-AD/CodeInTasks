@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CodeInTasks.Web.Models.Solution
+﻿namespace CodeInTasks.Web.Models.Solution
 {
     public class SolutionStatusUpdateModel
     {

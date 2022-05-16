@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CodeInTasks.Web.Models.Task
+﻿namespace CodeInTasks.Web.Models.Task
 {
     public class TaskCreateModel
     {
