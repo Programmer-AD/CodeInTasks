@@ -73,6 +73,12 @@ namespace CodeInTasks.Application.Services
             await taskRepository.UpdateAsync(taskModel);
         }
 
+        public Task<bool> IsOwnerAsync(Guid taskId, Guid userId)
+        {
+            var resultTask = taskRepository.AnyAsync(x => x.Id == taskId && x.CreatorId == userId);
+            return resultTask;
+        }
+
         private async Task<TaskModel> GetTaskAsync(Guid taskId)
         {
             var taskModel = await taskRepository.GetAsync(taskId);

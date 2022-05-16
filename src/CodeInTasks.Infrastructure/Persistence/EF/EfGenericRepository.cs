@@ -76,6 +76,14 @@ namespace CodeInTasks.Infrastructure.Persistence.EF
             return Task.CompletedTask;
         }
 
+        public Task<bool> AnyAsync(Expression<Predicate<T>> predicate, bool includeDeleted)
+        {
+            var source = GetSource(includeDeleted);
+            var convertedPredicate = predicate.ConvertToFunc();
+            var resultTask = source.AnyAsync(convertedPredicate);
+            return resultTask;
+        }
+
         private IQueryable<T> GetSource(bool includeDeleted)
         {
             var source = (IQueryable<T>)dbSet;
@@ -117,6 +125,5 @@ namespace CodeInTasks.Infrastructure.Persistence.EF
 
             return source;
         }
-
     }
 }

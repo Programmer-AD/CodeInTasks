@@ -25,5 +25,7 @@ namespace CodeInTasks.Application.Interfaces.Infrastructure
             int take = 0,
             int skip = 0,
             bool includeDeleted = false);
+
+        Task<bool> AnyAsync(Expression<Predicate<T>> predicate, bool includeDeleted = false);
     }
 }
