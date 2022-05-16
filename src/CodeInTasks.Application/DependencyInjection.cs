@@ -1,7 +1,7 @@
 ﻿using CodeInTasks.Application.Dtos.Solution;
 using CodeInTasks.Application.Dtos.Task;
 using CodeInTasks.Application.Filtration;
-using CodeInTasks.Application.Filtration.FiltrationActions;
+using CodeInTasks.Application.Filtration.Actions;
 using CodeInTasks.Application.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

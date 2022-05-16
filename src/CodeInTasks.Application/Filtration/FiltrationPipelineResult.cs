@@ -4,8 +4,10 @@ namespace CodeInTasks.Application.Filtration
 {
     internal class FiltrationPipelineResult<TEntity>
     {
-        public Expression<Predicate<TEntity>> FilterExpression { get; private set; } = null;
+        public bool IsDescendingOrder { get; set; }
         public Expression<Func<TEntity, IComparable>> OrderExpression { get; set; } = null;
+
+        public Expression<Predicate<TEntity>> FilterExpression { get; private set; } = null;
 
         public void AddFilter(Expression<Predicate<TEntity>> newFilterExpression)
         {

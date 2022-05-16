@@ -2,6 +2,8 @@
 {
     public enum TaskSolutionResult : byte
     {
+        Unknown,
+
         DownloadError,
         BuildError,
         RunError,

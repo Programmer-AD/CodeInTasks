@@ -4,8 +4,8 @@
     {
         public string RepositoryName { get; set; }
 
-        public TaskSolutionStatus Status { get; set; }
-        public TaskSolutionResult? Result { get; set; }
+        public TaskSolutionStatus Status { get; set; } = TaskSolutionStatus.Queued;
+        public TaskSolutionResult Result { get; set; } = TaskSolutionResult.Unknown;
         public string ResultAdditionalInfo { get; set; }
 
         public DateTime SendTime { get; set; } = DateTime.UtcNow;
