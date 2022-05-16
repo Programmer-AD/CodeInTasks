@@ -36,8 +36,7 @@ namespace CodeInTasks.Application.Filtration.Actions
 
         internal static void Ordering(SolutionFilterDto _, FiltrationPipelineResult<Solution> pipelineResult)
         {
-            pipelineResult.OrderExpression = solution => solution.SendTime;
-            pipelineResult.IsDescendingOrder = true;
+            pipelineResult.OrderFunction = solutionQueryable => solutionQueryable.OrderByDescending(x => x.SendTime);
         }
     }
 }

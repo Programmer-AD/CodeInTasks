@@ -7,15 +7,18 @@ namespace CodeInTasks.Application.Services
     {
         private readonly IRepository<Solution> solutionRepository;
         private readonly ISolutionCheckQueue checkQueue;
+        private readonly IFiltrationPipeline<SolutionFilterDto, Solution> filtrationPipeline;
         private readonly IMapper mapper;
 
         public SolutionService(
             IRepository<Solution> solutionRepository,
             ISolutionCheckQueue checkQueue,
+            IFiltrationPipeline<SolutionFilterDto, Solution> filtrationPipeline,
             IMapper mapper)
         {
             this.solutionRepository = solutionRepository;
             this.checkQueue = checkQueue;
+            this.filtrationPipeline = filtrationPipeline;
             this.mapper = mapper;
         }
 
@@ -31,10 +34,19 @@ namespace CodeInTasks.Application.Services
             return solutionId;
         }
 
-        public Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto)
+        public async Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto)
         {
-            //TODO: SolutionService.GetFilteredAsync
-            throw new NotImplementedException();
+            var pipelineResult = filtrationPipeline.GetResult(filterDto);
+
+            var solutionModels = await solutionRepository.GetAllAsync(
+                pipelineResult.FilterExpression,
+                pipelineResult.OrderFunction,
+                filterDto.TakeCount,
+                filterDto.TakeOffset);
+
+            var solutionViewDtos = mapper.Map<IEnumerable<SolutionViewDto>>(solutionModels);
+
+            return solutionViewDtos;
         }
 
         public async Task<SolutionViewDto> GetAsync(Guid solutionId)

@@ -6,12 +6,17 @@ namespace CodeInTasks.Application.Services
     internal class TaskService : ITaskService
     {
         private readonly IRepository<TaskModel> taskRepository;
+        private readonly IFiltrationPipeline<TaskFilterDto, TaskModel> filtrationPipeline;
         private readonly IMapper mapper;
 
 
-        public TaskService(IRepository<TaskModel> taskRepository, IMapper mapper)
+        public TaskService(
+            IRepository<TaskModel> taskRepository,
+            IFiltrationPipeline<TaskFilterDto, TaskModel> filtrationPipeline,
+            IMapper mapper)
         {
             this.taskRepository = taskRepository;
+            this.filtrationPipeline = filtrationPipeline;
             this.mapper = mapper;
         }
 
@@ -34,10 +39,19 @@ namespace CodeInTasks.Application.Services
             }
         }
 
-        public Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto)
+        public async Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto)
         {
-            //TODO: TaskService.GetFilteredAsync
-            throw new NotImplementedException();
+            var pipelineResult = filtrationPipeline.GetResult(filterDto);
+
+            var taskModels = await taskRepository.GetAllAsync(
+                pipelineResult.FilterExpression,
+                pipelineResult.OrderFunction,
+                filterDto.TakeCount,
+                filterDto.TakeOffset);
+
+            var taskViewDtos = mapper.Map<IEnumerable<TaskViewDto>>(taskModels);
+
+            return taskViewDtos;
         }
 
         public async Task<TaskViewDto> GetAsync(Guid taskId)

@@ -4,8 +4,7 @@ namespace CodeInTasks.Application.Filtration
 {
     internal class FiltrationPipelineResult<TEntity>
     {
-        public bool IsDescendingOrder { get; set; }
-        public Expression<Func<TEntity, IComparable>> OrderExpression { get; set; } = null;
+        public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderFunction { get; set; } = null;
 
         public Expression<Predicate<TEntity>> FilterExpression { get; private set; } = null;
 

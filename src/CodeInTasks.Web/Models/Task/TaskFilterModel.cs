@@ -9,5 +9,11 @@
         public IEnumerable<RunnerType> Runners { get; set; }
 
         public Guid? CreatorId { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public int TakeOffset { get; set; }
+
+        [Range(1, ModelConstants.TaskFilter_TakeCount_Max)]
+        public int TakeCount { get; set; }
     }
 }

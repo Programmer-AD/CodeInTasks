@@ -39,8 +39,7 @@ namespace CodeInTasks.Application.Filtration.Actions
 
         internal static void Ordering(TaskFilterDto _, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
-            pipelineResult.OrderExpression = task => task.CreateDate;
-            pipelineResult.IsDescendingOrder = true;
+            pipelineResult.OrderFunction = taskQueryable => taskQueryable.OrderByDescending(x => x.CreateDate);
         }
     }
 }
