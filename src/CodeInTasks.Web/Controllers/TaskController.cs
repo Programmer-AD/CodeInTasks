@@ -46,6 +46,8 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult<TaskCreateResultModel>> AddAsync(TaskCreateModel taskCreateModel)
         {
             var taskCreateDto = mapper.Map<TaskCreateDto>(taskCreateModel);
+            taskCreateDto.CreatorId = User.GetUserId();
+
             var taskId = await taskService.AddAsync(taskCreateDto);
 
             var result = new TaskCreateResultModel { TaskId = taskId };
@@ -56,19 +58,49 @@ namespace CodeInTasks.Web.Controllers
         [HttpPut("{taskId}")]
         public async Task<ActionResult> UpdateAsync(Guid taskId, TaskUpdateModel taskUpdateModel)
         {
-            var taskUpdateDto = mapper.Map<TaskUpdateDto>(taskUpdateModel);
-            await taskService.UpdateAsync(taskUpdateDto);
+            var canManageTask = await CanManageTask(taskId);
 
-            return Ok();
+            if (canManageTask)
+            {
+                var taskUpdateDto = mapper.Map<TaskUpdateDto>(taskUpdateModel);
+                taskUpdateDto.Id = taskId;
+
+                await taskService.UpdateAsync(taskUpdateDto);
+
+                return Ok();
+            }
+            else
+            {
+                return Forbid();
+            }
         }
 
         [Authorize(Roles = $"{RoleNames.Creator},{RoleNames.Manager}")]
         [HttpDelete("{taskId}")]
         public async Task<ActionResult> DeleteAsync(Guid taskId)
         {
-            await taskService.DeleteAsync(taskId);
+            var canManageTask = await CanManageTask(taskId);
 
-            return Ok();
+            if (canManageTask)
+            {
+                await taskService.DeleteAsync(taskId);
+
+                return Ok();
+            }
+            else
+            {
+                return Forbid();
+            }
+        }
+
+        private async Task<bool> CanManageTask(Guid taskId)
+        {
+            var userId = User.GetUserId();
+
+            var result = User.IsInRole(RoleNames.Manager)
+                || User.IsInRole(RoleNames.Creator) && await taskService.IsOwnerAsync(taskId, userId);
+
+            return result;
         }
     }
 }

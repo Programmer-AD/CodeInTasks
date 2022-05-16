@@ -10,5 +10,6 @@ namespace CodeInTasks.Application.Interfaces.Services
 
         Task<TaskViewDto> GetAsync(Guid taskId);
         Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto);
+        Task<bool> IsOwnerAsync(Guid taskId, Guid userId);
     }
 }

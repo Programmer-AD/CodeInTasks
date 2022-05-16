@@ -25,6 +25,8 @@ namespace CodeInTasks.Web.Controllers
             SolutionCreateModel solutionCreateModel)
         {
             var solutionCreateDto = mapper.Map<SolutionCreateDto>(solutionCreateModel);
+            solutionCreateDto.SenderId = User.GetUserId();
+
             var solutionId = await solutionService.AddAsync(solutionCreateDto);
 
             var result = new SolutionCreateResultModel { SolutionId = solutionId };
@@ -47,6 +49,8 @@ namespace CodeInTasks.Web.Controllers
             SolutionFilterModel filterModel)
         {
             var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
+            solutionFilterDto.SenderId = User.GetUserId();
+
             var solutionViewDtos = await solutionService.GetFilteredAsync(solutionFilterDto);
 
             var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutionViewDtos);
@@ -58,6 +62,7 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
             var statusUpdateDto = mapper.Map<SolutionStatusUpdateDto>(statusUpdateModel);
+
             await solutionService.UpdateStatusAsync(statusUpdateDto);
 
             return Ok();
