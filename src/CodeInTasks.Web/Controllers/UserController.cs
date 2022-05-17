@@ -23,17 +23,17 @@ namespace CodeInTasks.Web.Controllers
         [HttpPost("/signIn")]
         public async Task<ActionResult<UserSignInResultModel>> SignInAsync(UserSignInModel signInModel)
         {
-            var username = signInModel.Username;
+            var userName = signInModel.UserName;
             var password = signInModel.Password;
 
-            var isSignedIn = await identityService.TrySignInAsync(username, password, out var token);
+            var signInToken = await identityService.GetSignInTokenAsync(userName, password);
 
-            if (isSignedIn)
+            if (signInToken != null)
             {
                 var result = new UserSignInResultModel()
                 {
-                    Token = token,
-                    Username = username,
+                    Token = signInToken,
+                    UserName = userName,
                 };
 
                 return Ok(result);
@@ -73,10 +73,10 @@ namespace CodeInTasks.Web.Controllers
             if (CanSetRole(roleManageModel.Role))
             {
                 var userId = roleManageModel.UserId;
-                var roleName = RoleNames.GetByEnum(roleManageModel.Role);
+                var role = roleManageModel.Role;
                 var isSetted = roleManageModel.IsSetted;
 
-                await identityService.SetRoleAsync(userId, roleName, isSetted);
+                await identityService.SetRoleAsync(userId, role, isSetted);
 
                 return Ok();
             }

@@ -72,12 +72,7 @@ namespace CodeInTasks.Application.Services
         {
             var solution = await solutionRepository.GetAsync(solutionId);
 
-            if (solution == null)
-            {
-                throw new EntityNotFoundException($"Not found solution with id \"{solutionId}\"");
-            }
-
-            return solution;
+            return solution ?? throw new EntityNotFoundException($"Not found solution with id \"{solutionId}\"");
         }
     }
 }

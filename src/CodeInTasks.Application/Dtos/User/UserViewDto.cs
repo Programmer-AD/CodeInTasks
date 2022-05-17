@@ -2,6 +2,8 @@
 {
     public class UserViewDto
     {
-        //TODO: UserViewDto
+        public string UserName { get; set; }
+        public IEnumerable<RoleEnum> Roles { get; set; }
+        public bool IsBanned { get; set; }
     }
 }

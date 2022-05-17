@@ -83,12 +83,7 @@ namespace CodeInTasks.Application.Services
         {
             var taskModel = await taskRepository.GetAsync(taskId);
 
-            if (taskModel != null)
-            {
-                throw new EntityNotFoundException($"Not found task with id \"{taskId}\"");
-            }
-
-            return taskModel;
+            return taskModel ?? throw new EntityNotFoundException($"Not found task with id \"{taskId}\"");
         }
     }
 }

@@ -43,9 +43,19 @@ namespace CodeInTasks.Infrastructure
             IConfiguration config)
         {
             var jwtAuthOptions = config.GetValue<JwtAuthOptions>(ConfigSections.JwtAuthOptions);
+            services.AddSingleton(_ => jwtAuthOptions);
 
-            services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<AppDbContext>()
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireDigit = true;
+
+                options.Password.RequiredLength = Identity.IdentityConstants.Password_RequiredLength;
+            }).AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddAuthorization();

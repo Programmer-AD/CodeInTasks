@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Infrastructure.Identity
+﻿namespace CodeInTasks.Application.Dtos.User
 {
     public enum RoleEnum
     {

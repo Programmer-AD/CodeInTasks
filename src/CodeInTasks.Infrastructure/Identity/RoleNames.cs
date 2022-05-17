@@ -1,4 +1,6 @@
-﻿namespace CodeInTasks.Infrastructure.Identity
+﻿using CodeInTasks.Application.Dtos.User;
+
+namespace CodeInTasks.Infrastructure.Identity
 {
     public class RoleNames
     {
@@ -7,7 +9,7 @@
         public const string Admin = "Admin";
         public const string Builder = "Builder";
 
-        public static string GetByEnum(RoleEnum roleEnum)
+        public static string FromEnum(RoleEnum roleEnum)
         {
             var result = roleEnum switch
             {

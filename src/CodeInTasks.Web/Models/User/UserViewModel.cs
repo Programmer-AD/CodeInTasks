@@ -1,7 +1,11 @@
-﻿namespace CodeInTasks.Web.Models.User
+﻿using CodeInTasks.Application.Dtos.User;
+
+namespace CodeInTasks.Web.Models.User
 {
     public class UserViewModel
     {
-        //TODO: UserViewModel
+        public string UserName { get; set; }
+        public IEnumerable<RoleEnum> Roles { get; set; }
+        public bool IsBanned { get; set; }
     }
 }

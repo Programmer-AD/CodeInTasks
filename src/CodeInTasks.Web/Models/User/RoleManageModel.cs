@@ -1,4 +1,6 @@
-﻿namespace CodeInTasks.Web.Models.User
+﻿using CodeInTasks.Application.Dtos.User;
+
+namespace CodeInTasks.Web.Models.User
 {
     public class RoleManageModel
     {
