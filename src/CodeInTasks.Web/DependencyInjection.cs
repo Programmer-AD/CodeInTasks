@@ -14,10 +14,10 @@ namespace CodeInTasks.Web
 
         private static void AddMapping(this IServiceCollection services)
         {
-            services.AddAutoMapper(config =>
+            services.AddAutoMapper(mapperConfig =>
             {
-                config.AddProfile<ApplicationProfile>();
-                config.AddProfile<WebProfile>();
+                mapperConfig.AddProfile<ApplicationProfile>();
+                mapperConfig.AddProfile<WebProfile>();
             });
         }
     }
