@@ -3,7 +3,6 @@ using System.Security.Claims;
 using AutoMapper;
 using CodeInTasks.Application.Dtos.User;
 using CodeInTasks.Application.Exceptions;
-using CodeInTasks.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,29 +17,27 @@ namespace CodeInTasks.Infrastructure.Identity
         public JwtIdentityService(
             UserManager<User> userManager,
             IMapper mapper,
-            JwtAuthOptions jwtAuthOptions)
+            JwtAuthOptions authOptions)
         {
             this.userManager = userManager;
             this.mapper = mapper;
-            this.authOptions = jwtAuthOptions;
+            this.authOptions = authOptions;
         }
 
         public async Task CreateUserAsync(UserCreateDto userCreateDto)
         {
             var password = userCreateDto.Password;
+
             var user = mapper.Map<User>(userCreateDto);
+            user.UserName = user.Email;
 
             var result = await userManager.CreateAsync(user, password);
-
-            if (!result.Succeeded)
-            {
-                throw new IdentityException(result.Errors);
-            }
+            AssertResultSucceeded(result);
         }
 
-        public async Task<string> GetSignInTokenAsync(string userName, string password)
+        public async Task<string> GetSignInTokenAsync(string email, string password)
         {
-            var user = await GetUserByNameAsync(userName);
+            var user = await GetUserByUserNameAsync(email);
 
             var isPasswordCorrect = await userManager.CheckPasswordAsync(user, password);
 
@@ -77,7 +74,8 @@ namespace CodeInTasks.Infrastructure.Identity
 
             user.IsBanned = isBanned;
 
-            await userManager.UpdateAsync(user);
+            var result = await userManager.UpdateAsync(user);
+            AssertResultSucceeded(result);
         }
 
         public async Task SetRoleAsync(Guid userId, RoleEnum role, bool isHave)
@@ -86,15 +84,20 @@ namespace CodeInTasks.Infrastructure.Identity
             var roleName = RoleNames.FromEnum(role);
 
             var settingTask = isHave ? userManager.AddToRoleAsync(user, roleName) : userManager.RemoveFromRoleAsync(user, roleName);
-            var result = await settingTask;
 
+            var result = await settingTask;
+            AssertResultSucceeded(result);
+        }
+
+        private static void AssertResultSucceeded(IdentityResult result)
+        {
             if (!result.Succeeded)
             {
                 throw new IdentityException(result.Errors);
             }
         }
 
-        private async Task<User> GetUserByNameAsync(string userName)
+        private async Task<User> GetUserByUserNameAsync(string userName)
         {
             var user = await userManager.FindByNameAsync(userName);
 
@@ -112,10 +115,10 @@ namespace CodeInTasks.Infrastructure.Identity
         private async Task<List<Claim>> GetClaimsAsync(User user)
         {
             var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(IdentityConstants.UserIdClaimType, user.Id.ToString()),
-                };
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(IdentityConstants.UserIdClaimType, user.Id.ToString()),
+            };
 
             var roles = await userManager.GetRolesAsync(user);
 

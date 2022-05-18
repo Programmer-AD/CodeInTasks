@@ -1,7 +1,6 @@
-﻿using System.Runtime.Serialization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace CodeInTasks.Infrastructure.Exceptions
+namespace CodeInTasks.Application.Exceptions
 {
     [Serializable]
     public class IdentityException : Exception

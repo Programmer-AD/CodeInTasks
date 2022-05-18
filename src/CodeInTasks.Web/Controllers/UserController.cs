@@ -23,17 +23,17 @@ namespace CodeInTasks.Web.Controllers
         [HttpPost("/signIn")]
         public async Task<ActionResult<UserSignInResultModel>> SignInAsync(UserSignInModel signInModel)
         {
-            var userName = signInModel.UserName;
+            var email = signInModel.Email;
             var password = signInModel.Password;
 
-            var signInToken = await identityService.GetSignInTokenAsync(userName, password);
+            var signInToken = await identityService.GetSignInTokenAsync(email, password);
 
             if (signInToken != null)
             {
                 var result = new UserSignInResultModel()
                 {
                     Token = signInToken,
-                    UserName = userName,
+                    Email = email,
                 };
 
                 return Ok(result);
