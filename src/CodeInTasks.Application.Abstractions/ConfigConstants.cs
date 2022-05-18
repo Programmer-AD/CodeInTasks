@@ -4,6 +4,8 @@
     {
         public const string JwtAuthOptionsSection = "JWT";
 
+        public const string MigrationAssemblyName = "CodeInTasks.Seeding";
+
         public const string SqlConnectionString = "SQL";
         public const string RedisConnectionString = "Redis";
     }
