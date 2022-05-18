@@ -6,14 +6,14 @@
         public IdentityException() { }
 
         public IdentityException(IEnumerable<string> errors)
-            : base(GetMessageByErrors(errors))
+            : base(GetMessage(errors))
         {
             Errors = errors;
         }
 
         public IEnumerable<string> Errors { get; }
 
-        private static string GetMessageByErrors(IEnumerable<string> errors)
+        private static string GetMessage(IEnumerable<string> errors)
         {
             var result = string.Join(';', errors);
             return result;

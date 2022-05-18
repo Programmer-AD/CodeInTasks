@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.User;
-using CodeInTasks.Application.Abstractions.Exceptions;
 using CodeInTasks.Infrastructure.Persistance.IdentityModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -108,7 +107,7 @@ namespace CodeInTasks.Infrastructure.Identity
         {
             var user = await userManager.FindByNameAsync(userName);
 
-            return user ?? throw new EntityNotFoundException($"Not found user with name \"{userName}\"");
+            return user ?? throw new EntityNotFoundException($"Not found User with UserName=\"{userName}\"");
         }
 
         private async Task<User> GetUserByIdAsync(Guid userId)
@@ -116,7 +115,7 @@ namespace CodeInTasks.Infrastructure.Identity
             var idString = userId.ToString();
             var user = await userManager.FindByIdAsync(idString);
 
-            return user ?? throw new EntityNotFoundException($"Not found user with id \"{userId}\"");
+            return user ?? throw new EntityNotFoundException(nameof(User), userId);
         }
 
         private async Task<List<Claim>> GetClaimsAsync(User user)

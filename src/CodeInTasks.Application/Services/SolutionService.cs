@@ -25,6 +25,8 @@ namespace CodeInTasks.Application.Services
         public async Task<Guid> AddAsync(SolutionCreateDto solutionCreateDto)
         {
             var solution = mapper.Map<Solution>(solutionCreateDto);
+            await AssertSolutionNotQueuedAsync(solution);
+
             var solutionId = await solutionRepository.AddAsync(solution);
 
             solution.Id = solutionId;
@@ -72,7 +74,20 @@ namespace CodeInTasks.Application.Services
         {
             var solution = await solutionRepository.GetAsync(solutionId);
 
-            return solution ?? throw new EntityNotFoundException($"Not found solution with id \"{solutionId}\"");
+            return solution ?? throw new EntityNotFoundException(nameof(Solution), solutionId);
+        }
+
+        private async Task AssertSolutionNotQueuedAsync(Solution solution)
+        {
+            var isAlreadyQueued = await solutionRepository.AnyAsync(
+                x => x.TaskId == solution.TaskId
+                    && x.SenderId == solution.SenderId
+                    && x.Status != TaskSolutionStatus.Finished);
+
+            if (isAlreadyQueued)
+            {
+                throw new SolutionAlreadyQueuedException(solution);
+            }
         }
     }
 }

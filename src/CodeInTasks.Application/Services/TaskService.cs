@@ -34,7 +34,7 @@ namespace CodeInTasks.Application.Services
 
             if (!isDeleted)
             {
-                throw new EntityNotFoundException($"Not found task with id \"{taskId}\"");
+                throw new EntityNotFoundException(nameof(TaskModel), taskId);
             }
         }
 
@@ -82,7 +82,7 @@ namespace CodeInTasks.Application.Services
         {
             var taskModel = await taskRepository.GetAsync(taskId);
 
-            return taskModel ?? throw new EntityNotFoundException($"Not found task with id \"{taskId}\"");
+            return taskModel ?? throw new EntityNotFoundException(nameof(TaskModel), taskId);
         }
     }
 }

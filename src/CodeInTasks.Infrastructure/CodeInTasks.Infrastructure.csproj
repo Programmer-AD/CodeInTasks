@@ -20,6 +20,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CodeInTasks.Application.Abstractions\CodeInTasks.Application.Abstractions.csproj" />
 		<ProjectReference Include="..\CodeInTasks.Infrastructure.Persistance\CodeInTasks.Infrastructure.Persistance.csproj" />
+		<ProjectReference Include="..\CodeInTasks.Infrastructure.Queues.Shared\CodeInTasks.Infrastructure.Queues.Shared.csproj" />
 	</ItemGroup>
 
 </Project>
