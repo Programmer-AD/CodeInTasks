@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
+﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 using CodeInTasks.Infrastructure.Queues.Shared.Models;
 using StackExchange.Redis;
@@ -11,17 +9,22 @@ namespace CodeInTasks.Infrastructure.Queues
     {
         private readonly IDatabase redisDatabase;
         private readonly IRepository<TaskModel> taskRepository;
+        private readonly IJsonSerializer jsonSerializer;
 
-        public SolutionCheckQueue(IDatabase redisDatabase, IRepository<TaskModel> taskRepository)
+        public SolutionCheckQueue(
+            IDatabase redisDatabase,
+            IRepository<TaskModel> taskRepository,
+            IJsonSerializer jsonSerializer)
         {
             this.redisDatabase = redisDatabase;
             this.taskRepository = taskRepository;
+            this.jsonSerializer = jsonSerializer;
         }
 
         public async Task EnqueueSolutionCheck(SolutionQueueDto solution)
         {
             var message = await MakeMessageAsync(solution);
-            var messageJson = SerializeMessage(message);
+            var messageJson = jsonSerializer.Serialize(message);
 
             await redisDatabase.StreamAddAsync(
                 QueueConstants.SolutionStreamName,
@@ -74,15 +77,5 @@ namespace CodeInTasks.Infrastructure.Queues
 
             return taskModel ?? throw new EntityNotFoundException(nameof(TaskModel), taskId);
         }
-
-        //TODO: move this to some special serializer class
-        private static string SerializeMessage(SolutionCheckQueueMessage message)
-        {
-            var messageJsonBytes = JsonSerializer.SerializeToUtf8Bytes(message, new JsonSerializerOptions(JsonSerializerDefaults.Web));
-            var messageJson = Encoding.UTF8.GetString(messageJsonBytes);
-
-            return messageJson;
-        }
-
     }
 }

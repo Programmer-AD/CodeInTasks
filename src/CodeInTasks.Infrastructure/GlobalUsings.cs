@@ -4,3 +4,4 @@ global using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
 global using CodeInTasks.Domain;
 global using CodeInTasks.Domain.Models;
 global using CodeInTasks.Infrastructure.Queues.Shared;
+global using CodeInTasks.Infrastructure.Wrappers.Interfaces;

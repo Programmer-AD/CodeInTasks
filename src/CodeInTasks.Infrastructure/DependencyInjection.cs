@@ -1,6 +1,7 @@
 ﻿using CodeInTasks.Infrastructure.Identity;
 using CodeInTasks.Infrastructure.Persistance;
 using CodeInTasks.Infrastructure.Queues;
+using CodeInTasks.Infrastructure.Wrappers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,7 @@ namespace CodeInTasks.Infrastructure
             services.AddPersistance(config);
             services.AddIdentity(config);
             services.AddQueues(config);
+            services.AddWrappers();
 
             return services;
         }

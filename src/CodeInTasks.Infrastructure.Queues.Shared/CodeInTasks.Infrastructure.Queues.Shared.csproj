@@ -7,7 +7,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\CodeInTasks.Domain\CodeInTasks.Domain.csproj" />
+		<PackageReference Include="StackExchange.Redis" Version="2.5.61" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CodeInTasks.Domain\CodeInTasks.Domain.csproj" />
+		<ProjectReference Include="..\CodeInTasks.Infrastructure.Wrappers\CodeInTasks.Infrastructure.Wrappers.csproj" />
 	</ItemGroup>
 
 </Project>
