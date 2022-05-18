@@ -1,5 +1,6 @@
 using CodeInTasks.Application;
 using CodeInTasks.Infrastructure;
+using CodeInTasks.Web.Middleware;
 
 namespace CodeInTasks.Web
 {
@@ -30,6 +31,9 @@ namespace CodeInTasks.Web
 
         public static WebApplication Setup(this WebApplication app)
         {
+            app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+            app.UseMiddleware<ChangeSaverMiddleware>();
+
             app.UseRouting();
 
             app.UseAuthentication();
