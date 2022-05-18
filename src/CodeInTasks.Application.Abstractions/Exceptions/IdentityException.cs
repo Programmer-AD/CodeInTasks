@@ -1,24 +1,21 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace CodeInTasks.Application.Abstractions.Exceptions
+﻿namespace CodeInTasks.Application.Abstractions.Exceptions
 {
     [Serializable]
     public class IdentityException : Exception
     {
         public IdentityException() { }
 
-        public IdentityException(IEnumerable<IdentityError> errors)
+        public IdentityException(IEnumerable<string> errors)
             : base(GetMessageByErrors(errors))
         {
             Errors = errors;
         }
 
-        public IEnumerable<IdentityError> Errors { get; }
+        public IEnumerable<string> Errors { get; }
 
-        private static string GetMessageByErrors(IEnumerable<IdentityError> errors)
+        private static string GetMessageByErrors(IEnumerable<string> errors)
         {
-            var errorTexts = errors.Select(x => $"{x.Code}: {x.Description}");
-            var result = string.Join(';', errorTexts);
+            var result = string.Join(';', errors);
             return result;
         }
     }

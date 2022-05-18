@@ -12,6 +12,6 @@
         public string TestRepositoryName { get; set; }
 
         public Guid CreatorId { get; set; }
-        public User Creator { get; set; }
+        public UserData Creator { get; set; }
     }
 }

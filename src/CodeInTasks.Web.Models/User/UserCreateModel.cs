@@ -3,8 +3,8 @@
     public class UserCreateModel
     {
         [Required]
-        [MinLength(DomainConstants.User_Name_MinLength)]
-        [MaxLength(DomainConstants.User_Name_MaxLength)]
+        [MinLength(DomainConstants.UserData_Name_MinLength)]
+        [MaxLength(DomainConstants.UserData_Name_MaxLength)]
         public string Name { get; set; }
 
         [Required, EmailAddress]

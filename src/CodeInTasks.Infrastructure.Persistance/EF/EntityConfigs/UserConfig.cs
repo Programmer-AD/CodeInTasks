@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CodeInTasks.Infrastructure.Persistance.IdentityModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
@@ -7,9 +8,9 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(x => x.Name)
-                .HasMaxLength(DomainConstants.User_Name_MaxLength)
-                .IsRequired();
+            builder.HasOne(x => x.UserData).WithOne().HasForeignKey((User user) => user.Id);
+
+            builder.Navigation(x => x.UserData).AutoInclude();
         }
     }
 }

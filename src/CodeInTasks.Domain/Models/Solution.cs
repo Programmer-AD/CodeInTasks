@@ -16,6 +16,6 @@
         public TaskModel Task { get; set; }
 
         public Guid SenderId { get; set; }
-        public User Sender { get; set; }
+        public UserData Sender { get; set; }
     }
 }

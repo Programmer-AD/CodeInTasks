@@ -31,7 +31,7 @@ namespace CodeInTasks.Application.Mapping
 
         private void CreateUserMaps()
         {
-            CreateBaseDtoMaps<UserCreateDto, User, UserViewDto>();
+            CreateBaseDtoMaps<UserCreateDto, UserData, UserViewDto>();
         }
 
         private void CreateBaseDtoMaps<TCreateDto, TEntity, TViewDto>(

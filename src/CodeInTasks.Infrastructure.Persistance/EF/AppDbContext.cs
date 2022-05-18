@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using CodeInTasks.Infrastructure.Persistance.IdentityModels;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CodeInTasks.Infrastructure.Persistance.EF
@@ -7,6 +8,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
     {
         public DbSet<TaskModel> Tasks { get; set; }
         public DbSet<Solution> Solutions { get; set; }
+        public DbSet<UserData> UserDatas { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
