@@ -8,7 +8,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
     {
         private readonly DbSet<T> dbSet;
 
-        public EfGenericRepository(AppDbContext dbContext)
+        public EfGenericRepository(DbContext dbContext)
         {
             dbSet = dbContext.Set<T>();
         }

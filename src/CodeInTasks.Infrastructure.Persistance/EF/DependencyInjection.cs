@@ -12,6 +12,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
             var sqlConnectionString = config.GetConnectionString(ConfigConstants.SqlConnectionString);
 
             services.AddDbContext<AppDbContext>(GetDbContextOptionsConfigurator(sqlConnectionString));
+            services.AddScoped<DbContext>(provider => provider.GetRequiredService<AppDbContext>());
 
             services.AddScoped(typeof(IRepository<>), typeof(EfGenericRepository<>));
         }
