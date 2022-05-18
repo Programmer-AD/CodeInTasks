@@ -1,14 +1,13 @@
 ﻿namespace CodeInTasks.Web.Models.User
 {
-    public class UserCreateModel
+    public class UserSignInModel
     {
-        [Required]
-        public string Name { get; set; }
-
         [Required, EmailAddress]
         public string Email { get; set; }
 
-        [Required, MinLength(IdentityConstants.Password_RequiredLength)]
+        [Required]
+        [MinLength(DomainConstants.User_Password_MinLength)]
+        [MaxLength(DomainConstants.User_Password_MaxLength)]
         public string Password { get; set; }
     }
 }

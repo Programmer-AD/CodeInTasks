@@ -33,7 +33,7 @@ namespace CodeInTasks.Infrastructure.Identity
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = true;
             options.Password.RequireDigit = true;
-            options.Password.RequiredLength = IdentityConstants.Password_RequiredLength;
+            options.Password.RequiredLength = DomainConstants.User_Password_MinLength;
         }
 
         private static void ConfigureAuthenticationOptions(AuthenticationOptions options)

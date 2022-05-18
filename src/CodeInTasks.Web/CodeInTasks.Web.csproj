@@ -3,6 +3,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CodeInTasks.Application\CodeInTasks.Application.csproj" />
 		<ProjectReference Include="..\CodeInTasks.Infrastructure\CodeInTasks.Infrastructure.csproj" />
+		<ProjectReference Include="..\CodeInTasks.Web.Models\CodeInTasks.Web.Models.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -16,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
 	</ItemGroup>
 
 </Project>
