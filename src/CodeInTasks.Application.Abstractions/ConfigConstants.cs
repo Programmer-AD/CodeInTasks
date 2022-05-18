@@ -1,6 +1,6 @@
-﻿namespace CodeInTasks.Infrastructure
+﻿namespace CodeInTasks.Application.Abstractions
 {
-    internal static class ConfigConstants
+    public static class ConfigConstants
     {
         public const string JwtAuthOptionsSection = "JWT";
 

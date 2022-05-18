@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CodeInTasks.Application.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CodeInTasks.Infrastructure.Persistence.EF
+namespace CodeInTasks.Infrastructure.Persistance.EF
 {
     internal static class DependencyInjection
     {

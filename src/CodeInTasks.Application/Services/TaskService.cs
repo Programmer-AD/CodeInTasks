@@ -9,7 +9,6 @@ namespace CodeInTasks.Application.Services
         private readonly IFiltrationPipeline<TaskFilterDto, TaskModel> filtrationPipeline;
         private readonly IMapper mapper;
 
-
         public TaskService(
             IRepository<TaskModel> taskRepository,
             IFiltrationPipeline<TaskFilterDto, TaskModel> filtrationPipeline,
@@ -32,7 +31,7 @@ namespace CodeInTasks.Application.Services
         public async Task DeleteAsync(Guid taskId)
         {
             var isDeleted = await taskRepository.DeleteAsync(taskId);
-            
+
             if (!isDeleted)
             {
                 throw new EntityNotFoundException($"Not found task with id \"{taskId}\"");

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using CodeInTasks.Domain.Models;
 
-namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure
+namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance
 {
     public interface IRepository<T>
         where T : ModelBase

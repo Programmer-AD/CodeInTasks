@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CodeInTasks.Infrastructure.Persistence.EF.EntityConfigs
+namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
 {
     internal class SolutionConfig : IEntityTypeConfiguration<Solution>
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CodeInTasks.Infrastructure.Persistence.EF
+namespace CodeInTasks.Infrastructure.Persistance.EF
 {
-    internal class AppDbContext : IdentityDbContext<User, Role, Guid>
+    public class AppDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<TaskModel> Tasks { get; set; }
         public DbSet<Solution> Solutions { get; set; }

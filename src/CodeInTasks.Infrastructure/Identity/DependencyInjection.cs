@@ -1,4 +1,4 @@
-﻿using CodeInTasks.Infrastructure.Persistence.EF;
+﻿using CodeInTasks.Infrastructure.Persistance.EF;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

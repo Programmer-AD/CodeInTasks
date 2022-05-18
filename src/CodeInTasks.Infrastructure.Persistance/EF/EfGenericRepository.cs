@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
-namespace CodeInTasks.Infrastructure.Persistence.EF
+namespace CodeInTasks.Infrastructure.Persistance.EF
 {
     internal class EfGenericRepository<T> : IRepository<T>
         where T : ModelBase
