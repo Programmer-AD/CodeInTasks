@@ -12,7 +12,8 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
                 .IsRequired();
 
             builder.Property(x => x.Description)
-                .HasMaxLength(DomainConstants.TaskModel_Description_MaxLength);
+                .HasMaxLength(DomainConstants.TaskModel_Description_MaxLength)
+                .IsRequired();
 
             builder.Property(x => x.BaseRepositoryName)
                 .HasMaxLength(DomainConstants.RepositoryName_MaxLength)
