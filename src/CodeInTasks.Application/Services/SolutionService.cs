@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Dtos.Solution;
+using CodeInTasks.Application.Abstractions.Dtos.Solution;
 
 namespace CodeInTasks.Application.Services
 {

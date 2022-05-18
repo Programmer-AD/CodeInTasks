@@ -1,5 +1,5 @@
-﻿using CodeInTasks.Application.Dtos.Solution;
-using CodeInTasks.Application.Dtos.Task;
+﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
+using CodeInTasks.Application.Abstractions.Dtos.Task;
 using CodeInTasks.Application.Filtration.Actions;
 using Microsoft.Extensions.DependencyInjection;
 

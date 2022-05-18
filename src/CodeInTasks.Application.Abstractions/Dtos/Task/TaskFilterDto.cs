@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Application.Dtos.Task
+﻿namespace CodeInTasks.Application.Abstractions.Dtos.Task
 {
     public class TaskFilterDto
     {

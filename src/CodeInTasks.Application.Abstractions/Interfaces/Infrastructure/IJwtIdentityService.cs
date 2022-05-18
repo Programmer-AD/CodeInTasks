@@ -1,6 +1,6 @@
-﻿using CodeInTasks.Application.Dtos.User;
+﻿using CodeInTasks.Application.Abstractions.Dtos.User;
 
-namespace CodeInTasks.Application.Interfaces.Infrastructure
+namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure
 {
     public interface IJwtIdentityService
     {

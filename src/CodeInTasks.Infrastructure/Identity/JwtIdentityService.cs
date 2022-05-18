@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using AutoMapper;
-using CodeInTasks.Application.Dtos.User;
-using CodeInTasks.Application.Exceptions;
+using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.Application.Abstractions.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -129,7 +129,6 @@ namespace CodeInTasks.Infrastructure.Identity
 
             return claims;
         }
-
 
         private JwtSecurityToken GetJwtToken(List<Claim> claims)
         {

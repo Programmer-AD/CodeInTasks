@@ -2,7 +2,7 @@
 
 namespace CodeInTasks.Application.Filtration
 {
-    internal class FiltrationPipelineResult<TEntity>
+    internal class FiltrationPipelineResult<TEntity> : IFiltrationPipelineResult<TEntity>
     {
         public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderFunction { get; set; } = null;
 
@@ -20,7 +20,7 @@ namespace CodeInTasks.Application.Filtration
             }
         }
 
-        private Expression<Predicate<TEntity>> MergeExpressions(
+        internal static Expression<Predicate<TEntity>> MergeExpressions(
             Expression<Predicate<TEntity>> baseExpression,
             Expression<Predicate<TEntity>> expressionToMerge)
         {

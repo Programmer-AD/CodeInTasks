@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Dtos.Solution;
-using CodeInTasks.Application.Dtos.Task;
-using CodeInTasks.Application.Dtos.User;
+using CodeInTasks.Application.Abstractions.Dtos.Solution;
+using CodeInTasks.Application.Abstractions.Dtos.Task;
+using CodeInTasks.Application.Abstractions.Dtos.User;
 using CodeInTasks.Web.Models.Solution;
 using CodeInTasks.Web.Models.Task;
 using CodeInTasks.Web.Models.User;

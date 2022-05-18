@@ -1,6 +1,4 @@
-﻿using CodeInTasks.Application.Interfaces.Filtration;
-
-namespace CodeInTasks.Application.Filtration
+﻿namespace CodeInTasks.Application.Filtration
 {
     internal class FiltrationPipeline<TFilterDto, TEntity> : IFiltrationPipeline<TFilterDto, TEntity>
     {
@@ -11,7 +9,7 @@ namespace CodeInTasks.Application.Filtration
             this.filtrationActions = filtrationActions;
         }
 
-        public FiltrationPipelineResult<TEntity> GetResult(TFilterDto filterDto)
+        public IFiltrationPipelineResult<TEntity> GetResult(TFilterDto filterDto)
         {
             var result = new FiltrationPipelineResult<TEntity>();
 

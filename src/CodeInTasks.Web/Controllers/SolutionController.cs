@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Dtos.Solution;
+using CodeInTasks.Application.Abstractions.Dtos.Solution;
 using CodeInTasks.Web.Models.Solution;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

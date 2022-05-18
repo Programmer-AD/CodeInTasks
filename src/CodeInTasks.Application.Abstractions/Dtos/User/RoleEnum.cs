@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Application.Dtos.User
+﻿namespace CodeInTasks.Application.Abstractions.Dtos.User
 {
     public enum RoleEnum
     {

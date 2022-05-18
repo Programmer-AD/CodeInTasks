@@ -1,6 +1,6 @@
-﻿using CodeInTasks.Application.Dtos.Solution;
+﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
 
-namespace CodeInTasks.Application.Interfaces.Services
+namespace CodeInTasks.Application.Abstractions.Interfaces.Services
 {
     public interface ISolutionService
     {

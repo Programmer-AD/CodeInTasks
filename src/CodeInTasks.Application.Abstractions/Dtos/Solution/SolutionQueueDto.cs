@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Application.Dtos.Solution
+﻿namespace CodeInTasks.Application.Abstractions.Dtos.Solution
 {
     public class SolutionQueueDto
     {

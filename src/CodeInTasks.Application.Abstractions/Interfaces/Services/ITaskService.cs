@@ -1,6 +1,6 @@
-﻿using CodeInTasks.Application.Dtos.Task;
+﻿using CodeInTasks.Application.Abstractions.Dtos.Task;
 
-namespace CodeInTasks.Application.Interfaces.Services
+namespace CodeInTasks.Application.Abstractions.Interfaces.Services
 {
     public interface ITaskService
     {

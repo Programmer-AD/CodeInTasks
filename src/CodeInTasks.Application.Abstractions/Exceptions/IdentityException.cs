@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace CodeInTasks.Application.Exceptions
+namespace CodeInTasks.Application.Abstractions.Exceptions
 {
     [Serializable]
     public class IdentityException : Exception

@@ -1,4 +1,4 @@
-﻿using CodeInTasks.Application.Dtos.Task;
+﻿using CodeInTasks.Application.Abstractions.Dtos.Task;
 
 namespace CodeInTasks.Application.Filtration.Actions
 {

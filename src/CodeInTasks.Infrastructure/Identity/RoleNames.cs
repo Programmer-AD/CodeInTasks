@@ -1,4 +1,4 @@
-﻿using CodeInTasks.Application.Dtos.User;
+﻿using CodeInTasks.Application.Abstractions.Dtos.User;
 
 namespace CodeInTasks.Infrastructure.Identity
 {

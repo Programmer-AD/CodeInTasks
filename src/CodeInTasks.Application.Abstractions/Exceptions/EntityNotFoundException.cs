@@ -1,7 +1,6 @@
-﻿using System.Runtime.Serialization;
-
-namespace CodeInTasks.Application.Exceptions
+﻿namespace CodeInTasks.Application.Abstractions.Exceptions
 {
+    [Serializable]
     public class EntityNotFoundException : Exception
     {
         public EntityNotFoundException() { }
