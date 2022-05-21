@@ -24,9 +24,29 @@ namespace CodeInTasks.Application.Filtration
             Expression<Predicate<TEntity>> baseExpression,
             Expression<Predicate<TEntity>> expressionToMerge)
         {
+            var targetParameter = baseExpression.Parameters[0];
+
             var andExpression = Expression.AndAlso(baseExpression.Body, expressionToMerge.Body);
-            var resultExpression = Expression.Lambda<Predicate<TEntity>>(andExpression, baseExpression.Parameters);
+            var parameterChanger = new ParameterChangerVisitor(targetParameter);
+            var bodyExpression = parameterChanger.Visit(andExpression);
+
+            var resultExpression = Expression.Lambda<Predicate<TEntity>>(bodyExpression, baseExpression.Parameters);
             return resultExpression;
+        }
+
+        private class ParameterChangerVisitor : ExpressionVisitor
+        {
+            private readonly ParameterExpression targetParameter;
+
+            public ParameterChangerVisitor(ParameterExpression targetParameter)
+            {
+                this.targetParameter = targetParameter;
+            }
+
+            protected override Expression VisitParameter(ParameterExpression node)
+            {
+                return targetParameter;
+            }
         }
     }
 }
