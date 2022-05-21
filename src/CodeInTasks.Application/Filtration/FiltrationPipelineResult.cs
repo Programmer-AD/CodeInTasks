@@ -20,7 +20,7 @@ namespace CodeInTasks.Application.Filtration
             }
         }
 
-        internal static Expression<Predicate<TEntity>> MergeExpressions(
+        private static Expression<Predicate<TEntity>> MergeExpressions(
             Expression<Predicate<TEntity>> baseExpression,
             Expression<Predicate<TEntity>> expressionToMerge)
         {
