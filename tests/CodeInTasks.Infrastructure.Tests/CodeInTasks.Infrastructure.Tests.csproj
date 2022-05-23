@@ -21,6 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\CodeInTasks.Infrastructure\CodeInTasks.Infrastructure.csproj" />
+		<ProjectReference Include="..\CodeInTasks.SharedTestHelpers\CodeInTasks.SharedTestHelpers.csproj" />
 	</ItemGroup>
 
 </Project>
