@@ -39,12 +39,15 @@ namespace CodeInTasks.Application.Services
         public async Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto)
         {
             var pipelineResult = filtrationPipeline.GetResult(filterDto);
+            var filter = new RepositoryFilter<Solution>()
+            {
+                Predicate = pipelineResult.FilterExpression,
+                OrderFunction = pipelineResult.OrderFunction,
+                Take = filterDto.TakeCount,
+                Skip = filterDto.TakeOffset
+            };
 
-            var solutionModels = await solutionRepository.GetAllAsync(
-                pipelineResult.FilterExpression,
-                pipelineResult.OrderFunction,
-                filterDto.TakeCount,
-                filterDto.TakeOffset);
+            var solutionModels = await solutionRepository.GetFilteredAsync(filter);
 
             var solutionViewDtos = mapper.Map<IEnumerable<SolutionViewDto>>(solutionModels);
 

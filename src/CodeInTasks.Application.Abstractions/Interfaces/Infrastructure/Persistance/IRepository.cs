@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using CodeInTasks.Domain.Models;
 
 namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance
 {
@@ -13,18 +12,9 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persist
         Task<T> GetAsync(Guid id, bool includeDeleted = false);
         Task<T> GetAsync(Expression<Predicate<T>> predicate, bool includeDeleted = false);
 
-        Task<IEnumerable<T>> GetAllAsync(
-            Expression<Predicate<T>> predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderFunc = null,
-            int take = 0,
-            int skip = 0,
-            bool includeDeleted = false);
+        Task<IEnumerable<T>> GetFilteredAsync(RepositoryFilter<T> filter);
 
-        Task<long> CountAsync(
-            Expression<Predicate<T>> predicate = null,
-            int take = 0,
-            int skip = 0,
-            bool includeDeleted = false);
+        Task<long> CountAsync(RepositoryFilter<T> filter);
 
         Task<bool> AnyAsync(Expression<Predicate<T>> predicate, bool includeDeleted = false);
     }

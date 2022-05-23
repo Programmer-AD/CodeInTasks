@@ -20,13 +20,9 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
             return Task.FromResult(id);
         }
 
-        public async Task<long> CountAsync(
-            Expression<Predicate<T>> predicate = null,
-            int take = 0,
-            int skip = 0,
-            bool includeDeleted = false)
+        public async Task<long> CountAsync(RepositoryFilter<T> filter)
         {
-            var source = GetSetupedSource(predicate, orderFunc: null, take, skip, includeDeleted);
+            var source = GetSetupedSource(filter);
             var result = await source.LongCountAsync();
             return result;
         }
@@ -45,14 +41,9 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
             return entityExists;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(
-            Expression<Predicate<T>> predicate = null,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderFunc = null,
-            int take = 0,
-            int skip = 0,
-            bool includeDeleted = false)
+        public async Task<IEnumerable<T>> GetFilteredAsync(RepositoryFilter<T> filter)
         {
-            var source = GetSetupedSource(predicate, orderFunc, take, skip, includeDeleted);
+            var source = GetSetupedSource(filter);
             var result = await source.ToListAsync();
             return result;
         }
@@ -96,28 +87,30 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
             return source;
         }
 
-        private IQueryable<T> GetSetupedSource(
-            Expression<Predicate<T>> predicate,
-            Func<IQueryable<T>, IOrderedQueryable<T>> orderFunc,
-            int take,
-            int skip,
-            bool includeDeleted)
+        private IQueryable<T> GetSetupedSource(RepositoryFilter<T> filter)
         {
-            var source = GetSource(includeDeleted);
+            var source = GetSource(filter.IncludeDeleted);
 
+            var predicate = filter.Predicate;
             if (predicate != null)
             {
                 var convertedPredicate = predicate.ConvertToFunc();
                 source = source.Where(convertedPredicate);
             }
+
+            var orderFunc = filter.OrderFunction;
             if (orderFunc != null)
             {
                 source = orderFunc(source);
             }
+
+            var skip = filter.Skip;
             if (skip > 0)
             {
                 source = source.Skip(skip);
             }
+
+            var take = filter.Take;
             if (take > 0)
             {
                 source = source.Take(take);
