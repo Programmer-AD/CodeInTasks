@@ -8,6 +8,7 @@ namespace CodeInTasks.Web
         public static IServiceCollection AddWeb(this IServiceCollection services, IConfiguration config)
         {
             services.AddMapping();
+            services.AddControllers();
 
             return services;
         }
