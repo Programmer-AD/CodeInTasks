@@ -44,6 +44,7 @@ namespace CodeInTasks.Application.Tests.Services
                mapperMock.Object);
 
             SetupMappings();
+            ServiceTestHelpers.SetupFiltrationPipelineMock(filtrationPipelineMock);
         }
 
         [Test]
@@ -117,9 +118,6 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task GetFilteredAsync_UseFiltrationPipeline()
         {
-            SetupFiltrationPipeline();
-
-
             await solutionService.GetFilteredAsync(filterDto);
 
 
@@ -129,9 +127,6 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task GetFilteredAsync_GetFilteredFromRepository()
         {
-            SetupFiltrationPipeline();
-
-
             await solutionService.GetFilteredAsync(filterDto);
 
 
@@ -241,22 +236,11 @@ namespace CodeInTasks.Application.Tests.Services
                 .ReturnsAsync(isQueued);
         }
 
-        private void SetupFiltrationPipeline()
-        {
-            var pipelineResultMock = new Mock<IFiltrationPipelineResult<Solution>>();
-
-            filtrationPipelineMock
-                .Setup(x => x.GetResult(It.IsAny<SolutionFilterDto>()))
-                .Returns(pipelineResultMock.Object);
-        }
-
         private void SetCanFoundEntityById(bool canFound)
         {
-            var resultOfGet = canFound ? solution : null;
+            var result = canFound ? solution : null;
 
-            solutionRepositoryMock
-                .Setup(x => x.GetAsync(It.IsAny<Guid>(), It.IsAny<bool>()))
-                .ReturnsAsync(resultOfGet);
+            ServiceTestHelpers.SetRepositoryGetResult(solutionRepositoryMock, result);
         }
     }
 }
