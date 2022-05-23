@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Infrastructure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Seeding", "src\CodeInTasks.Seeding\CodeInTasks.Seeding.csproj", "{E94AF60D-D69F-4C6B-B8CA-2261CCBB4797}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeInTasks.SharedTestHelpers", "tests\CodeInTasks.SharedTestHelpers\CodeInTasks.SharedTestHelpers.csproj", "{1832ACC5-92C6-427E-835A-AA42E64C017A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{E94AF60D-D69F-4C6B-B8CA-2261CCBB4797}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E94AF60D-D69F-4C6B-B8CA-2261CCBB4797}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E94AF60D-D69F-4C6B-B8CA-2261CCBB4797}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1832ACC5-92C6-427E-835A-AA42E64C017A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1832ACC5-92C6-427E-835A-AA42E64C017A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1832ACC5-92C6-427E-835A-AA42E64C017A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1832ACC5-92C6-427E-835A-AA42E64C017A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{11930D81-53EA-4FED-98AF-422FA965B0F8} = {3E4A229D-B31E-4239-871F-8A061C0ED765}
 		{95C0F957-AA15-48B0-950A-37C9716ACD8C} = {3E4A229D-B31E-4239-871F-8A061C0ED765}
 		{E94AF60D-D69F-4C6B-B8CA-2261CCBB4797} = {3E4A229D-B31E-4239-871F-8A061C0ED765}
+		{1832ACC5-92C6-427E-835A-AA42E64C017A} = {8D8386CC-6537-49A6-87EA-17667F5F20C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {364C5C2E-47B0-40C3-92C2-F3D20C28D0CD}
