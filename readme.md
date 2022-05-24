@@ -21,6 +21,7 @@ Functions by roles descibed [here](./RoleFunctions.md)
 - ASP.NET Core 6
 - EntityFramework Core 6
 - AutoMapper mapping library
+- StackExchange.Redis for work with Redis (as MQ)
 - NUnit test framework
 - Moq mocking library
 - FluentAssertions assertion library
