@@ -17,9 +17,9 @@ namespace CodeInTasks.Application.Tests.Filtration
         [SetUp]
         public void SetUp()
         {
-            filtrationActions = new List<FiltrationAction<object, TestModel>>();
+            filtrationActions = new();
 
-            filtrationPipeline = new FiltrationPipeline<object, TestModel>(filtrationActions);
+            filtrationPipeline = new(filtrationActions);
         }
 
         [Test]

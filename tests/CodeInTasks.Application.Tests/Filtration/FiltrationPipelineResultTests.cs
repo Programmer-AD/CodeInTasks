@@ -15,7 +15,7 @@ namespace CodeInTasks.Application.Tests.Filtration
         [SetUp]
         public void SetUp()
         {
-            filtrationPipelineResult = new FiltrationPipelineResult<TestModel>();
+            filtrationPipelineResult = new();
         }
 
         [Test]
