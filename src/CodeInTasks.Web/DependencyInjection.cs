@@ -1,5 +1,6 @@
 ﻿using CodeInTasks.Application.Mapping;
 using CodeInTasks.Web.Mapping;
+using CodeInTasks.Web.Middleware.ExceptionHandling;
 
 namespace CodeInTasks.Web
 {
@@ -7,6 +8,8 @@ namespace CodeInTasks.Web
     {
         public static IServiceCollection AddWeb(this IServiceCollection services, IConfiguration config)
         {
+            services.AddExceptionHandleInfos();
+
             services.AddMapping();
             services.AddControllers();
 

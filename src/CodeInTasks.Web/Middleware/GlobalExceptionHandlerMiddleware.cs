@@ -1,76 +1,64 @@
-﻿using CodeInTasks.Application.Abstractions.Exceptions;
+﻿using CodeInTasks.Web.Middleware.ExceptionHandling;
 
 namespace CodeInTasks.Web.Middleware
 {
     public class GlobalExceptionHandlerMiddleware : IMiddleware
     {
+        private readonly IReadOnlyDictionary<Type, ExceptionHandleInfo> knownExceptions;
         private readonly ILogger<GlobalExceptionHandlerMiddleware> logger;
 
-        public GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger)
+        public GlobalExceptionHandlerMiddleware(
+            ILogger<GlobalExceptionHandlerMiddleware> logger,
+            IEnumerable<ExceptionHandleInfo> handleInfos)
         {
             this.logger = logger;
+            knownExceptions = handleInfos.ToDictionary(x => x.ExceptionType, x => x);
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var response = context.Response;
-
             try
             {
                 await next(context);
             }
-            catch (EntityNotFoundException exception)
-            {
-                await HandleEntityNotFoundExceptionAsync(context, response, exception);
-            }
-            catch (SolutionAlreadyQueuedException exception)
-            {
-                await HandleSolutionAlreadyQueuedExceptionAsync(context, response, exception);
-            }
-            catch (IdentityException exception)
-            {
-                await HandleIdentityExceptionAsync(context, response, exception);
-            }
             catch (Exception exception)
             {
-                await HandleOtherException(context, response, exception);
+                await HandleException(context, exception);
             }
         }
 
-        private async Task HandleEntityNotFoundExceptionAsync(HttpContext context, HttpResponse response, EntityNotFoundException exception)
+        private async Task HandleException(HttpContext context, Exception exception)
+        {
+            var exceptionType = exception.GetType();
+
+            while (exceptionType != typeof(Exception))
+            {
+                if (knownExceptions.TryGetValue(exceptionType, out var handleInfo))
+                {
+                    await HandleKnownException(context, exception, handleInfo);
+                    return;
+                }
+
+                exceptionType = exceptionType.BaseType;
+            }
+
+            await HandleOtherException(context, exception);
+        }
+
+        private async Task HandleKnownException(HttpContext context, Exception exception, ExceptionHandleInfo handleInfo)
         {
             LogWarning(exception, context);
 
-            const string message = "Entity not found";
-
-            await SetResponsesAsync(response, StatusCodes.Status404NotFound, message);
+            await SetResponsesAsync(context.Response, handleInfo.ResultStatusCode, handleInfo.ResultMessage);
         }
 
-        private async Task HandleSolutionAlreadyQueuedExceptionAsync(HttpContext context, HttpResponse response, SolutionAlreadyQueuedException exception)
-        {
-            LogWarning(exception, context);
-
-            const string message = "Solution already queued";
-
-            await SetResponsesAsync(response, StatusCodes.Status400BadRequest, message);
-        }
-
-        private async Task HandleIdentityExceptionAsync(HttpContext context, HttpResponse response, IdentityException exception)
-        {
-            LogWarning(exception, context);
-
-            const string message = "Identity error occured";
-
-            await SetResponsesAsync(response, StatusCodes.Status400BadRequest, message);
-        }
-
-        private async Task HandleOtherException(HttpContext context, HttpResponse response, Exception exception)
+        private async Task HandleOtherException(HttpContext context, Exception exception)
         {
             LogError(exception, context);
 
             const string message = "Internal error occured";
 
-            await SetResponsesAsync(response, StatusCodes.Status500InternalServerError, message);
+            await SetResponsesAsync(context.Response, StatusCodes.Status500InternalServerError, message);
         }
 
         private static async Task SetResponsesAsync(HttpResponse response, int code, string message)
