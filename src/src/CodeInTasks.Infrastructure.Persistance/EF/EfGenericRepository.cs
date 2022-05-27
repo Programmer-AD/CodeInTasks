@@ -20,11 +20,10 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
             return Task.FromResult(id);
         }
 
-        public async Task<long> CountAsync(RepositoryFilter<T> filter)
+        public Task<long> CountAsync(RepositoryFilter<T> filter)
         {
             var source = GetSetupedSource(filter);
-            var result = await source.LongCountAsync();
-            return result;
+            return source.LongCountAsync();
         }
 
         public async Task<bool> DeleteAsync(Guid id)

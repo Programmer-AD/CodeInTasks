@@ -23,9 +23,9 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet("{taskId}")]
         public async Task<ActionResult<TaskViewModel>> GetAsync(Guid taskId)
         {
-            var taskViewDto = await taskService.GetAsync(taskId);
+            var taskModel = await taskService.GetAsync(taskId);
 
-            var taskViewModel = mapper.Map<TaskViewModel>(taskViewDto);
+            var taskViewModel = mapper.Map<TaskViewModel>(taskModel);
             return Ok(taskViewModel);
         }
 
@@ -35,9 +35,9 @@ namespace CodeInTasks.Web.Controllers
             TaskFilterModel filterModel)
         {
             var filterDto = mapper.Map<TaskFilterDto>(filterModel);
-            var taskViewDtos = await taskService.GetFilteredAsync(filterDto);
+            var taskModels = await taskService.GetFilteredAsync(filterDto);
 
-            var taskViewModels = mapper.Map<IEnumerable<TaskViewModel>>(taskViewDtos);
+            var taskViewModels = mapper.Map<IEnumerable<TaskViewModel>>(taskModels);
             return Ok(taskViewModels);
         }
 

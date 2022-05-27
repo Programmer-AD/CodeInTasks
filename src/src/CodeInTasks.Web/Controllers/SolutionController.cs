@@ -37,9 +37,9 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SolutionViewModel>> GetAsync(Guid solutionId)
         {
-            var solutionViewDto = await solutionService.GetAsync(solutionId);
+            var solution = await solutionService.GetAsync(solutionId);
 
-            var solutionViewModel = mapper.Map<SolutionViewModel>(solutionViewDto);
+            var solutionViewModel = mapper.Map<SolutionViewModel>(solution);
             return Ok(solutionViewModel);
         }
 
@@ -50,9 +50,9 @@ namespace CodeInTasks.Web.Controllers
         {
             var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
 
-            var solutionViewDtos = await solutionService.GetFilteredAsync(solutionFilterDto);
+            var solutions = await solutionService.GetFilteredAsync(solutionFilterDto);
 
-            var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutionViewDtos);
+            var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutions);
             return Ok(solutionViewModels);
         }
 
