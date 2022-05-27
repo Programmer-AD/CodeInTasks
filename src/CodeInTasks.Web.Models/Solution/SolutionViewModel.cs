@@ -3,7 +3,7 @@
     public class SolutionViewModel
     {
         public Guid Id { get; set; }
-        public string RepositoryName { get; set; }
+        public string RepositoryUrl { get; set; }
 
         public TaskSolutionStatus Status { get; set; }
         public TaskSolutionResult? Result { get; set; }

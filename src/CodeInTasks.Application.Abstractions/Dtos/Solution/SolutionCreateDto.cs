@@ -2,7 +2,8 @@
 {
     public class SolutionCreateDto
     {
-        public string RepositoryName { get; set; }
+        public string RepositoryUrl { get; set; }
+        public string RepositoryAccessToken { get; set; }
         public Guid TaskId { get; set; }
         public Guid SenderId { get; set; }
     }

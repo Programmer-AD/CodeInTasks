@@ -7,8 +7,9 @@
         public TaskCategory Category { get; set; }
 
         public RunnerType Runner { get; set; }
-        public string BaseRepositoryName { get; set; }
-        public string TestRepositoryName { get; set; }
+        public string BaseRepositoryUrl { get; set; }
+        public string TestRepositoryUrl { get; set; }
+        public string TestRepositoryAccessToken { get; set; }
 
         public Guid CreatorId { get; set; }
     }

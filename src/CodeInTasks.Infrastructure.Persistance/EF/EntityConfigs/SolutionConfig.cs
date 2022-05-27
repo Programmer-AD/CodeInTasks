@@ -7,8 +7,12 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<Solution> builder)
         {
-            builder.Property(x => x.RepositoryName)
-                .HasMaxLength(DomainConstants.RepositoryName_MaxLength)
+            builder.Property(x => x.RepositoryUrl)
+                .HasMaxLength(DomainConstants.RepositoryUrl_MaxLength)
+                .IsRequired();
+
+            builder.Property(x => x.RepositoryAccessToken)
+                .HasMaxLength(DomainConstants.RepositoryAccessToken_MaxLength)
                 .IsRequired();
 
             builder.Property(x => x.ResultAdditionalInfo)

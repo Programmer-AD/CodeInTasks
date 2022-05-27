@@ -2,7 +2,8 @@
 {
     public class Solution : ModelBase
     {
-        public string RepositoryName { get; set; }
+        public string RepositoryUrl { get; set; }
+        public string RepositoryAccessToken { get; set; }
 
         public TaskSolutionStatus Status { get; set; } = TaskSolutionStatus.Queued;
         public TaskSolutionResult Result { get; set; } = TaskSolutionResult.Unknown;

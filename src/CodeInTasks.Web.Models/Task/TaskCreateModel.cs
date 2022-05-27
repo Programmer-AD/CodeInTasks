@@ -17,13 +17,18 @@
         public RunnerType Runner { get; set; }
 
         [Required]
-        [MinLength(DomainConstants.RepositoryName_MinLength)]
-        [MaxLength(DomainConstants.RepositoryName_MaxLength)]
-        public string BaseRepositoryName { get; set; }
+        [MinLength(DomainConstants.RepositoryUrl_MinLength)]
+        [MaxLength(DomainConstants.RepositoryUrl_MaxLength)]
+        public string BaseRepositoryUrl { get; set; }
 
         [Required]
-        [MinLength(DomainConstants.RepositoryName_MinLength)]
-        [MaxLength(DomainConstants.RepositoryName_MaxLength)]
-        public string TestRepositoryName { get; set; }
+        [MinLength(DomainConstants.RepositoryUrl_MinLength)]
+        [MaxLength(DomainConstants.RepositoryUrl_MaxLength)]
+        public string TestRepositoryUrl { get; set; }
+
+        [Required]
+        [MinLength(DomainConstants.RepositoryAccessToken_MinLength)]
+        [MaxLength(DomainConstants.RepositoryAccessToken_MaxLength)]
+        public string TestRepositoryAccessToken { get; set; }
     }
 }

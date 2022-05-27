@@ -45,30 +45,14 @@ namespace CodeInTasks.Infrastructure.Queues
                 SolutionId = solution.Id,
                 Runner = task.Runner,
 
-                TestRepositoryUrl = GetRepositoryUrl(task.TestRepositoryName),
-                TestRepositoryAccessToken = await GetUserRepositoryAccessToken(task.CreatorId),
+                TestRepositoryUrl = task.TestRepositoryUrl,
+                TestRepositoryAccessToken = task.TestRepositoryAccessToken,
 
-                UserRepositoryUrl = GetRepositoryUrl(solution.RepositoryName),
-                UserRepositoryAccessToken = await GetUserRepositoryAccessToken(solution.SenderId),
+                UserRepositoryUrl = solution.RepositoryUrl,
+                UserRepositoryAccessToken = solution.RepositoryAccessToken,
             };
 
             return message;
-        }
-
-        private static string GetRepositoryUrl(string repositoryName)
-        {
-            //TODO: move const somewhere or acquire from DI
-            const string RepositorySite = "https://gitlab.com/";
-
-            var result = RepositorySite + repositoryName;
-
-            return result;
-        }
-
-        private static Task<string> GetUserRepositoryAccessToken(Guid userId)
-        {
-            //TODO: Retrieve repository access token of user from DB
-            return Task.FromResult(string.Empty);
         }
 
         private async Task<TaskModel> GetTaskAsync(Guid taskId)

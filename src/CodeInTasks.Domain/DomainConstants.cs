@@ -21,7 +21,10 @@
 
 
 
-        public const int RepositoryName_MinLength = 1;
-        public const int RepositoryName_MaxLength = 128;
+        public const int RepositoryUrl_MinLength = 4;
+        public const int RepositoryUrl_MaxLength = 1024;
+
+        public const int RepositoryAccessToken_MinLength = 4;
+        public const int RepositoryAccessToken_MaxLength = 256;
     }
 }
