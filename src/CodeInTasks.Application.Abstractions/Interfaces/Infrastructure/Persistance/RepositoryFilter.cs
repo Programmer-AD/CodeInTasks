@@ -4,7 +4,7 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persist
 {
     public class RepositoryFilter<T>
     {
-        public Expression<Predicate<T>> Predicate { get; set; } = null;
+        public Expression<Predicate<T>> FiltrationPredicate { get; set; } = null;
         public Func<IQueryable<T>, IOrderedQueryable<T>> OrderFunction { get; set; } = null;
         public int Take { get; set; } = 0;
         public int Skip { get; set; } = 0;

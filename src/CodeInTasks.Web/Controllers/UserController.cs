@@ -26,7 +26,7 @@ namespace CodeInTasks.Web.Controllers
             var email = signInModel.Email;
             var password = signInModel.Password;
 
-            var signInToken = await identityService.GetSignInTokenAsync(email, password);
+            var signInToken = await identityService.GetJwtTokenAsync(email, password);
 
             if (signInToken != null)
             {

@@ -40,7 +40,7 @@ namespace CodeInTasks.Infrastructure.Identity
             AssertResultSucceeded(result);
         }
 
-        public async Task<string> GetSignInTokenAsync(string email, string password)
+        public async Task<string> GetJwtTokenAsync(string email, string password)
         {
             var user = await GetUserByUserNameAsync(email);
 

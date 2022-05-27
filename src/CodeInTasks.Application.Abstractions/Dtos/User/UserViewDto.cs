@@ -1,5 +1,6 @@
 ﻿namespace CodeInTasks.Application.Abstractions.Dtos.User
 {
+    //TODO: Find way to remove it
     public class UserViewDto
     {
         public string Name { get; set; }

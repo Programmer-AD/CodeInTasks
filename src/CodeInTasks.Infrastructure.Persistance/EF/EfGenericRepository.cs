@@ -91,7 +91,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
         {
             var source = GetSource(filter.IncludeDeleted);
 
-            var predicate = filter.Predicate;
+            var predicate = filter.FiltrationPredicate;
             if (predicate != null)
             {
                 var convertedPredicate = predicate.ConvertToFunc();

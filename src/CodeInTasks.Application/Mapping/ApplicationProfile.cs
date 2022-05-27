@@ -16,7 +16,7 @@ namespace CodeInTasks.Application.Mapping
 
         private void CreateSolutionMaps()
         {
-            CreateBaseDtoMaps<SolutionCreateDto, Solution, SolutionViewDto>();
+            CreateMap<SolutionCreateDto, Solution>();
 
             CreateMap<SolutionStatusUpdateDto, Solution>();
             CreateMap<Solution, SolutionQueueDto>();
@@ -24,25 +24,14 @@ namespace CodeInTasks.Application.Mapping
 
         private void CreateTaskMaps()
         {
-            CreateBaseDtoMaps<TaskCreateDto, TaskModel, TaskViewDto>();
+            CreateMap<TaskCreateDto, TaskModel>();
 
             CreateMap<TaskUpdateDto, TaskModel>();
         }
 
         private void CreateUserMaps()
         {
-            CreateBaseDtoMaps<UserCreateDto, UserData, UserViewDto>();
-        }
-
-        private void CreateBaseDtoMaps<TCreateDto, TEntity, TViewDto>(
-            Action<IMappingExpression<TCreateDto, TEntity>> configureCreate = null,
-            Action<IMappingExpression<TEntity, TViewDto>> configureView = null)
-        {
-            var createMapping = CreateMap<TCreateDto, TEntity>();
-            configureCreate?.Invoke(createMapping);
-
-            var viewMapping = CreateMap<TEntity, TViewDto>();
-            configureView?.Invoke(viewMapping);
+            CreateMap<UserCreateDto, UserData>();
         }
     }
 }

@@ -8,8 +8,8 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Services
         Task UpdateAsync(TaskUpdateDto taskUpdateDto);
         Task DeleteAsync(Guid taskId);
 
-        Task<TaskViewDto> GetAsync(Guid taskId);
-        Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto);
+        Task<TaskModel> GetAsync(Guid taskId);
+        Task<IEnumerable<TaskModel>> GetFilteredAsync(TaskFilterDto filterDto);
         Task<bool> IsOwnerAsync(Guid taskId, Guid userId);
     }
 }

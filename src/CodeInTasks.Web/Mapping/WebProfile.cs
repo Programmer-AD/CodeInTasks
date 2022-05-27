@@ -2,6 +2,7 @@
 using CodeInTasks.Application.Abstractions.Dtos.Solution;
 using CodeInTasks.Application.Abstractions.Dtos.Task;
 using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.Domain.Models;
 using CodeInTasks.Web.Models.Solution;
 using CodeInTasks.Web.Models.Task;
 using CodeInTasks.Web.Models.User;
@@ -20,7 +21,7 @@ namespace CodeInTasks.Web.Mapping
         private void CreateSolutionMaps()
         {
             CreateMap<SolutionCreateModel, SolutionCreateDto>();
-            CreateMap<SolutionViewDto, SolutionViewModel>();
+            CreateMap<Solution, SolutionViewModel>();
 
             CreateMap<SolutionFilterModel, SolutionFilterDto>();
             CreateMap<SolutionStatusUpdateModel, SolutionStatusUpdateDto>();
@@ -29,7 +30,7 @@ namespace CodeInTasks.Web.Mapping
         private void CreateTaskMaps()
         {
             CreateMap<TaskCreateModel, TaskCreateDto>();
-            CreateMap<TaskViewDto, TaskViewModel>();
+            CreateMap<TaskModel, TaskViewModel>();
 
             CreateMap<TaskFilterModel, TaskFilterDto>();
             CreateMap<TaskUpdateModel, TaskUpdateDto>();

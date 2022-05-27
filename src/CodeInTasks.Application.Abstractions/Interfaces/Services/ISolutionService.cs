@@ -7,7 +7,7 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Services
         Task<Guid> AddAsync(SolutionCreateDto solutionCreateDto);
         Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto);
 
-        Task<SolutionViewDto> GetAsync(Guid solutionId);
-        Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto);
+        Task<Solution> GetAsync(Guid solutionId);
+        Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterDto filterDto);
     }
 }

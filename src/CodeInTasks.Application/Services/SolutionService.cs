@@ -36,31 +36,27 @@ namespace CodeInTasks.Application.Services
             return solutionId;
         }
 
-        public async Task<IEnumerable<SolutionViewDto>> GetFilteredAsync(SolutionFilterDto filterDto)
+        public Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterDto filterDto)
         {
             var pipelineResult = filtrationPipeline.GetResult(filterDto);
             var filter = new RepositoryFilter<Solution>()
             {
-                Predicate = pipelineResult.FilterExpression,
+                FiltrationPredicate = pipelineResult.FilterExpression,
                 OrderFunction = pipelineResult.OrderFunction,
                 Take = filterDto.TakeCount,
                 Skip = filterDto.TakeOffset
             };
 
-            var solutionModels = await solutionRepository.GetFilteredAsync(filter);
+            var resultTask = solutionRepository.GetFilteredAsync(filter);
 
-            var solutionViewDtos = mapper.Map<IEnumerable<SolutionViewDto>>(solutionModels);
-
-            return solutionViewDtos;
+            return resultTask;
         }
 
-        public async Task<SolutionViewDto> GetAsync(Guid solutionId)
+        public Task<Solution> GetAsync(Guid solutionId)
         {
-            var solution = await GetSolutionAsync(solutionId);
+            var resultTask = GetSolutionAsync(solutionId);
 
-            var solutionViewDto = mapper.Map<SolutionViewDto>(solution);
-
-            return solutionViewDto;
+            return resultTask;
         }
 
         public async Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto)

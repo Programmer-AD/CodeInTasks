@@ -9,6 +9,6 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure
         Task SetBanAsync(Guid userId, bool isBanned);
 
         Task<UserViewDto> GetUserInfoAsync(Guid userId);
-        Task<string> GetSignInTokenAsync(string email, string password);
+        Task<string> GetJwtTokenAsync(string email, string password);
     }
 }

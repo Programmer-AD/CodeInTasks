@@ -19,13 +19,13 @@ namespace CodeInTasks.Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<Guid> AddAsync(TaskCreateDto taskCreateDto)
+        public Task<Guid> AddAsync(TaskCreateDto taskCreateDto)
         {
             var taskModel = mapper.Map<TaskModel>(taskCreateDto);
 
-            var taskId = await taskRepository.AddAsync(taskModel);
+            var resultTask = taskRepository.AddAsync(taskModel);
 
-            return taskId;
+            return resultTask;
         }
 
         public async Task DeleteAsync(Guid taskId)
@@ -38,31 +38,27 @@ namespace CodeInTasks.Application.Services
             }
         }
 
-        public async Task<IEnumerable<TaskViewDto>> GetFilteredAsync(TaskFilterDto filterDto)
+        public Task<IEnumerable<TaskModel>> GetFilteredAsync(TaskFilterDto filterDto)
         {
             var pipelineResult = filtrationPipeline.GetResult(filterDto);
             var filter = new RepositoryFilter<TaskModel>()
             {
-                Predicate = pipelineResult.FilterExpression,
+                FiltrationPredicate = pipelineResult.FilterExpression,
                 OrderFunction = pipelineResult.OrderFunction,
                 Take = filterDto.TakeCount,
                 Skip = filterDto.TakeOffset
             };
 
-            var taskModels = await taskRepository.GetFilteredAsync(filter);
+            var resultTask = taskRepository.GetFilteredAsync(filter);
 
-            var taskViewDtos = mapper.Map<IEnumerable<TaskViewDto>>(taskModels);
-
-            return taskViewDtos;
+            return resultTask;
         }
 
-        public async Task<TaskViewDto> GetAsync(Guid taskId)
+        public Task<TaskModel> GetAsync(Guid taskId)
         {
-            var taskModel = await GetTaskAsync(taskId);
+            var resultTask = GetTaskAsync(taskId);
 
-            var taskViewDto = mapper.Map<TaskViewDto>(taskModel);
-
-            return taskViewDto;
+            return resultTask;
         }
 
         public async Task UpdateAsync(TaskUpdateDto taskUpdateDto)
@@ -78,6 +74,7 @@ namespace CodeInTasks.Application.Services
         public Task<bool> IsOwnerAsync(Guid taskId, Guid userId)
         {
             var resultTask = taskRepository.AnyAsync(x => x.Id == taskId && x.CreatorId == userId);
+
             return resultTask;
         }
 

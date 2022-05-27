@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.Task;
@@ -17,7 +16,6 @@ namespace CodeInTasks.Application.Tests.Services
         private static readonly TaskModel taskModel = new();
         private static readonly TaskCreateDto taskCreateDto = new();
         private static readonly TaskUpdateDto taskUpdateDto = new();
-        private static readonly TaskViewDto taskViewDto = new();
         private static readonly TaskFilterDto filterDto = new();
 
 
@@ -193,14 +191,6 @@ namespace CodeInTasks.Application.Tests.Services
             mapperMock
                 .Setup(x => x.Map<TaskModel>(It.IsAny<TaskCreateDto>()))
                 .Returns(taskModel);
-
-            mapperMock
-                .Setup(x => x.Map<TaskViewDto>(It.IsAny<TaskModel>()))
-                .Returns(taskViewDto);
-
-            mapperMock
-                .Setup(x => x.Map<IEnumerable<TaskViewDto>>(It.IsAny<IEnumerable<TaskModel>>()))
-                .Returns(Array.Empty<TaskViewDto>());
         }
 
         private void SetEntityDeletedResult(bool isDeleted)

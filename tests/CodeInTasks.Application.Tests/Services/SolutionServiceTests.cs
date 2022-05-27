@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.Solution;
@@ -17,7 +16,6 @@ namespace CodeInTasks.Application.Tests.Services
         private static readonly SolutionCreateDto solutionCreateDto = new();
         private static readonly Solution solution = new();
         private static readonly SolutionQueueDto solutionQueueDto = new();
-        private static readonly SolutionViewDto solutionViewDto = new();
         private static readonly SolutionStatusUpdateDto statusUpdateDto = new();
         private static readonly SolutionFilterDto filterDto = new();
 
@@ -219,14 +217,6 @@ namespace CodeInTasks.Application.Tests.Services
             mapperMock
                 .Setup(x => x.Map<SolutionQueueDto>(It.IsAny<Solution>()))
                 .Returns(solutionQueueDto);
-
-            mapperMock
-                .Setup(x => x.Map<SolutionViewDto>(It.IsAny<Solution>()))
-                .Returns(solutionViewDto);
-
-            mapperMock
-                .Setup(x => x.Map<IEnumerable<SolutionViewDto>>(It.IsAny<IEnumerable<Solution>>()))
-                .Returns(Array.Empty<SolutionViewDto>());
         }
 
         private void SetSolutionAlreadyQueued(bool isQueued)
