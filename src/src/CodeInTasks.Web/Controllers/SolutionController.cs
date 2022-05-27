@@ -33,7 +33,7 @@ namespace CodeInTasks.Web.Controllers
             return Ok(result);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<SolutionViewModel>> GetAsync(Guid solutionId)
         {
@@ -43,13 +43,12 @@ namespace CodeInTasks.Web.Controllers
             return Ok(solutionViewModel);
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SolutionViewModel>>> GetFilteredAsync(
             SolutionFilterModel filterModel)
         {
             var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
-            solutionFilterDto.SenderId = User.GetUserId();
 
             var solutionViewDtos = await solutionService.GetFilteredAsync(solutionFilterDto);
 

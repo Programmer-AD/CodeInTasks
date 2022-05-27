@@ -18,9 +18,20 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         }
 
         [Test]
-        public void SenderFilter_SetFilterExpression()
+        public void SenderFilter_WhenSenderIdIsNull_DontSetFilterExpression()
         {
-            //Currently SenderId is required for filter and matches with current user id
+            filterDto.SenderId = null;
+
+
+            SolutionFiltrationActions.SenderFilter(filterDto, pipelineResult);
+
+
+            pipelineResult.FilterExpression.Should().BeNull();
+        }
+
+        [Test]
+        public void SenderFilter_WhenSenderIdNotNull_SetFilterExpression()
+        {
             filterDto.SenderId = Guid.NewGuid();
 
 

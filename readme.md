@@ -11,7 +11,7 @@ Site with coding tasks with such types:
 
 ## Functions
 
-Functions by roles descibed [here](./RoleFunctions.md)
+Functions by roles descibed [here](./docs/roleFunctions.md)
 
 ## Used technologies
 

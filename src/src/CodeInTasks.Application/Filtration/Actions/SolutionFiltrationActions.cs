@@ -11,7 +11,10 @@ namespace CodeInTasks.Application.Filtration.Actions
         {
             var senderId = filterDto.SenderId;
 
-            pipelineResult.AddFilter(solution => solution.SenderId == senderId);
+            if (senderId.HasValue)
+            {
+                pipelineResult.AddFilter(solution => solution.SenderId == senderId.Value);
+            }
         }
 
         internal static void TaskFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
