@@ -6,10 +6,6 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
 {
     public class AppDbContext : IdentityDbContext<User, Role, Guid>
     {
-        public DbSet<TaskModel> Tasks { get; set; }
-        public DbSet<Solution> Solutions { get; set; }
-        public DbSet<UserData> UserDatas { get; set; }
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
