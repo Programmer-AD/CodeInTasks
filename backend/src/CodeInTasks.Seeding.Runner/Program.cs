@@ -1,9 +1,8 @@
-﻿using CodeInTasks.Builder.Infrastructure;
-using CodeInTasks.Builder.Runtime;
+﻿using CodeInTasks.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CodeInTasks.Builder
+namespace CodeInTasks.Seeding.Runner
 {
     internal class Program
     {
@@ -20,9 +19,9 @@ namespace CodeInTasks.Builder
             var config = context.Configuration;
 
             services
-                .AddRuntime(config)
-                .AddInfrastructure(config)
-                .AddBuilder(config);
+                .AddHostedService<SeedingHostedService>()
+                .AddSeeding()
+                .AddInfrastructure(config);
         }
     }
 }

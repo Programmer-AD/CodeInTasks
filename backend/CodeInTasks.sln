@@ -57,6 +57,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Builder", "buil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Builder.Tests", "builder\tests\CodeInTasks.Builder.Tests\CodeInTasks.Builder.Tests.csproj", "{9E38D5E5-F800-4B42-B0B6-01EA64687D69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeInTasks.Seeding.Runner", "src\CodeInTasks.Seeding.Runner\CodeInTasks.Seeding.Runner.csproj", "{D6242624-6BA3-489A-9B5A-498E0D407953}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,10 @@ Global
 		{9E38D5E5-F800-4B42-B0B6-01EA64687D69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E38D5E5-F800-4B42-B0B6-01EA64687D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E38D5E5-F800-4B42-B0B6-01EA64687D69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6242624-6BA3-489A-9B5A-498E0D407953}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6242624-6BA3-489A-9B5A-498E0D407953}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6242624-6BA3-489A-9B5A-498E0D407953}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6242624-6BA3-489A-9B5A-498E0D407953}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -180,6 +186,7 @@ Global
 		{7233B483-D10E-4E5A-8D55-D8399BA04D62} = {3B0F694A-7E3F-4D2C-BE67-62543F16092F}
 		{B3BBAAAB-51AA-4895-BA6F-F83D92100A31} = {3B0F694A-7E3F-4D2C-BE67-62543F16092F}
 		{9E38D5E5-F800-4B42-B0B6-01EA64687D69} = {43221012-6B4F-4387-BD14-3C20DBC332E0}
+		{D6242624-6BA3-489A-9B5A-498E0D407953} = {3E4A229D-B31E-4239-871F-8A061C0ED765}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {364C5C2E-47B0-40C3-92C2-F3D20C28D0CD}
