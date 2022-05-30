@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Builder.Runtime
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Builder.Infrastructure.Tests", "builder\tests\CodeInTasks.Builder.Infrastructure.Tests\CodeInTasks.Builder.Infrastructure.Tests.csproj", "{AEC8A299-6AB6-429A-9E20-DD01FE31363F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeInTasks.Builder.Runtime.Abstractions", "builder\src\CodeInTasks.Builder.Runtime.Abstractions\CodeInTasks.Builder.Runtime.Abstractions.csproj", "{7233B483-D10E-4E5A-8D55-D8399BA04D62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,10 @@ Global
 		{AEC8A299-6AB6-429A-9E20-DD01FE31363F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEC8A299-6AB6-429A-9E20-DD01FE31363F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEC8A299-6AB6-429A-9E20-DD01FE31363F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7233B483-D10E-4E5A-8D55-D8399BA04D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7233B483-D10E-4E5A-8D55-D8399BA04D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7233B483-D10E-4E5A-8D55-D8399BA04D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7233B483-D10E-4E5A-8D55-D8399BA04D62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,6 +179,7 @@ Global
 		{EE839B8B-C13B-4F1B-8630-7EB909456684} = {43221012-6B4F-4387-BD14-3C20DBC332E0}
 		{1652FACE-6F5B-4A78-B456-C22EF5A6ECEB} = {43221012-6B4F-4387-BD14-3C20DBC332E0}
 		{AEC8A299-6AB6-429A-9E20-DD01FE31363F} = {43221012-6B4F-4387-BD14-3C20DBC332E0}
+		{7233B483-D10E-4E5A-8D55-D8399BA04D62} = {3B0F694A-7E3F-4D2C-BE67-62543F16092F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {364C5C2E-47B0-40C3-92C2-F3D20C28D0CD}

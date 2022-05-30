@@ -6,7 +6,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CodeInTasks.Builder.Infrastructure\CodeInTasks.Builder.Infrastructure.csproj" />
+	  <ProjectReference Include="..\CodeInTasks.Builder.Runtime.Abstractions\CodeInTasks.Builder.Runtime.Abstractions.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>
