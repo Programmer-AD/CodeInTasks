@@ -3,7 +3,7 @@ using CodeInTasks.Builder.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace CodeInTasks.Builder.Listening
+namespace CodeInTasks.Builder
 {
     internal class Program
     {
@@ -22,7 +22,7 @@ namespace CodeInTasks.Builder.Listening
             services
                 .AddRuntime(config)
                 .AddInfrastructure(config)
-                .AddEntry(config);
+                .AddBuilder(config);
         }
     }
 }

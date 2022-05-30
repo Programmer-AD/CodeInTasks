@@ -20,7 +20,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\tests\CodeInTasks.SharedTestHelpers\CodeInTasks.SharedTestHelpers.csproj" />
-		<ProjectReference Include="..\..\src\CodeInTasks.Builder.Listening\CodeInTasks.Builder.Listening.csproj" />
+		<ProjectReference Include="..\..\src\CodeInTasks.Builder\CodeInTasks.Builder.csproj" />
 	</ItemGroup>
 
 </Project>
