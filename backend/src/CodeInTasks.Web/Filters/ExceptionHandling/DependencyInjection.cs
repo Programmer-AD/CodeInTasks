@@ -1,6 +1,6 @@
 ﻿using CodeInTasks.Application.Abstractions.Exceptions;
 
-namespace CodeInTasks.Web.Middleware.ExceptionHandling
+namespace CodeInTasks.Web.Filters.ExceptionHandling
 {
     public static class DependencyInjection
     {

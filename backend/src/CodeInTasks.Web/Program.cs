@@ -1,6 +1,6 @@
 using CodeInTasks.Application;
 using CodeInTasks.Infrastructure;
-using CodeInTasks.Web.Middleware;
+using CodeInTasks.Web.Filters;
 
 namespace CodeInTasks.Web
 {
@@ -31,8 +31,7 @@ namespace CodeInTasks.Web
 
         public static WebApplication Setup(this WebApplication app)
         {
-            app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
-            app.UseMiddleware<ChangeSaverMiddleware>();
+            app.UseExceptionHandler();
 
             app.UseRouting();
 

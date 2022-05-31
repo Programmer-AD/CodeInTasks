@@ -1,6 +1,7 @@
 ﻿using CodeInTasks.Application.Mapping;
+using CodeInTasks.Web.Filters;
+using CodeInTasks.Web.Filters.ExceptionHandling;
 using CodeInTasks.Web.Mapping;
-using CodeInTasks.Web.Middleware.ExceptionHandling;
 
 namespace CodeInTasks.Web
 {
@@ -11,7 +12,11 @@ namespace CodeInTasks.Web
             services.AddExceptionHandleInfos();
 
             services.AddMapping();
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add<ExceptionHandlerFilterAttribute>();
+                options.Filters.Add<ChangeSaverFilterAttribute>();
+            });
 
             return services;
         }
