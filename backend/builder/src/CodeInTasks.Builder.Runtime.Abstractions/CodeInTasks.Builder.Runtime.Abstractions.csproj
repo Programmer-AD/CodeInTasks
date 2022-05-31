@@ -6,4 +6,9 @@
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\src\CodeInTasks.Application.Abstractions\CodeInTasks.Application.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\..\src\CodeInTasks.Infrastructure.Queues.Shared\CodeInTasks.Infrastructure.Queues.Shared.csproj" />
+	</ItemGroup>
+
 </Project>
