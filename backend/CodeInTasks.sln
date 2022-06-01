@@ -103,7 +103,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Web.Tests", "We
 		{9A106204-327B-455A-A9D7-92A67E33EF24} = {9A106204-327B-455A-A9D7-92A67E33EF24}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeInTasks.Shared.Queues.Abstractions", "Shared\src\CodeInTasks.Shared.Queues.Abstractions\CodeInTasks.Shared.Queues.Abstractions.csproj", "{AC6D6044-7C64-48F5-922E-8F8BA17DA3A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeInTasks.Shared.Queues.Abstractions", "Shared\src\CodeInTasks.Shared.Queues.Abstractions\CodeInTasks.Shared.Queues.Abstractions.csproj", "{AC6D6044-7C64-48F5-922E-8F8BA17DA3A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
