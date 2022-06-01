@@ -7,8 +7,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\src\CodeInTasks.Application.Abstractions\CodeInTasks.Application.Abstractions.csproj" />
-	  <ProjectReference Include="..\..\..\src\CodeInTasks.Infrastructure.Queues.Shared\CodeInTasks.Infrastructure.Queues.Shared.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Abstractions\CodeInTasks.Shared.Queues.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Messages\CodeInTasks.Shared.Queues.Messages.csproj" />
+	  <ProjectReference Include="..\..\..\WebApi\src\CodeInTasks.Web.Models\CodeInTasks.Web.Models.csproj" />
 	</ItemGroup>
 
 </Project>

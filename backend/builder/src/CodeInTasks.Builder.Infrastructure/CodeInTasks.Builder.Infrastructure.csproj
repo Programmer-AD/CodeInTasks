@@ -7,13 +7,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+		<PackageReference Include="LibGit2Sharp" Version="0.26.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\src\CodeInTasks.Infrastructure.Queues.Shared\CodeInTasks.Infrastructure.Queues.Shared.csproj" />
-	  <ProjectReference Include="..\CodeInTasks.Builder.Runtime.Abstractions\CodeInTasks.Builder.Runtime.Abstractions.csproj" />
+		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues\CodeInTasks.Shared.Queues.csproj" />
+		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Wrappers\CodeInTasks.Shared.Wrappers.csproj" />
+		<ProjectReference Include="..\CodeInTasks.Builder.Runtime.Abstractions\CodeInTasks.Builder.Runtime.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
 	</ItemGroup>
 
 </Project>
