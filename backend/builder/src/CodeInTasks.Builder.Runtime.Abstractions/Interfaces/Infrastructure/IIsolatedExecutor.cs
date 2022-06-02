@@ -2,6 +2,8 @@
 {
     public interface IIsolatedExecutor
     {
-        //TODO: IIsolatedExecutor
+        Task BuildAsync(string path, string instanceName, CancellationToken cancellationToken);
+        Task RunAsync(string instanceName, CancellationToken cancellationToken);
+        Task RemoveAsync(string instanceName);
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IRuntime
     {
-        Task<SolutionStatusUpdateDto> HandleAsync(SolutionCheckQueueMessage checkQueueMessage);
+        Task HandleAsync(SolutionCheckQueueMessage checkQueueMessage);
     }
 }

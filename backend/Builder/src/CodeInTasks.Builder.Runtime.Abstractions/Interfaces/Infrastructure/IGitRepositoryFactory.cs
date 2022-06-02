@@ -1,7 +1,7 @@
 ﻿namespace CodeInTasks.Builder.Runtime.Abstractions.Interfaces.Infrastructure
 {
-    public interface IGitProvider
+    public interface IGitRepositoryFactory
     {
-        //TODO: IGitProvider
+        IGitRepository GetRepository(string path);
     }
 }
