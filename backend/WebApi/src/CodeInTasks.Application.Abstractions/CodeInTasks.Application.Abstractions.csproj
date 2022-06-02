@@ -8,6 +8,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Domain\CodeInTasks.Domain.csproj" />
+		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Abstractions\CodeInTasks.Shared.Queues.Abstractions.csproj" />
+		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Messages\CodeInTasks.Shared.Queues.Messages.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿global using CodeInTasks.Application.Abstractions.Exceptions;
+global using CodeInTasks.Application.Abstractions.Interfaces.Enqueuers;
 global using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
 global using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
 global using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;

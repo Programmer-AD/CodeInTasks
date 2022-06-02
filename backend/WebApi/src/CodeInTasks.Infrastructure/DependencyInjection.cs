@@ -1,6 +1,5 @@
 ﻿using CodeInTasks.Infrastructure.Identity;
 using CodeInTasks.Infrastructure.Persistance;
-using CodeInTasks.Infrastructure.Queues;
 using CodeInTasks.Shared.Wrappers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +12,10 @@ namespace CodeInTasks.Infrastructure
         {
             services.AddPersistance(config);
             services.AddIdentity(config);
-            services.AddQueues(config);
             services.AddWrappers();
+
+            var redisConnectionString = config.GetConnectionString(ConfigConstants.RedisConnectionString);
+            services.AddMessageQueues(redisConnectionString);
 
             return services;
         }

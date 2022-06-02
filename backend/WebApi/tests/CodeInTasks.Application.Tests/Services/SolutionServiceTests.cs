@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.Solution;
+using CodeInTasks.Application.Abstractions.Interfaces.Enqueuers;
 using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
-using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 using CodeInTasks.Application.Services;
-using CodeInTasks.Shared.TestHelpers;
 
 namespace CodeInTasks.Application.Tests.Services
 {
@@ -22,7 +21,7 @@ namespace CodeInTasks.Application.Tests.Services
 
 
         private Mock<IRepository<Solution>> solutionRepositoryMock;
-        private Mock<ISolutionCheckQueue> checkQueueMock;
+        private Mock<ISolutionCheckEnqueuer> checkQueueMock;
         private Mock<IFiltrationPipeline<SolutionFilterDto, Solution>> filtrationPipelineMock;
         private Mock<IMapper> mapperMock;
 

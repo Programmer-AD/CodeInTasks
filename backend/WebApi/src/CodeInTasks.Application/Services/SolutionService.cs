@@ -6,18 +6,18 @@ namespace CodeInTasks.Application.Services
     internal class SolutionService : ISolutionService
     {
         private readonly IRepository<Solution> solutionRepository;
-        private readonly ISolutionCheckQueue checkQueue;
+        private readonly ISolutionCheckEnqueuer checkEnqueuer;
         private readonly IFiltrationPipeline<SolutionFilterDto, Solution> filtrationPipeline;
         private readonly IMapper mapper;
 
         public SolutionService(
             IRepository<Solution> solutionRepository,
-            ISolutionCheckQueue checkQueue,
+            ISolutionCheckEnqueuer checkEnqueuer,
             IFiltrationPipeline<SolutionFilterDto, Solution> filtrationPipeline,
             IMapper mapper)
         {
             this.solutionRepository = solutionRepository;
-            this.checkQueue = checkQueue;
+            this.checkEnqueuer = checkEnqueuer;
             this.filtrationPipeline = filtrationPipeline;
             this.mapper = mapper;
         }
@@ -31,7 +31,7 @@ namespace CodeInTasks.Application.Services
 
             solution.Id = solutionId;
             var queueDto = mapper.Map<SolutionQueueDto>(solution);
-            await checkQueue.EnqueueSolutionCheck(queueDto);
+            await checkEnqueuer.EnqueueSolutionCheck(queueDto);
 
             return solutionId;
         }

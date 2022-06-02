@@ -14,11 +14,9 @@
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-		<PackageReference Include="StackExchange.Redis" Version="2.5.61" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Messages\CodeInTasks.Shared.Queues.Messages.csproj" />
 		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues\CodeInTasks.Shared.Queues.csproj" />
 		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Wrappers\CodeInTasks.Shared.Wrappers.csproj" />
 		<ProjectReference Include="..\CodeInTasks.Application.Abstractions\CodeInTasks.Application.Abstractions.csproj" />

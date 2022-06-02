@@ -1,39 +1,27 @@
 ﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
-using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
+using CodeInTasks.Shared.Queues.Abstractions.Interfaces;
 using CodeInTasks.Shared.Queues.Messages;
-using CodeInTasks.Shared.Wrappers.Interfaces;
-using StackExchange.Redis;
 
-namespace CodeInTasks.Infrastructure.Queues
+namespace CodeInTasks.Application.Enqueuers
 {
-    internal class SolutionCheckQueue : ISolutionCheckQueue
+    internal class SolutionCheckEnqueuer : ISolutionCheckEnqueuer
     {
-        private readonly IDatabase redisDatabase;
         private readonly IRepository<TaskModel> taskRepository;
-        private readonly IJsonSerializer jsonSerializer;
+        private readonly IMessageQueue<SolutionCheckQueueMessage> messageQueue;
 
-        public SolutionCheckQueue(
-            IDatabase redisDatabase,
-            IRepository<TaskModel> taskRepository,
-            IJsonSerializer jsonSerializer)
+        public SolutionCheckEnqueuer(
+            IMessageQueue<SolutionCheckQueueMessage> messageQueue,
+            IRepository<TaskModel> taskRepository)
         {
-            this.redisDatabase = redisDatabase;
+            this.messageQueue = messageQueue;
             this.taskRepository = taskRepository;
-            this.jsonSerializer = jsonSerializer;
         }
 
         public async Task EnqueueSolutionCheck(SolutionQueueDto solution)
         {
             var message = await MakeMessageAsync(solution);
-            var messageJson = jsonSerializer.Serialize(message);
 
-            await redisDatabase.StreamAddAsync(
-                QueueConstants.SolutionStreamName,
-                QueueConstants.DataFieldName,
-                messageJson,
-                maxLength: QueueConstants.SolutionStreamMaxLength,
-                useApproximateMaxLength: true,
-                flags: CommandFlags.FireAndForget);
+            await messageQueue.PublishAsync(message);
         }
 
         internal async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueDto solution)
