@@ -11,7 +11,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+	  <PackageReference Include="StackExchange.Redis" Version="2.5.61" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\CodeInTasks.Shared.Queues.Abstractions\CodeInTasks.Shared.Queues.Abstractions.csproj" />
+		<ProjectReference Include="..\CodeInTasks.Shared.Wrappers\CodeInTasks.Shared.Wrappers.csproj" />
 	</ItemGroup>
 
 </Project>
