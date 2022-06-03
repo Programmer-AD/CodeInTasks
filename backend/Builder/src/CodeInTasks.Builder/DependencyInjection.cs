@@ -8,7 +8,7 @@ namespace CodeInTasks.Builder
     {
         public static IServiceCollection AddBuilder(this IServiceCollection services, IConfiguration config)
         {
-            services.AddSingleton<IBuilderService, BuilderService>();
+            services.AddServices();
 
             services.AddSingleton<PrimaryHostedService>();
 

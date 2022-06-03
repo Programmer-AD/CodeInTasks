@@ -5,6 +5,8 @@
         bool IsDirectoryExists(string path);
         bool IsFileExists(string path);
 
+        void CreateDirectory(string path);
+
         FileStream OpenRead(string filePath);
         FileStream OpenWrite(string filePath);
 

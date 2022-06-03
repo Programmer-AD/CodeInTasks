@@ -22,6 +22,11 @@
             return File.Exists(path);
         }
 
+        public void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
+        }
+
         public FileStream OpenRead(string path)
         {
             return File.OpenRead(path);

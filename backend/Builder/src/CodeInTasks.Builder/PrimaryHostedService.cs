@@ -9,6 +9,9 @@ namespace CodeInTasks.Builder
         private readonly ILogger<PrimaryHostedService> logger;
         private readonly IBuilderService builderService;
 
+        private readonly CancellationTokenSource cancellationTokenSource;
+
+        private Task primaryTask;
         private int exitCode = 0;
 
         public PrimaryHostedService(
@@ -19,6 +22,8 @@ namespace CodeInTasks.Builder
             this.appLifetime = appLifetime;
             this.logger = logger;
             this.builderService = builderService;
+
+            cancellationTokenSource = new();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -30,14 +35,16 @@ namespace CodeInTasks.Builder
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            cancellationTokenSource.Cancel();
+
             Environment.ExitCode = exitCode;
 
-            return Task.CompletedTask;
+            return primaryTask;
         }
 
         private void OnApplicationStarted()
         {
-            Task.Run(async () =>
+            primaryTask = Task.Run(async () =>
             {
                 try
                 {
@@ -58,7 +65,9 @@ namespace CodeInTasks.Builder
 
         private Task RunAsync()
         {
-            return builderService.RunAsync();
+            var cancellationToken = cancellationTokenSource.Token;
+
+            return builderService.RunAsync(cancellationToken);
         }
     }
 }
