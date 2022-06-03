@@ -1,5 +1,4 @@
-﻿using CodeInTasks.Shared.Wrappers.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeInTasks.Shared.Wrappers
 {
@@ -8,6 +7,8 @@ namespace CodeInTasks.Shared.Wrappers
         public static IServiceCollection AddWrappers(this IServiceCollection services)
         {
             services.AddSingleton<IJsonSerializer, Serialization.JsonSerializerWrapper>();
+
+            services.AddSingleton<IFileSystem, IO.FileSystemWrapper>();
 
             return services;
         }
