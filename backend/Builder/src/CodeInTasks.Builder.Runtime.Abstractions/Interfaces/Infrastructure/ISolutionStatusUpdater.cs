@@ -2,8 +2,8 @@
 
 namespace CodeInTasks.Builder.Runtime.Abstractions.Interfaces.Infrastructure
 {
-    public interface IResultPublisher
+    public interface ISolutionStatusUpdater
     {
-        Task PublishAsync(SolutionStatusUpdateModel solutionStatus);
+        Task UpdateStatusAsync(SolutionStatusUpdateModel solutionStatus);
     }
 }
