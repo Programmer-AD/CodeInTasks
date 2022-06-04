@@ -5,6 +5,5 @@
         Implement,
         AddPart,
         FixBugs,
-        AddTests
     }
 }
