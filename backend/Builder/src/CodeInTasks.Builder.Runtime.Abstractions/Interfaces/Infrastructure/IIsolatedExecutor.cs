@@ -1,6 +1,4 @@
-﻿using CodeInTasks.Domain.Enums;
-
-namespace CodeInTasks.Builder.Runtime.Abstractions.Interfaces.Infrastructure
+﻿namespace CodeInTasks.Builder.Runtime.Abstractions.Interfaces.Infrastructure
 {
     public interface IIsolatedExecutor
     {

@@ -8,13 +8,14 @@ namespace CodeInTasks.Builder.Runtime.Services
         private readonly SolutionStatusUpdateModel solutionStatusModel;
         private readonly ISolutionStatusUpdater statusUpdater;
 
+        public Guid SolutionId { get; }
+
         public SolutionStatusTracer(Guid solutionId, ISolutionStatusUpdater statusUpdater)
         {
-            solutionStatusModel = new()
-            {
-                Id = solutionId,
-            };
+            SolutionId = solutionId;
             this.statusUpdater = statusUpdater;
+
+            solutionStatusModel = new() { Id = solutionId, };
         }
 
         public Task ChangeStatusAsync(TaskSolutionStatus solutionStatus)
@@ -27,14 +28,14 @@ namespace CodeInTasks.Builder.Runtime.Services
             return statusUpdater.UpdateStatusAsync(solutionStatusModel);
         }
 
-        public Task PublishResultAsync(Action<SolutionStatusUpdateModel> configureResultModel)
+        public Task PublishResultAsync(TaskSolutionResult solutionResult, Action<SolutionStatusUpdateModel> configureResultModel)
         {
             AssertCanUpdateResult();
 
             configureResultModel(solutionStatusModel);
 
-            AssertResultSetted();
-
+            solutionStatusModel.Id = SolutionId;
+            solutionStatusModel.Result = solutionResult;
             solutionStatusModel.Status = TaskSolutionStatus.Finished;
             solutionStatusModel.FinishTime = DateTime.UtcNow;
 
@@ -54,14 +55,6 @@ namespace CodeInTasks.Builder.Runtime.Services
             if (solutionStatusModel.Status == TaskSolutionStatus.Finished)
             {
                 throw new InvalidOperationException("Cant update status model: result already published!");
-            }
-        }
-
-        private void AssertResultSetted()
-        {
-            if (!solutionStatusModel.Result.HasValue)
-            {
-                throw new InvalidOperationException("Cant publish result without setted result field!");
             }
         }
     }
