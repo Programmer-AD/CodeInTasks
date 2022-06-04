@@ -1,0 +1,59 @@
+﻿using CodeInTasks.Shared.Queues.Messages;
+using CodeInTasks.Shared.Wrappers.Interfaces;
+
+namespace CodeInTasks.Builder.Runtime.Stages
+{
+    internal class DownloadStage : StageBase<DownloadStageArguments, DownloadStageResult>, IDownloadStage
+    {
+        private readonly IGitRepositoryFactory gitRepositoryFactory;
+        private readonly IFileSystem fileSystem;
+
+        public DownloadStage(IGitRepositoryFactory gitRepositoryFactory, IFileSystem fileSystem)
+        {
+            this.gitRepositoryFactory = gitRepositoryFactory;
+            this.fileSystem = fileSystem;
+        }
+
+        protected override async Task<DownloadStageResult> GetResultAsync(DownloadStageArguments stageArguments)
+        {
+            var gitRepository = gitRepositoryFactory.GetRepository(stageArguments.DestinationFolder);
+
+            await CloneRepositoryAsync(stageArguments.TestRepositoryInfo, gitRepository);
+
+            var lastTestCommitId = gitRepository.GetLastCommitId();
+
+            await PullRepositoryAsync(stageArguments.SolutionRepositoryInfo, gitRepository);
+
+            //TODO: Add configuration stage
+            var allFilesPaths = new[] { "*" };
+            gitRepository.CheckoutPaths(lastTestCommitId, allFilesPaths);
+
+            //TODO: Add download timeout
+            //TODO: Add download exception handling
+            //TODO: Add result return
+        }
+
+        protected override Task CleanAsync(DownloadStageArguments stageArguments)
+        {
+            fileSystem.DeleteDirectory(stageArguments.DestinationFolder, recursive: true);
+
+            return Task.CompletedTask;
+        }
+
+        private static Task CloneRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        {
+            var repositoryUrl = repositoryInfo.RepositoryUrl;
+            var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
+
+            return gitRepository.CloneAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
+        }
+
+        private static Task PullRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        {
+            var repositoryUrl = repositoryInfo.RepositoryUrl;
+            var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
+
+            return gitRepository.PullAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
+        }
+    }
+}

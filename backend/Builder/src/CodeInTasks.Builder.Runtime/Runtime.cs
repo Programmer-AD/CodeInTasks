@@ -6,79 +6,108 @@ namespace CodeInTasks.Builder.Runtime
 {
     public class Runtime : IRuntime
     {
-        private readonly IGitRepositoryFactory gitRepositoryFactory;
-        private readonly IIsolatedExecutor isolatedExecutor;
-        private readonly ISolutionStatusUpdater solutionStatusUpdater;
+        private readonly ISolutionStatusTracerFactory solutionStatusTracerFactory;
+        private readonly IDownloadStage downloadStage;
+        private readonly IBuildStage buildStage;
+        private readonly IRunStage runStage;
 
         public Runtime(
-            IGitRepositoryFactory gitRepositoryFactory,
-            IIsolatedExecutor isolatedExecutor,
-            ISolutionStatusUpdater solutionStatusUpdater)
+            ISolutionStatusTracerFactory solutionStatusTracerFactory,
+            IDownloadStage downloadStage,
+            IBuildStage buildStage,
+            IRunStage runStage)
         {
-            this.gitRepositoryFactory = gitRepositoryFactory;
-            this.isolatedExecutor = isolatedExecutor;
-            this.solutionStatusUpdater = solutionStatusUpdater;
+            this.solutionStatusTracerFactory = solutionStatusTracerFactory;
+            this.downloadStage = downloadStage;
+            this.buildStage = buildStage;
+            this.runStage = runStage;
         }
 
-        //TODO: Make status updating parallel with actions
-        //TODO: Make way to handle download/build/... errors
         public async Task HandleAsync(SolutionCheckQueueMessage checkQueueMessage)
         {
             var solutionId = checkQueueMessage.SolutionId;
+            var solutionStatusTracer = solutionStatusTracerFactory.CreateTracer(solutionId);
 
-            var gitRepositoryFolder = GetGitRepositoryFolder(solutionId);
-
-            await UpdateSolutionStatus(solutionId, TaskSolutionStatus.Downloading);
-            await DownloadRepositoryAsync(checkQueueMessage, gitRepositoryFolder);
-
-            var solutionInstanceName = solutionId.ToString("N");
-
-            await UpdateSolutionStatus(solutionId, TaskSolutionStatus.Building);
-            await BuildAsync(gitRepositoryFolder, solutionInstanceName);
-
-            await UpdateSolutionStatus(solutionId, TaskSolutionStatus.Running);
-            await RunAsync(solutionInstanceName);
+            await InvokeDownloadStageAsync(solutionStatusTracer, checkQueueMessage);
         }
 
-        private Task UpdateSolutionStatus(Guid solutionId, TaskSolutionStatus solutionStatus)
+        private async Task InvokeDownloadStageAsync(
+            ISolutionStatusTracer solutionStatusTracer,
+            SolutionCheckQueueMessage checkQueueMessage)
         {
-            var solutionStatusModel = new SolutionStatusUpdateModel()
+            var solutionId = solutionStatusTracer.SolutionId;
+
+            var downloadArguments = new DownloadStageArguments()
             {
-                Id = solutionId,
-                Status = solutionStatus,
+                DestinationFolder = GetGitRepositoryFolder(solutionId),
+                SolutionRepositoryInfo = checkQueueMessage.SolutionRepositoryInfo,
+                TestRepositoryInfo = checkQueueMessage.TestRepositoryInfo
             };
 
-            return solutionStatusUpdater.UpdateStatusAsync(solutionStatusModel);
+            await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Downloading);
+
+            await downloadStage.InvokeAsync(downloadArguments,
+                onSuccess: _ => InvokeBuildStageAsync(solutionStatusTracer, downloadArguments.DestinationFolder, checkQueueMessage.Runner),
+                onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.DownloadError, stageResult));
         }
 
-        private Task PublishSolutionResult(Guid solutionId, Action<SolutionStatusUpdateModel> configureResult)
+        private async Task InvokeBuildStageAsync(
+            ISolutionStatusTracer solutionStatusTracer,
+            string repositoryFolder,
+            RunnerType runner)
         {
-            var solutionStatusModel = new SolutionStatusUpdateModel()
+            var solutionId = solutionStatusTracer.SolutionId;
+            var instanceName = GetSolutionInstanceName(solutionId);
+
+            var buildArguments = new BuildStageArguments()
             {
-                Id = solutionId,
-                Status = TaskSolutionStatus.Finished,
-                FinishTime = DateTime.UtcNow,
+                FolderPath = repositoryFolder,
+                InstanceName = instanceName,
+                Runner = runner,
             };
 
-            configureResult(solutionStatusModel);
+            await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Building);
 
-            return solutionStatusUpdater.UpdateStatusAsync(solutionStatusModel);
+            await buildStage.InvokeAsync(buildArguments,
+                onSuccess: _ => InvokeRunStageAsync(solutionStatusTracer, instanceName, runner),
+                onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.BuildError, stageResult));
         }
 
-        //TODO: Add download error handling
-        //TODO: Add download timeout
-        private async Task DownloadRepositoryAsync(SolutionCheckQueueMessage checkQueueMessage, string gitRepositoryFolder)
+        private async Task InvokeRunStageAsync(
+            ISolutionStatusTracer solutionStatusTracer,
+            string instanceName,
+            RunnerType runner)
         {
-            var gitRepository = gitRepositoryFactory.GetRepository(gitRepositoryFolder);
+            var runArguments = new RunStageArguments()
+            {
+                InstanceName = instanceName,
+                Runner = runner,
+            };
 
-            await CloneRepositoryAsync(checkQueueMessage.TestRepositoryInfo, gitRepository);
-            
-            var lastTestCommitId = gitRepository.GetLastCommitId();
+            await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Running);
 
-            await PullRepositoryAsync(checkQueueMessage.SolutionRepositoryInfo, gitRepository);
+            await runStage.InvokeAsync(runArguments,
+                onSuccess: stageResult => PublishCheckResultAsync(stageResult, solutionStatusTracer),
+                onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.RunError, stageResult));
+        }
 
-            var allFilesPaths = new[] { "*" };
-            gitRepository.CheckoutPaths(lastTestCommitId, allFilesPaths);
+        private static Task PublishStageFailAsync(ISolutionStatusTracer solutionStatusTracer, TaskSolutionResult solutionResult, StageResultBase stageResult)
+        {
+            return solutionStatusTracer.PublishResultAsync(
+                solutionResult,
+                statusModel => ConfigureSolutionResult(statusModel, stageResult));
+        }
+
+        private static Task PublishCheckResultAsync(RunStageResult runStageResult, ISolutionStatusTracer solutionStatusTracer)
+        {
+            var checkResult = runStageResult.IsTaskCompleted ? TaskSolutionResult.Completed : TaskSolutionResult.Failed;
+
+            return solutionStatusTracer.PublishResultAsync(checkResult, statusModel =>
+            {
+                ConfigureSolutionResult(statusModel, runStageResult);
+
+                statusModel.RunTimeMs = runStageResult.RunTimeMs;
+            });
         }
 
         private static string GetGitRepositoryFolder(Guid solutionId)
@@ -89,34 +118,17 @@ namespace CodeInTasks.Builder.Runtime
             return result;
         }
 
-        private static Task CloneRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        private static string GetSolutionInstanceName(Guid solutionId)
         {
-            var repositoryUrl = repositoryInfo.RepositoryUrl;
-            var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
+            var idString = solutionId.ToString("N");
 
-            return gitRepository.CloneAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
+            return idString;
         }
 
-        private static Task PullRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        private static void ConfigureSolutionResult(SolutionStatusUpdateModel statusModel, StageResultBase stageResult)
         {
-            var repositoryUrl = repositoryInfo.RepositoryUrl;
-            var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
-
-            return gitRepository.PullAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
-        }
-
-        //TODO: Make build timeout
-        //TODO: Make building error handling
-        private Task BuildAsync(string folderPath, string instanceName)
-        {
-            return isolatedExecutor.BuildAsync(folderPath, instanceName, CancellationToken.None);
-        }
-
-        //TODO: Make run timeout
-        //TODO: Make running error handling
-        private Task RunAsync(string instanceName)
-        {
-            throw isolatedExecutor.RunAsync(instanceName)
+            statusModel.ErrorCode = stageResult.ErrorCode;
+            statusModel.ResultAdditionalInfo = stageResult.AdditionalInfo;
         }
     }
 }

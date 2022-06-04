@@ -7,6 +7,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Wrappers\CodeInTasks.Shared.Wrappers.csproj" />
 		<ProjectReference Include="..\CodeInTasks.Builder.Runtime.Abstractions\CodeInTasks.Builder.Runtime.Abstractions.csproj" />
 	</ItemGroup>
 
