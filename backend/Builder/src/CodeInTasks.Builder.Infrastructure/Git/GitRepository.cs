@@ -43,7 +43,7 @@ namespace CodeInTasks.Builder.Infrastructure.Git
             }
             catch (UserCancelledException)
             {
-                throw new TimeLimitExceedException();
+                throw new SizeLimitExceedException();
             }
         }
 
@@ -96,7 +96,7 @@ namespace CodeInTasks.Builder.Infrastructure.Git
             }
             catch (UserCancelledException)
             {
-                throw new TimeLimitExceedException();
+                throw new SizeLimitExceedException();
             }
         }
 

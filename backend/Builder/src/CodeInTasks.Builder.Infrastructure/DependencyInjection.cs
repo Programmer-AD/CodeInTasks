@@ -15,6 +15,10 @@ namespace CodeInTasks.Builder.Infrastructure
             var redisConfiguration = config.GetConnectionString(BuilderConfigConstants.RedisConnectionString);
             services.AddMessageQueues(redisConfiguration);
 
+            services.AddSingleton<IIsolatedExecutor, Execution.IsolatedExecutor>();
+            services.AddSingleton<IGitRepositoryFactory, Git.GitRepositoryFactory>();
+            services.AddSingleton<ISolutionStatusUpdater, Web.SolutionStatusUpdater>();
+
             return services;
         }
     }
