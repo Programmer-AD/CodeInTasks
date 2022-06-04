@@ -1,9 +1,6 @@
 ﻿namespace CodeInTasks.Builder.Runtime.Abstractions.Interfaces.Stages
 {
-    public interface IRunStage
+    public interface IRunStage : IStage<RunStageArguments, RunStageResult>
     {
-        Task<RunStageResult> RunAsync(RunStageArguments stageArguments);
-
-        Task CleanAsync(RunStageArguments stageArguments);
     }
 }
