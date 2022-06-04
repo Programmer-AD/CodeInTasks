@@ -7,8 +7,5 @@
 
         public RepositoryInfo TestRepositoryInfo { get; set; }
         public RepositoryInfo SolutionRepositoryInfo { get; set; }
-
-
-        public record struct RepositoryInfo(string RepositoryUrl, string AuthUserName, string AuthPassword);
     }
 }

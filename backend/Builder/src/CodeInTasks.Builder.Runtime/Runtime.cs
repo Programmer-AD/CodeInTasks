@@ -72,7 +72,7 @@ namespace CodeInTasks.Builder.Runtime
             var gitRepository = gitRepositoryFactory.GetRepository(gitRepositoryFolder);
 
             await CloneRepositoryAsync(checkQueueMessage.TestRepositoryInfo, gitRepository);
-
+            
             var lastTestCommitId = gitRepository.GetLastCommitId();
 
             await PullRepositoryAsync(checkQueueMessage.SolutionRepositoryInfo, gitRepository);
@@ -89,7 +89,7 @@ namespace CodeInTasks.Builder.Runtime
             return result;
         }
 
-        private static Task CloneRepositoryAsync(SolutionCheckQueueMessage.RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        private static Task CloneRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
         {
             var repositoryUrl = repositoryInfo.RepositoryUrl;
             var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
@@ -97,7 +97,7 @@ namespace CodeInTasks.Builder.Runtime
             return gitRepository.CloneAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
         }
 
-        private static Task PullRepositoryAsync(SolutionCheckQueueMessage.RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        private static Task PullRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
         {
             var repositoryUrl = repositoryInfo.RepositoryUrl;
             var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
@@ -107,9 +107,9 @@ namespace CodeInTasks.Builder.Runtime
 
         //TODO: Make build timeout
         //TODO: Make building error handling
-        private Task BuildAsync(string folderPath, string solutionInstanceName)
+        private Task BuildAsync(string folderPath, string instanceName)
         {
-            return isolatedExecutor.BuildAsync(folderPath, solutionInstanceName, CancellationToken.None);
+            return isolatedExecutor.BuildAsync(folderPath, instanceName, CancellationToken.None);
         }
 
         //TODO: Make run timeout
