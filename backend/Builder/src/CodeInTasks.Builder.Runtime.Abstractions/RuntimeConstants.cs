@@ -5,5 +5,7 @@
         public const string TaskConfigFileName = "taskConfig.json";
 
         public const string DownloadFolder = "./data/tmp";
+
+        public const long Git_MaxDownloadSizeBytes = 4 * 1024 * 1024; //4 MB
     }
 }

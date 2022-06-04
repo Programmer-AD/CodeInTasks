@@ -18,17 +18,16 @@ namespace CodeInTasks.Builder.Runtime.Stages
         {
             var gitRepository = gitRepositoryFactory.GetRepository(stageArguments.DestinationFolder);
 
-            await CloneRepositoryAsync(stageArguments.TestRepositoryInfo, gitRepository);
+            await CloneRepositoryAsync(gitRepository, stageArguments.TestRepositoryInfo);
 
             var lastTestCommitId = gitRepository.GetLastCommitId();
 
-            await PullRepositoryAsync(stageArguments.SolutionRepositoryInfo, gitRepository);
+            await PullRepositoryAsync(gitRepository, stageArguments.SolutionRepositoryInfo);
 
             //TODO: Add configuration stage
             var allFilesPaths = new[] { "*" };
             gitRepository.CheckoutPaths(lastTestCommitId, allFilesPaths);
 
-            //TODO: Add download timeout
             //TODO: Add download exception handling
             //TODO: Add result return
         }
@@ -40,20 +39,20 @@ namespace CodeInTasks.Builder.Runtime.Stages
             return Task.CompletedTask;
         }
 
-        private static Task CloneRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        private static Task CloneRepositoryAsync(IGitRepository gitRepository, RepositoryInfo repositoryInfo)
         {
             var repositoryUrl = repositoryInfo.RepositoryUrl;
             var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
 
-            return gitRepository.CloneAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
+            return gitRepository.CloneAsync(repositoryUrl, repositoryAuth, RuntimeConstants.Git_MaxDownloadSizeBytes);
         }
 
-        private static Task PullRepositoryAsync(RepositoryInfo repositoryInfo, IGitRepository gitRepository)
+        private static Task PullRepositoryAsync(IGitRepository gitRepository, RepositoryInfo repositoryInfo)
         {
             var repositoryUrl = repositoryInfo.RepositoryUrl;
             var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
 
-            return gitRepository.PullAsync(repositoryUrl, repositoryAuth, CancellationToken.None);
+            return gitRepository.PullAsync(repositoryUrl, repositoryAuth, RuntimeConstants.Git_MaxDownloadSizeBytes);
         }
     }
 }
