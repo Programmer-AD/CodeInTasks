@@ -4,6 +4,7 @@
     {
         public bool IsSucceded { get; set; }
 
-        //TODO: StageResultBase
+        public string ErrorCode { get; set; }
+        public string AdditionalInfo { get; set; }
     }
 }

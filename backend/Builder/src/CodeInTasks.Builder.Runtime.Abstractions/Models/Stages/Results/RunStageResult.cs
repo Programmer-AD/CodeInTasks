@@ -2,6 +2,7 @@
 {
     public class RunStageResult : StageResultBase
     {
-        //TODO: RunStageResult
+        public bool IsTaskCompleted { get; set; }
+        public int RunTimeMs { get; set; }
     }
 }

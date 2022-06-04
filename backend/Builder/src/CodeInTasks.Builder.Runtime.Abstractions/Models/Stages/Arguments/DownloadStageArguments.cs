@@ -4,6 +4,6 @@
     {
         public string DestinationFolder { get; set; }
         public RepositoryInfo TestRepositoryInfo { get; set; }
-        public RepositoryInfo SolutionRepository { get; set; }
+        public RepositoryInfo SolutionRepositoryInfo { get; set; }
     }
 }

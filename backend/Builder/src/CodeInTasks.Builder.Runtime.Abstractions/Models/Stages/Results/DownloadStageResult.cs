@@ -2,6 +2,5 @@
 {
     public class DownloadStageResult : StageResultBase
     {
-        //TODO: DownloadStageResult
     }
 }

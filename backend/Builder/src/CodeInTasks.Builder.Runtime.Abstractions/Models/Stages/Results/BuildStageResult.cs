@@ -2,6 +2,5 @@
 {
     public class BuildStageResult : StageResultBase
     {
-        //TODO: BuildStageResult
     }
 }
