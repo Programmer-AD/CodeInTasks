@@ -24,21 +24,23 @@ namespace CodeInTasks.Application.Enqueuers
             await messageQueue.PublishAsync(message);
         }
 
+        //TODO: Make AuthUserName retrieve (probably form url)
         internal async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueDto solution)
         {
             var taskId = solution.TaskId;
             var task = await GetTaskAsync(taskId);
+
+#warning This should not be empty
+            var testRepositoryAuthUserName = string.Empty;
+            var solutionRepositoryAuthUserName = string.Empty;
 
             var message = new SolutionCheckQueueMessage()
             {
                 SolutionId = solution.Id,
                 Runner = task.Runner,
 
-                TestRepositoryUrl = task.TestRepositoryUrl,
-                TestRepositoryAccessToken = task.TestRepositoryAccessToken,
-
-                UserRepositoryUrl = solution.RepositoryUrl,
-                UserRepositoryAccessToken = solution.RepositoryAccessToken,
+                TestRepositoryInfo = new(task.TestRepositoryUrl, testRepositoryAuthUserName, solution.RepositoryAuthPassword),
+                SolutionRepositoryInfo = new(solution.RepositoryUrl, solutionRepositoryAuthUserName, solution.RepositoryAuthPassword),
             };
 
             return message;

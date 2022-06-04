@@ -5,10 +5,10 @@
         public Guid SolutionId { get; set; }
         public RunnerType Runner { get; set; }
 
-        public string TestRepositoryUrl { get; set; }
-        public string TestRepositoryAccessToken { get; set; }
+        public RepositoryInfo TestRepositoryInfo { get; set; }
+        public RepositoryInfo SolutionRepositoryInfo { get; set; }
 
-        public string UserRepositoryUrl { get; set; }
-        public string UserRepositoryAccessToken { get; set; }
+
+        public record struct RepositoryInfo(string RepositoryUrl, string AuthUserName, string AuthPassword);
     }
 }

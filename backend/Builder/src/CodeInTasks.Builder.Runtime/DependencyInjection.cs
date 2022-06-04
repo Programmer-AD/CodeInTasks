@@ -7,7 +7,7 @@ namespace CodeInTasks.Builder.Runtime
     {
         public static IServiceCollection AddRuntime(this IServiceCollection services, IConfiguration config)
         {
-
+            services.AddSingleton<IRuntime, Runtime>();
 
             return services;
         }
