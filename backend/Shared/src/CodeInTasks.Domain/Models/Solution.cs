@@ -3,7 +3,7 @@
     public class Solution : ModelBase
     {
         public string RepositoryUrl { get; set; }
-        public string RepositoryAccessToken { get; set; }
+        public string RepositoryAuthPassword { get; set; }
 
         public TaskSolutionStatus Status { get; set; } = TaskSolutionStatus.Queued;
         public TaskSolutionResult Result { get; set; } = TaskSolutionResult.Unknown;

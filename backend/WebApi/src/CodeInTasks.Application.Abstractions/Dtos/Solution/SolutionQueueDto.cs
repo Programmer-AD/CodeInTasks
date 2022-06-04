@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public string RepositoryUrl { get; set; }
-        public string RepositoryAccessToken { get; set; }
+        public string RepositoryAuthPassword { get; set; }
 
         public Guid TaskId { get; set; }
         public Guid SenderId { get; set; }

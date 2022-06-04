@@ -11,6 +11,6 @@
         public RunnerType Runner { get; set; }
         public string BaseRepositoryUrl { get; set; }
         public string TestRepositoryUrl { get; set; }
-        public string TestRepositoryAccessToken { get; set; }
+        public string TestRepositoryAuthPassword { get; set; }
     }
 }

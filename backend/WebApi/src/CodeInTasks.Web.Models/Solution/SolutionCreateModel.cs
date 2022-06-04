@@ -8,9 +8,9 @@
         public string RepositoryUrl { get; set; }
 
         [Required]
-        [MinLength(DomainConstants.RepositoryAccessToken_MinLength)]
-        [MaxLength(DomainConstants.RepositoryAccessToken_MaxLength)]
-        public string RepositoryAccessToken { get; set; }
+        [MinLength(DomainConstants.RepositoryAuthPassword_MinLength)]
+        [MaxLength(DomainConstants.RepositoryAuthPassword_MaxLength)]
+        public string RepositoryAuthPassword { get; set; }
 
         public Guid TaskId { get; set; }
     }

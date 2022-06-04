@@ -11,8 +11,8 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
                 .HasMaxLength(DomainConstants.RepositoryUrl_MaxLength)
                 .IsRequired();
 
-            builder.Property(x => x.RepositoryAccessToken)
-                .HasMaxLength(DomainConstants.RepositoryAccessToken_MaxLength)
+            builder.Property(x => x.RepositoryAuthPassword)
+                .HasMaxLength(DomainConstants.RepositoryAuthPassword_MaxLength)
                 .IsRequired();
 
             builder.Property(x => x.ResultAdditionalInfo)

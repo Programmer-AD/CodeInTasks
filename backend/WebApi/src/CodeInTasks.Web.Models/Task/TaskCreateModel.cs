@@ -27,8 +27,8 @@
         public string TestRepositoryUrl { get; set; }
 
         [Required]
-        [MinLength(DomainConstants.RepositoryAccessToken_MinLength)]
-        [MaxLength(DomainConstants.RepositoryAccessToken_MaxLength)]
-        public string TestRepositoryAccessToken { get; set; }
+        [MinLength(DomainConstants.RepositoryAuthPassword_MinLength)]
+        [MaxLength(DomainConstants.RepositoryAuthPassword_MaxLength)]
+        public string TestRepositoryAuthPassword { get; set; }
     }
 }
