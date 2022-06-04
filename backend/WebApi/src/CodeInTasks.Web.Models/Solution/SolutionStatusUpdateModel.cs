@@ -7,7 +7,10 @@
         public TaskSolutionStatus Status { get; set; }
         public TaskSolutionResult? Result { get; set; }
 
-        [Required]
+        [MinLength(DomainConstants.Solution_ErrorCode_MinLength)]
+        [MaxLength(DomainConstants.Solution_ErrorCode_MaxLength)]
+        public string ErrorCode { get; set; }
+
         [MinLength(DomainConstants.Solution_ResultAdditionalInfo_MinLength)]
         [MaxLength(DomainConstants.Solution_ResultAdditionalInfo_MaxLength)]
         public string ResultAdditionalInfo { get; set; }

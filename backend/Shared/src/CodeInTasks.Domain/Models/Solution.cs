@@ -6,7 +6,8 @@
         public string RepositoryAuthPassword { get; set; }
 
         public TaskSolutionStatus Status { get; set; } = TaskSolutionStatus.Queued;
-        public TaskSolutionResult Result { get; set; } = TaskSolutionResult.Unknown;
+        public TaskSolutionResult? Result { get; set; }
+        public string ErrorCode { get; set; }
         public string ResultAdditionalInfo { get; set; }
 
         public DateTime SendTime { get; set; } = DateTime.UtcNow;

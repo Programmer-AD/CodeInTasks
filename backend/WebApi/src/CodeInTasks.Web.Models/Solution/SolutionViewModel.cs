@@ -7,6 +7,7 @@
 
         public TaskSolutionStatus Status { get; set; }
         public TaskSolutionResult? Result { get; set; }
+        public string ErrorCode { get; set; }
         public string ResultAdditionalInfo { get; set; }
 
         public DateTime SendTime { get; set; }

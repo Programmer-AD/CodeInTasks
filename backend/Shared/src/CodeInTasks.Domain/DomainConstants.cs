@@ -12,6 +12,10 @@
         public const int Solution_ResultAdditionalInfo_MinLength = 0;
         public const int Solution_ResultAdditionalInfo_MaxLength = 1024;
 
+        public const int Solution_ErrorCode_MinLength = 0;
+        public const int Solution_ErrorCode_MaxLength = 64;
+
+
 
         public const int User_Password_MinLength = 8;
         public const int User_Password_MaxLength = 40;

@@ -8,7 +8,6 @@
         BuildError,
         RunError,
 
-        TimeLimitExceed,
         Failed,
         Completed
     }

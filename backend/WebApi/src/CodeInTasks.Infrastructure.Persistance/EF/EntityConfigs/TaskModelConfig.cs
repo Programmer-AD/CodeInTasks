@@ -24,8 +24,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
                 .IsRequired();
 
             builder.Property(x => x.TestRepositoryAuthPassword)
-                .HasMaxLength(DomainConstants.RepositoryAuthPassword_MaxLength)
-                .IsRequired();
+                .HasMaxLength(DomainConstants.RepositoryAuthPassword_MaxLength);
 
             builder.HasOne(x => x.Creator).WithMany();
 

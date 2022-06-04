@@ -2,7 +2,7 @@
 {
     public class SolutionFilterDto
     {
-        public IEnumerable<TaskSolutionResult> Results { get; set; }
+        public IEnumerable<TaskSolutionResult?> Results { get; set; }
         public Guid? TaskId { get; set; }
         public Guid? SenderId { get; set; }
 
