@@ -2,7 +2,7 @@
 {
     public class SizeLimitExceedException : Exception
     {
-        private const string CustomMessage = "Size limit exceed exception!";
+        private const string CustomMessage = "Size limit exceed!";
 
         public SizeLimitExceedException()
             : base(CustomMessage)

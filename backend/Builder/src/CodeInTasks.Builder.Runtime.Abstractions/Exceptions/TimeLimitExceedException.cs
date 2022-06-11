@@ -2,7 +2,7 @@
 {
     public class TimeLimitExceedException : Exception
     {
-        private const string CustomMessage = "Time limit exceed exception!";
+        private const string CustomMessage = "Time limit exceed!";
 
         public TimeLimitExceedException()
             : base(CustomMessage)
