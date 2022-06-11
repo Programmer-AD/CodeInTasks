@@ -57,7 +57,7 @@ namespace CodeInTasks.Web.Controllers
         }
 
         [Authorize(Roles = RoleNames.Builder)]
-        [HttpPut]
+        [HttpPatch]
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
             var statusUpdateDto = mapper.Map<SolutionStatusUpdateDto>(statusUpdateModel);
