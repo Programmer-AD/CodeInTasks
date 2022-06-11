@@ -6,8 +6,8 @@ namespace CodeInTasks.Infrastructure.Identity
     {
         public static Guid GetUserId(this ClaimsPrincipal principal)
         {
-            var userIdString = principal.FindFirstValue(IdentityConstants.UserIdClaimType);
-            
+            var userIdString = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var userId = Guid.Parse(userIdString);
             return userId;
         }

@@ -7,7 +7,7 @@ namespace CodeInTasks.Web.Tests.Controllers
     [TestFixture]
     public class UserControllerTests
     {
-        private Mock<IJwtIdentityService> identityServiceMock;
+        private Mock<IIdentityService> identityServiceMock;
         private Mock<IMapper> mapperMock;
 
         private UserController userController;

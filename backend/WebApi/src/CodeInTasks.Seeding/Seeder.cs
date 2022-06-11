@@ -15,7 +15,7 @@ namespace CodeInTasks.Seeding
         private readonly AppDbContext dbContext;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
-        private readonly IJwtIdentityService identityService;
+        private readonly IIdentityService identityService;
         private readonly ILogger<Seeder> logger;
 
         public Seeder(
@@ -23,7 +23,7 @@ namespace CodeInTasks.Seeding
             AppDbContext dbContext,
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
-            IJwtIdentityService identityService,
+            IIdentityService identityService,
             ILogger<Seeder> logger)
         {
             this.seedingOptions = seedingOptions;

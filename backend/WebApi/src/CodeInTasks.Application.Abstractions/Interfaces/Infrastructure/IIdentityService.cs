@@ -2,13 +2,13 @@
 
 namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure
 {
-    public interface IJwtIdentityService
+    public interface IIdentityService
     {
         Task CreateUserAsync(UserCreateDto userCreateDto);
         Task SetRoleAsync(Guid userId, RoleEnum role, bool isHave);
         Task SetBanAsync(Guid userId, bool isBanned);
 
         Task<UserViewDto> GetUserInfoAsync(Guid userId);
-        Task<string> GetJwtTokenAsync(string email, string password);
+        Task<UserSignInResultDto> SignInAsync(string email, string password);
     }
 }

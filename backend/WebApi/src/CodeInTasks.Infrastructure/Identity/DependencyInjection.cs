@@ -25,7 +25,7 @@ namespace CodeInTasks.Infrastructure.Identity
             services.AddAuthentication(ConfigureAuthenticationOptions)
                 .AddJwtBearer(GetJwtBearerOptionsConfigurator(jwtAuthOptions));
 
-            services.AddScoped<IJwtIdentityService, JwtIdentityService>();
+            services.AddScoped<IIdentityService, JwtIdentityService>();
         }
 
         private static void ConfigureIdentityOptions(IdentityOptions options)

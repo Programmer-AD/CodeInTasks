@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CodeInTasks.Infrastructure.Identity
 {
-    internal class JwtIdentityService : IJwtIdentityService
+    internal class JwtIdentityService : IIdentityService
     {
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
@@ -40,7 +40,7 @@ namespace CodeInTasks.Infrastructure.Identity
             AssertResultSucceeded(result);
         }
 
-        public async Task<string> GetJwtTokenAsync(string email, string password)
+        public async Task<UserSignInResultDto> SignInAsync(string email, string password)
         {
             var user = await GetUserByUserNameAsync(email);
 
@@ -49,12 +49,20 @@ namespace CodeInTasks.Infrastructure.Identity
             if (isPasswordCorrect)
             {
                 var claims = await GetClaimsAsync(user);
-                var jwtToken = GetJwtToken(claims);
+                var expires = GetExpireDate();
+                var jwtToken = GetJwtToken(claims, expires);
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenString = tokenHandler.WriteToken(jwtToken);
 
-                return tokenString;
+                var result = new UserSignInResultDto()
+                {
+                    Email = email,
+                    ExpirationDate = expires,
+                    Token = tokenString
+                };
+
+                return result;
             }
             else
             {
@@ -118,27 +126,22 @@ namespace CodeInTasks.Infrastructure.Identity
             return user ?? throw new EntityNotFoundException(nameof(User), userId);
         }
 
-        private async Task<List<Claim>> GetClaimsAsync(User user)
+        private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
         {
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(IdentityConstants.UserIdClaimType, user.Id.ToString()),
-            };
-
-            var roles = await userManager.GetRolesAsync(user);
-
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+            var claims = await userManager.GetClaimsAsync(user);
 
             return claims;
         }
 
-        private JwtSecurityToken GetJwtToken(List<Claim> claims)
+        private static DateTime GetExpireDate()
         {
             var expires = DateTime.UtcNow.Add(IdentityConstants.TokenExpirationTime);
+
+            return expires;
+        }
+
+        private JwtSecurityToken GetJwtToken(IEnumerable<Claim> claims, DateTime expires)
+        {
             var signingCredentials = new SigningCredentials(authOptions.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
             var jwtToken = new JwtSecurityToken(
@@ -150,5 +153,7 @@ namespace CodeInTasks.Infrastructure.Identity
 
             return jwtToken;
         }
+
+
     }
 }

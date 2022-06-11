@@ -2,8 +2,6 @@
 {
     internal static class IdentityConstants
     {
-        public const string UserIdClaimType = "UserId";
-
-        public static readonly TimeSpan TokenExpirationTime = TimeSpan.FromHours(1);
+        public static readonly TimeSpan TokenExpirationTime = TimeSpan.FromMinutes(10);
     }
 }

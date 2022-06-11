@@ -10,10 +10,10 @@ namespace CodeInTasks.Web.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IJwtIdentityService identityService;
+        private readonly IIdentityService identityService;
         private readonly IMapper mapper;
 
-        public UserController(IJwtIdentityService identityService, IMapper mapper)
+        public UserController(IIdentityService identityService, IMapper mapper)
         {
             this.identityService = identityService;
             this.mapper = mapper;
@@ -26,15 +26,11 @@ namespace CodeInTasks.Web.Controllers
             var email = signInModel.Email;
             var password = signInModel.Password;
 
-            var signInToken = await identityService.GetJwtTokenAsync(email, password);
+            var signInResult = await identityService.SignInAsync(email, password);
 
-            if (signInToken != null)
+            if (signInResult.IsSucceeded)
             {
-                var result = new UserSignInResultModel()
-                {
-                    Token = signInToken,
-                    Email = email,
-                };
+                var result = mapper.Map<UserSignInResultModel>(signInModel);
 
                 return Ok(result);
             }
