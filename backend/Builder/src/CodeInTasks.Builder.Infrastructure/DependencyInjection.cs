@@ -1,4 +1,7 @@
-﻿using CodeInTasks.Builder.Runtime.Abstractions;
+﻿using CodeInTasks.Builder.Infrastructure.Execution;
+using CodeInTasks.Builder.Infrastructure.Git;
+using CodeInTasks.Builder.Infrastructure.Web;
+using CodeInTasks.Builder.Runtime.Abstractions;
 using CodeInTasks.Shared.Queues;
 using CodeInTasks.Shared.Wrappers;
 using Microsoft.Extensions.Configuration;
@@ -15,9 +18,11 @@ namespace CodeInTasks.Builder.Infrastructure
             var redisConfiguration = config.GetConnectionString(BuilderConfigConstants.RedisConnectionString);
             services.AddMessageQueues(redisConfiguration);
 
-            services.AddSingleton<IIsolatedExecutor, Execution.IsolatedExecutor>();
-            services.AddSingleton<IGitRepositoryFactory, Git.GitRepositoryFactory>();
-            services.AddSingleton<ISolutionStatusUpdater, Web.SolutionStatusUpdater>();
+            services.AddSingleton<HttpClient>();
+
+            services.AddGitRepositories();
+            services.AddSolutionStatusUpdater(config);
+            services.AddIsolatedExecutor();
 
             return services;
         }
