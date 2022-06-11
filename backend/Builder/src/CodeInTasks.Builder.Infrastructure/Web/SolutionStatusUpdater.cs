@@ -1,23 +1,50 @@
-﻿using CodeInTasks.Web.Models.Solution;
+﻿using System.Net.Http.Json;
+using CodeInTasks.Builder.Runtime.Abstractions;
+using CodeInTasks.Web.Models.Solution;
 
 namespace CodeInTasks.Builder.Infrastructure.Web
 {
     internal class SolutionStatusUpdater : ISolutionStatusUpdater
     {
         private readonly HttpClient httpClient;
-        private readonly IAuthorizationKeeper authorizationKeeper;
+        private readonly AuthKeeper authKeeper;
+        private readonly SolutionStatusUpdaterConfig config;
 
-        public SolutionStatusUpdater(HttpClient httpClient, IAuthorizationKeeper authorizationKeeper)
+        private readonly Uri destinationUri;
+
+        public SolutionStatusUpdater(
+            HttpClient httpClient,
+            AuthKeeper authKeeper,
+            SolutionStatusUpdaterConfig config)
         {
             this.httpClient = httpClient;
-            this.authorizationKeeper = authorizationKeeper;
+            this.authKeeper = authKeeper;
+            this.config = config;
+
+            destinationUri = GetDestinationUri(config.ServerUri);
         }
 
-        public Task UpdateStatusAsync(SolutionStatusUpdateModel solutionStatus)
+        public async Task UpdateStatusAsync(SolutionStatusUpdateModel solutionStatus)
         {
-            
+            using var requestMessage = new HttpRequestMessage(HttpMethod.Patch, destinationUri);
+
+            using var content = JsonContent.Create(solutionStatus);
+            requestMessage.Content = content;
+
+            var authHeader = await authKeeper.GetAuthenticationHeaderAsync();
+            requestMessage.Headers.Authorization = authHeader;
+
+            using var result = await httpClient.SendAsync(requestMessage);
+
+            result.EnsureSuccessStatusCode();
         }
 
+        private static Uri GetDestinationUri(string serverBaseUri)
+        {
+            var baseUri = new Uri(serverBaseUri);
+            var destinationUri = new Uri(baseUri, RuntimeConstants.SolutionStatusUpdater_RelativeSendPath);
 
+            return destinationUri;
+        }
     }
 }

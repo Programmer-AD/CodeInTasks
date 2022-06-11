@@ -12,7 +12,7 @@ namespace CodeInTasks.Builder.Infrastructure.Web
             
             services.AddSingleton(solutionStatusUpdater);
 
-            services.AddSingleton<IAuthorizationKeeper, AuthorizationKeeper>();
+            services.AddSingleton<AuthKeeper>();
 
             services.AddSingleton<ISolutionStatusUpdater, SolutionStatusUpdater>();
         }
