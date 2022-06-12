@@ -2,9 +2,9 @@
 {
     internal class BuildStage : StageBase<BuildStageArguments, BuildStageResult>, IBuildStage
     {
-        private readonly IIsolatedExecutor isolatedExecutor;
+        private readonly IDockerProvider isolatedExecutor;
 
-        public BuildStage(IIsolatedExecutor isolatedExecutor)
+        public BuildStage(IDockerProvider isolatedExecutor)
         {
             this.isolatedExecutor = isolatedExecutor;
         }

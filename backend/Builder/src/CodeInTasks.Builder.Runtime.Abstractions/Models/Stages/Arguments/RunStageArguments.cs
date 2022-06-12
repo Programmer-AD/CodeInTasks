@@ -3,6 +3,5 @@
     public class RunStageArguments
     {
         public string InstanceName { get; set; }
-        public RunnerType Runner { get; set; }
     }
 }

@@ -69,19 +69,17 @@ namespace CodeInTasks.Builder.Runtime
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Building);
 
             await buildStage.InvokeAsync(buildArguments,
-                onSuccess: _ => InvokeRunStageAsync(solutionStatusTracer, instanceName, runner),
+                onSuccess: _ => InvokeRunStageAsync(solutionStatusTracer, instanceName),
                 onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.BuildError, stageResult));
         }
 
         private async Task InvokeRunStageAsync(
             ISolutionStatusTracer solutionStatusTracer,
-            string instanceName,
-            RunnerType runner)
+            string instanceName)
         {
             var runArguments = new RunStageArguments()
             {
                 InstanceName = instanceName,
-                Runner = runner,
             };
 
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Running);

@@ -2,16 +2,16 @@
 {
     internal class RunStage : StageBase<RunStageArguments, RunStageResult>, IRunStage
     {
-        private readonly IIsolatedExecutor isolatedExecutor;
+        private readonly IDockerProvider isolatedExecutor;
 
-        public RunStage(IIsolatedExecutor isolatedExecutor)
+        public RunStage(IDockerProvider isolatedExecutor)
         {
             this.isolatedExecutor = isolatedExecutor;
         }
 
         protected override async Task<RunStageResult> GetResultAsync(RunStageArguments stageArguments)
         {
-            await isolatedExecutor.RunAsync(stageArguments.InstanceName, stageArguments.Runner, CancellationToken.None);
+            await isolatedExecutor.RunAsync(stageArguments.InstanceName, );
 
             //TODO: Add run timeout
             //TODO: Add run exception handling
