@@ -26,10 +26,12 @@ namespace CodeInTasks.Builder.Infrastructure.Web
 
         public async Task UpdateStatusAsync(SolutionStatusUpdateModel solutionStatus)
         {
-            using var requestMessage = new HttpRequestMessage(HttpMethod.Patch, destinationUri);
-
             using var content = JsonContent.Create(solutionStatus);
-            requestMessage.Content = content;
+
+            using var requestMessage = new HttpRequestMessage(HttpMethod.Patch, destinationUri)
+            {
+                Content = content
+            };
 
             var authHeader = await authKeeper.GetAuthenticationHeaderAsync();
             requestMessage.Headers.Authorization = authHeader;
