@@ -2,8 +2,8 @@
 {
     public interface IIsolatedExecutor
     {
-        Task BuildAsync(string path, RunnerType runner, string instanceName, CancellationToken cancellationToken);
-        Task RunAsync(string instanceName, RunnerType runner, CancellationToken cancellationToken);
-        Task RemoveAsync(string instanceName);
+        Task BuildAsync(string filePath, RunnerType runner, string buildName, long buildTimeout);
+        Task RunAsync(string buildName, RunnerType runner, long runTimeout);
+        Task RemoveBuildAsync(string buildName);
     }
 }
