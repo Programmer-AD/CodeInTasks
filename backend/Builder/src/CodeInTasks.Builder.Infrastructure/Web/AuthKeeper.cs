@@ -5,7 +5,7 @@ using CodeInTasks.Web.Models.User;
 
 namespace CodeInTasks.Builder.Infrastructure.Web
 {
-    internal class AuthKeeper
+    internal class AuthKeeper : IAuthKeeper
     {
         private const string AuthScheme = "Bearer";
 
@@ -27,7 +27,7 @@ namespace CodeInTasks.Builder.Infrastructure.Web
             destinationUri = GetDestinationUri(statusUpdaterConfig.ServerUri);
         }
 
-        public virtual ValueTask<AuthenticationHeaderValue> GetAuthenticationHeaderAsync()
+        public ValueTask<AuthenticationHeaderValue> GetAuthenticationHeaderAsync()
         {
             if (IsCacheValid())
             {
