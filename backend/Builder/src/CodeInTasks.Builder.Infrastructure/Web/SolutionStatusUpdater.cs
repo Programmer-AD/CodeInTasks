@@ -8,7 +8,6 @@ namespace CodeInTasks.Builder.Infrastructure.Web
     {
         private readonly HttpClient httpClient;
         private readonly AuthKeeper authKeeper;
-        private readonly SolutionStatusUpdaterConfig config;
 
         private readonly Uri destinationUri;
 
@@ -19,7 +18,6 @@ namespace CodeInTasks.Builder.Infrastructure.Web
         {
             this.httpClient = httpClient;
             this.authKeeper = authKeeper;
-            this.config = config;
 
             destinationUri = GetDestinationUri(config.ServerUri);
         }

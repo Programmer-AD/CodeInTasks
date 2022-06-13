@@ -2,8 +2,8 @@
 {
     public interface IDockerProvider
     {
-        Task BuildAsync(string filePath, RunnerType runner, string imageName, long buildTimeout);
-        Task RunAsync(string imageName, long runTimeout);
+        Task BuildAsync(string filePath, string imageName, TimeSpan buildTimeout);
+        Task RunAsync(string imageName, TimeSpan runTimeout);
         Task RemoveBuildAsync(string imageName);
     }
 }

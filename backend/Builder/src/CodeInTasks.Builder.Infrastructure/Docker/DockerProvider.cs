@@ -1,22 +1,18 @@
-﻿using CodeInTasks.Domain.Enums;
-
-namespace CodeInTasks.Builder.Infrastructure.Docker
+﻿namespace CodeInTasks.Builder.Infrastructure.Docker
 {
     internal class DockerProvider : IDockerProvider
     {
-        private readonly HttpClient httpClient;
-
-        public DockerProvider(HttpClient httpClient)
+        public DockerProvider()
         {
-            this.httpClient = httpClient;
+            //TODO: make this using Process but add some wrapper for its creation
         }
 
-        public Task BuildAsync(string filePath, RunnerType runner, string imageName, long buildTimeout)
+        public Task BuildAsync(string filePath, string imageName, TimeSpan buildTimeout)
         {
             throw new NotImplementedException();
         }
 
-        public Task RunAsync(string imageName, long runTimeout)
+        public Task RunAsync(string imageName, TimeSpan runTimeout)
         {
             throw new NotImplementedException();
         }
