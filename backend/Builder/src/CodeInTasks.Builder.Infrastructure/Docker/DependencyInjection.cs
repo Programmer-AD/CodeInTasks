@@ -6,6 +6,8 @@ namespace CodeInTasks.Builder.Infrastructure.Docker
     {
         public static void AddIsolatedExecutor(this IServiceCollection services)
         {
+            services.AddSingleton<IProcessRunner, ProcessRunner>();
+
             services.AddSingleton<IDockerProvider, DockerProvider>();
         }
     }
