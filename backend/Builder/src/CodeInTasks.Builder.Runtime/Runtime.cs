@@ -37,12 +37,12 @@ namespace CodeInTasks.Builder.Runtime
         {
             var solutionId = solutionStatusTracer.SolutionId;
 
-            var downloadArguments = new DownloadStageArguments()
-            {
-                DestinationFolder = GetGitRepositoryFolder(solutionId),
-                SolutionRepositoryInfo = checkQueueMessage.SolutionRepositoryInfo,
-                TestRepositoryInfo = checkQueueMessage.TestRepositoryInfo
-            };
+            var destinationFolder = GetGitRepositoryFolder(solutionId);
+
+            var downloadArguments = new DownloadStageArguments(
+                destinationFolder,
+                checkQueueMessage.SolutionRepositoryInfo,
+                checkQueueMessage.TestRepositoryInfo);
 
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Downloading);
 
@@ -59,12 +59,7 @@ namespace CodeInTasks.Builder.Runtime
             var solutionId = solutionStatusTracer.SolutionId;
             var instanceName = GetSolutionInstanceName(solutionId);
 
-            var buildArguments = new BuildStageArguments()
-            {
-                FolderPath = repositoryFolder,
-                InstanceName = instanceName,
-                Runner = runner,
-            };
+            var buildArguments = new BuildStageArguments(repositoryFolder, runner, instanceName);
 
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Building);
 
@@ -77,10 +72,7 @@ namespace CodeInTasks.Builder.Runtime
             ISolutionStatusTracer solutionStatusTracer,
             string instanceName)
         {
-            var runArguments = new RunStageArguments()
-            {
-                InstanceName = instanceName,
-            };
+            var runArguments = new RunStageArguments(instanceName);
 
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Running);
 
