@@ -11,5 +11,9 @@
         public const string SolutionStatusUpdater_RelativeSendPath = "/api/solution";
         public const int SolutionStatusUpdater_AuthExpireSecondsReserve = 5;
         public const string SolutionStatusUpdater_AuthRelativeSendPath = "/api/user/signIn";
+
+        public const int DockerProvider_ContainerMemoryLimitMB = 256;
+
+        public const int Docker_ApplicationErrorExitCode = 1;
     }
 }

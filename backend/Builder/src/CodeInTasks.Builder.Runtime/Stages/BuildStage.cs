@@ -20,7 +20,7 @@
 
         protected override Task CleanAsync(BuildStageArguments stageArguments)
         {
-            return isolatedExecutor.RemoveBuildAsync(stageArguments.InstanceName);
+            return isolatedExecutor.RemoveImageAsync(stageArguments.InstanceName);
         }
     }
 }
