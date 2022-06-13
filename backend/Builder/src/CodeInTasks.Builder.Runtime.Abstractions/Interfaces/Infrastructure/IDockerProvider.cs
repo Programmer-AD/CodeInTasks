@@ -17,6 +17,10 @@
         /// <summary>
         /// Calls docker run
         /// <para>
+        /// Running application is isolted from network, has readonly filesystem
+        /// and RAM limit setted to <see cref="RuntimeConstants.DockerProvider_ContainerMemoryLimitMB"/> megabytes
+        /// </para>
+        /// <para>
         /// This method also remove container after end of run
         /// </para>
         /// </summary>
