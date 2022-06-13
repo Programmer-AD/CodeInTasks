@@ -53,19 +53,18 @@ namespace CodeInTasks.Builder.Infrastructure.Docker
 
         private static async Task<ProcessRunnerResult> MakeResultAsync(Process process, bool exitedNormaly)
         {
-            var errorStreamReadingTask = process.StandardError.ReadToEndAsync();
             var outputStreamReadingTask = process.StandardOutput.ReadToEndAsync();
+            var errorStreamReadingTask = process.StandardError.ReadToEndAsync();
 
-            await Task.WhenAll(errorStreamReadingTask, outputStreamReadingTask);
+            var streamTexts = await Task.WhenAll(outputStreamReadingTask, errorStreamReadingTask);
+            var streamOutputText = string.Join(Environment.NewLine, streamTexts);
 
             var result = new ProcessRunnerResult()
             {
                 ExitCode = process.ExitCode,
                 IsKilled = !exitedNormaly,
                 RunTime = process.TotalProcessorTime,
-
-                ErrorStreamText = errorStreamReadingTask.Result,
-                OutputStreamText = outputStreamReadingTask.Result,
+                StreamOutputText = streamOutputText
             };
 
             return result;

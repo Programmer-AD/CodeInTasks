@@ -6,8 +6,7 @@
         public bool IsKilled { get; set; }
         public TimeSpan RunTime { get; set; }
 
-        public string OutputStreamText { get; set; }
-        public string ErrorStreamText { get; set; }
+        public string StreamOutputText { get; set; }
 
         public bool HasSuccess => !IsKilled && ExitCode == 0;
     }
