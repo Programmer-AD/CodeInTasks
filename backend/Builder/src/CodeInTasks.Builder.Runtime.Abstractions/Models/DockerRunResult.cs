@@ -2,8 +2,8 @@
 {
     public class DockerRunResult
     {
-        public bool HasSuccessExitCode { get; set; }
-        public TimeSpan RunTime { get; set; }
-        public string StreamOutputText { get; set; }
+        public bool HasSuccessExitCode { get; init; }
+        public TimeSpan RunTime { get; init; }
+        public string StreamOutputText { get; init; }
     }
 }

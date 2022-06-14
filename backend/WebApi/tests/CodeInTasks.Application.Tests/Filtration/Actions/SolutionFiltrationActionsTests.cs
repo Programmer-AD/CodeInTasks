@@ -68,7 +68,7 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void ResultsFilter_WhenResultsIsEmpty_DontSetFilterExpression()
         {
-            filterDto.Results = Array.Empty<TaskSolutionResult>();
+            filterDto.Results = Array.Empty<TaskSolutionResult?>();
 
 
             SolutionFiltrationActions.ResultsFilter(filterDto, pipelineResult);
@@ -80,7 +80,7 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void ResultsFilter_WhenResultsIsNotEmpty_SetFilterExpression()
         {
-            filterDto.Results = new[] { TaskSolutionResult.Completed };
+            filterDto.Results = new TaskSolutionResult?[] { TaskSolutionResult.Completed };
 
 
             SolutionFiltrationActions.ResultsFilter(filterDto, pipelineResult);
