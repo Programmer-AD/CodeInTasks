@@ -8,17 +8,20 @@ namespace CodeInTasks.Builder.Runtime
     {
         private readonly ISolutionStatusTracerFactory solutionStatusTracerFactory;
         private readonly IDownloadStage downloadStage;
+        private readonly IConfigurationStage configurationStage;
         private readonly IBuildStage buildStage;
         private readonly IRunStage runStage;
 
         public Runtime(
             ISolutionStatusTracerFactory solutionStatusTracerFactory,
             IDownloadStage downloadStage,
+            IConfigurationStage configurationStage,
             IBuildStage buildStage,
             IRunStage runStage)
         {
             this.solutionStatusTracerFactory = solutionStatusTracerFactory;
             this.downloadStage = downloadStage;
+            this.configurationStage = configurationStage;
             this.buildStage = buildStage;
             this.runStage = runStage;
         }
@@ -47,8 +50,29 @@ namespace CodeInTasks.Builder.Runtime
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Downloading);
 
             await downloadStage.InvokeAsync(downloadArguments,
-                onSuccess: _ => InvokeBuildStageAsync(solutionStatusTracer, downloadArguments.DestinationFolder),
+                onSuccess: downloadResult => InvokeConfigurationStageAsync(
+                    solutionStatusTracer,
+                    destinationFolder,
+                    checkQueueMessage.Runner,
+                    downloadResult.LastTestRepositoryCommitID),
                 onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.DownloadError, stageResult));
+        }
+
+        private async Task InvokeConfigurationStageAsync(
+            ISolutionStatusTracer solutionStatusTracer,
+            string repositoryFolder,
+            RunnerType runner,
+            string lastTestRepositoryCommitID)
+        {
+            var solutionId = solutionStatusTracer.SolutionId;
+
+            var configurationArguments = new ConfigurationStageArguments(repositoryFolder, runner, lastTestRepositoryCommitID);
+
+            await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Building);
+
+            await configurationStage.InvokeAsync(configurationArguments,
+                onSuccess: _ => InvokeBuildStageAsync(solutionStatusTracer, repositoryFolder),
+                onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.BuildError, stageResult));
         }
 
         private async Task InvokeBuildStageAsync(

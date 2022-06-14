@@ -2,18 +2,18 @@
 {
     internal class RunStage : StageBase<RunStageArguments, RunStageResult>, IRunStage
     {
-        private readonly IDockerProvider isolatedExecutor;
+        private readonly IDockerProvider dockerProvider;
 
-        public RunStage(IDockerProvider isolatedExecutor)
+        public RunStage(IDockerProvider dockerProvider)
         {
-            this.isolatedExecutor = isolatedExecutor;
+            this.dockerProvider = dockerProvider;
         }
 
         protected override async Task<RunStageResult> GetResultAsync(RunStageArguments stageArguments)
         {
             try
             {
-                var runResult = await isolatedExecutor.RunAsync(stageArguments.InstanceName, RuntimeConstants.RunTimeout);
+                var runResult = await dockerProvider.RunAsync(stageArguments.InstanceName, RuntimeConstants.RunTimeout);
 
                 var runTimeMs = (int)Math.Floor(runResult.RunTime.TotalMilliseconds);
 
