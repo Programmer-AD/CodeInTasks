@@ -2,6 +2,5 @@
 {
     public record struct BuildStageArguments(
         string FolderPath,
-        RunnerType Runner,
         string InstanceName);
 }

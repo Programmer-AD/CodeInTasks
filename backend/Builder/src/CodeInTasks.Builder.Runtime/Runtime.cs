@@ -47,19 +47,18 @@ namespace CodeInTasks.Builder.Runtime
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Downloading);
 
             await downloadStage.InvokeAsync(downloadArguments,
-                onSuccess: _ => InvokeBuildStageAsync(solutionStatusTracer, downloadArguments.DestinationFolder, checkQueueMessage.Runner),
+                onSuccess: _ => InvokeBuildStageAsync(solutionStatusTracer, downloadArguments.DestinationFolder),
                 onFail: stageResult => PublishStageFailAsync(solutionStatusTracer, TaskSolutionResult.DownloadError, stageResult));
         }
 
         private async Task InvokeBuildStageAsync(
             ISolutionStatusTracer solutionStatusTracer,
-            string repositoryFolder,
-            RunnerType runner)
+            string repositoryFolder)
         {
             var solutionId = solutionStatusTracer.SolutionId;
             var instanceName = GetSolutionInstanceName(solutionId);
 
-            var buildArguments = new BuildStageArguments(repositoryFolder, runner, instanceName);
+            var buildArguments = new BuildStageArguments(repositoryFolder, instanceName);
 
             await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Building);
 
