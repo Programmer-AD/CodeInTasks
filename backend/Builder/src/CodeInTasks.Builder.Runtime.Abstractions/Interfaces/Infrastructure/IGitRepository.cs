@@ -8,7 +8,7 @@
         string Path { get; }
 
         /// <summary>
-        /// Clones repository. This action required before any other
+        /// Clones repository. This action required for path before any other
         /// </summary>
         /// <param name="sourceUrl">Remote url from where to clone</param>
         /// <param name="gitAuth">Authorization credentials</param>
@@ -19,7 +19,7 @@
         /// <summary>
         /// Fetch remote repository and merge it using strategy "Ours".
         /// <para>
-        /// Throws <see cref="InvalidOperationException"/> if called before clone
+        /// Throws <see cref="InvalidOperationException"/> if repository not exists
         /// </para>
         /// </summary>
         /// <param name="sourceUrl">Remote url from where to fetch</param>
@@ -31,7 +31,7 @@
 
         /// <summary>
         /// <para>
-        /// Throws <see cref="InvalidOperationException"/> if called before clone
+        /// Throws <see cref="InvalidOperationException"/> if repository not exists
         /// </para>
         /// </summary>
         /// <returns>SHA-Id of last commit</returns>
@@ -44,7 +44,7 @@
         /// Supports "*" as part of paths
         /// </para>
         /// <para>
-        /// Throws <see cref="InvalidOperationException"/> if called before clone
+        /// Throws <see cref="InvalidOperationException"/> if repository not exists
         /// </para>
         /// </summary>
         /// <exception cref="InvalidOperationException" />

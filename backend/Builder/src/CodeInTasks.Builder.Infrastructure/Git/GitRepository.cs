@@ -6,11 +6,12 @@ namespace CodeInTasks.Builder.Infrastructure.Git
     {
         public string Path { get; }
 
-        private Repository repository;
+        private readonly Repository repository;
 
         public GitRepository(string path)
         {
             Path = path;
+            repository = new Repository(path);
         }
 
         public void CheckoutPaths(string commitId, IEnumerable<string> paths)
@@ -35,9 +36,7 @@ namespace CodeInTasks.Builder.Infrastructure.Git
 
             try
             {
-                var clonePath = Repository.Clone(sourceUrl, Path, cloneOptions);
-
-                repository = new Repository(clonePath);
+                Repository.Clone(sourceUrl, Path, cloneOptions);
 
                 return Task.CompletedTask;
             }
@@ -69,7 +68,7 @@ namespace CodeInTasks.Builder.Infrastructure.Git
 
         private void AssertRepositoryExists()
         {
-            if (repository == null)
+            if (!Repository.IsValid(Path))
             {
                 throw new InvalidOperationException("Repository dont exists! Clone it before calling other methods");
             }
