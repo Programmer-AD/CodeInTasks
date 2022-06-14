@@ -2,9 +2,15 @@
 {
     public abstract class StageResultBase
     {
-        public bool IsSucceded { get; set; }
+        protected StageResultBase(bool isSucceded, string errorCode = null, string additionalInfo = null) 
+        {
+            IsSucceded = isSucceded;
+            ErrorCode = errorCode;
+            AdditionalInfo = additionalInfo;
+        }
 
-        public string ErrorCode { get; set; }
-        public string AdditionalInfo { get; set; }
+        public bool IsSucceded { get; }
+        public string ErrorCode { get; }
+        public string AdditionalInfo { get; }
     }
 }

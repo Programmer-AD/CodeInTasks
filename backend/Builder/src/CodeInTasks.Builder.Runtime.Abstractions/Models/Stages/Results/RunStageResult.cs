@@ -2,7 +2,12 @@
 {
     public class RunStageResult : StageResultBase
     {
-        public bool IsTaskCompleted { get; set; }
-        public int RunTimeMs { get; set; }
+        public RunStageResult(bool isSucceded, string errorCode = null, string additionalInfo = null)
+            : base(isSucceded, errorCode, additionalInfo)
+        {
+        }
+
+        public bool IsTaskCompleted { get; init; }
+        public int RunTimeMs { get; init; }
     }
 }

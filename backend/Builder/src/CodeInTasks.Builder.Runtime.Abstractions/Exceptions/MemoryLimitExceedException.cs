@@ -1,10 +1,10 @@
 ﻿namespace CodeInTasks.Builder.Runtime.Abstractions.Exceptions
 {
-    public class SizeLimitExceedException : Exception
+    public class MemoryLimitExceedException : Exception
     {
         private const string CustomMessage = "Size limit exceed!";
 
-        public SizeLimitExceedException()
+        public MemoryLimitExceedException()
             : base(CustomMessage)
         {
         }

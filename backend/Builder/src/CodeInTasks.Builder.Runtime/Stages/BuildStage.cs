@@ -11,11 +11,26 @@
 
         protected override async Task<BuildStageResult> GetResultAsync(BuildStageArguments stageArguments)
         {
-            await isolatedExecutor.BuildAsync(stageArguments.FolderPath, stageArguments.Runner, stageArguments.InstanceName, CancellationToken.None);
+            try
+            {
+                await isolatedExecutor.BuildAsync(stageArguments.FolderPath, stageArguments.InstanceName, RuntimeConstants.BuildTimeout);
 
-            //TODO: Add build timeout
-            //TODO: Add build exception handling
-            //TODO: Add result return
+                var result = new BuildStageResult(isSucceded: true);
+
+                return result;
+            }
+            catch (TimeoutException)
+            {
+                var result = new BuildStageResult(isSucceded: false, ErrorCodes.Build_Timeout);
+
+                return result;
+            }
+            catch (DockerBuildException)
+            {
+                var result = new BuildStageResult(isSucceded: false, ErrorCodes.Build_Error);
+
+                return result;
+            }
         }
 
         protected override Task CleanAsync(BuildStageArguments stageArguments)

@@ -13,7 +13,7 @@
         /// <param name="sourceUrl">Remote url from where to clone</param>
         /// <param name="gitAuth">Authorization credentials</param>
         /// <param name="sizeLimitBytes">Max download size in bytes</param>
-        /// <exception cref="SizeLimitExceedException" />
+        /// <exception cref="MemoryLimitExceedException" />
         Task CloneAsync(string sourceUrl, GitAuthCredintials gitAuth, long sizeLimitBytes);
 
         /// <summary>
@@ -26,7 +26,7 @@
         /// <param name="gitAuth">Authorization credentials</param>
         /// <param name="sizeLimitBytes">Max download size in bytes</param>
         /// <exception cref="InvalidOperationException" />
-        /// <exception cref="SizeLimitExceedException" />
+        /// <exception cref="MemoryLimitExceedException" />
         Task PullAsync(string sourceUrl, GitAuthCredintials gitAuth, long sizeLimitBytes);
 
         /// <summary>

@@ -11,11 +11,32 @@
 
         protected override async Task<RunStageResult> GetResultAsync(RunStageArguments stageArguments)
         {
-            await isolatedExecutor.RunAsync(stageArguments.InstanceName, );
+            try
+            {
+                var runResult = await isolatedExecutor.RunAsync(stageArguments.InstanceName, RuntimeConstants.RunTimeout);
 
-            //TODO: Add run timeout
-            //TODO: Add run exception handling
-            //TODO: Add result return
+                var runTimeMs = (int)Math.Floor(runResult.RunTime.TotalMilliseconds);
+
+                var result = new RunStageResult(isSucceded: true)
+                {
+                    IsTaskCompleted = runResult.HasSuccessExitCode,
+                    RunTimeMs = runTimeMs
+                };
+
+                return result;
+            }
+            catch (TimeoutException)
+            {
+                var result = new RunStageResult(isSucceded: false, ErrorCodes.Run_Timeout);
+
+                return result;
+            }
+            catch (DockerRunException)
+            {
+                var result = new RunStageResult(isSucceded: false, ErrorCodes.Run_Error);
+
+                return result;
+            }
         }
 
         protected override Task CleanAsync(RunStageArguments stageArguments)

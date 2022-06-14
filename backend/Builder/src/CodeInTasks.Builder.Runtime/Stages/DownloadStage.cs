@@ -18,18 +18,37 @@ namespace CodeInTasks.Builder.Runtime.Stages
         {
             var gitRepository = gitRepositoryFactory.GetRepository(stageArguments.DestinationFolder);
 
-            await CloneRepositoryAsync(gitRepository, stageArguments.TestRepositoryInfo);
+            var cloneErrorCode = await TryRepositoryDownloadAsync(gitRepository.CloneAsync, stageArguments.TestRepositoryInfo);
 
-            var lastTestCommitId = gitRepository.GetLastCommitId();
+            if (!string.IsNullOrEmpty(cloneErrorCode))
+            {
+                var result = new DownloadStageResult(
+                    isSucceded: false,
+                    cloneErrorCode,
+                    ErrorCodes.Download_ErrorAdditionalInfo_TestRepository);
 
-            await PullRepositoryAsync(gitRepository, stageArguments.SolutionRepositoryInfo);
+                return result;
+            }
 
-            //TODO: Add configuration stage
-            var allFilesPaths = new[] { "*" };
-            gitRepository.CheckoutPaths(lastTestCommitId, allFilesPaths);
+            var lastTestRepositoryCommitId = gitRepository.GetLastCommitId();
 
-            //TODO: Add download exception handling
-            //TODO: Add result return
+            var pullErrorCode = await TryRepositoryDownloadAsync(gitRepository.PullAsync, stageArguments.TestRepositoryInfo);
+
+            if (!string.IsNullOrEmpty(pullErrorCode))
+            {
+                var result = new DownloadStageResult(
+                    isSucceded: false,
+                    pullErrorCode,
+                    ErrorCodes.Download_ErrorAdditionalInfo_SolutionRepository);
+
+                return result;
+            }
+
+            var successResult = new DownloadStageResult(isSucceded: true)
+            {
+                LastTestRepositoryCommitID = lastTestRepositoryCommitId,
+            };
+            return successResult;
         }
 
         protected override Task CleanAsync(DownloadStageArguments stageArguments)
@@ -39,20 +58,27 @@ namespace CodeInTasks.Builder.Runtime.Stages
             return Task.CompletedTask;
         }
 
-        private static Task CloneRepositoryAsync(IGitRepository gitRepository, RepositoryInfo repositoryInfo)
+        private static async Task<string> TryRepositoryDownloadAsync(
+            Func<string, GitAuthCredintials, long, Task> downloadFunc,
+            RepositoryInfo repositoryInfo)
         {
             var repositoryUrl = repositoryInfo.RepositoryUrl;
             var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
 
-            return gitRepository.CloneAsync(repositoryUrl, repositoryAuth, RuntimeConstants.Git_MaxDownloadSizeBytes);
-        }
+            try
+            {
+                await downloadFunc(repositoryUrl, repositoryAuth, RuntimeConstants.Git_MaxDownloadSizeBytes);
 
-        private static Task PullRepositoryAsync(IGitRepository gitRepository, RepositoryInfo repositoryInfo)
-        {
-            var repositoryUrl = repositoryInfo.RepositoryUrl;
-            var repositoryAuth = new GitAuthCredintials(repositoryInfo.AuthUserName, repositoryInfo.AuthPassword);
-
-            return gitRepository.PullAsync(repositoryUrl, repositoryAuth, RuntimeConstants.Git_MaxDownloadSizeBytes);
+                return null;
+            }
+            catch (MemoryLimitExceedException)
+            {
+                return ErrorCodes.Download_MemoryLimitExceed;
+            }
+            catch (Exception)
+            {
+                return ErrorCodes.Download_Error;
+            }
         }
     }
 }
