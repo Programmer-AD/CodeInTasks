@@ -84,7 +84,7 @@ namespace CodeInTasks.Builder.Runtime
 
             var buildArguments = new BuildStageArguments(repositoryFolder, instanceName);
 
-            await solutionStatusTracer.ChangeStatusAsync(TaskSolutionStatus.Building);
+            //No status change because it setted in configuration substage
 
             await buildStage.InvokeAsync(buildArguments,
                 onSuccess: _ => InvokeRunStageAsync(solutionStatusTracer, instanceName),
