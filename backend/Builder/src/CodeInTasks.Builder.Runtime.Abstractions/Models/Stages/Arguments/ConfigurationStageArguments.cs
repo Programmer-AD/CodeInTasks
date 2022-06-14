@@ -3,5 +3,5 @@
     public record struct ConfigurationStageArguments(
         string FolderPath,
         RunnerType RunnerType,
-        string LastTestRepositroyCommitID);
+        string LastTestRepositoryCommitId);
 }
