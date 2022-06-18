@@ -24,15 +24,13 @@ namespace CodeInTasks.Application.Enqueuers
             await messageQueue.PublishAsync(message);
         }
 
-        //TODO: Make AuthUserName retrieve (probably form url)
-        internal async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueDto solution)
+        private async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueDto solution)
         {
             var taskId = solution.TaskId;
             var task = await GetTaskAsync(taskId);
 
-#warning This should not be empty
-            var testRepositoryAuthUserName = string.Empty;
-            var solutionRepositoryAuthUserName = string.Empty;
+            var testRepositoryAuthUserName = GetGitUserName(task.TestRepositoryUrl);
+            var solutionRepositoryAuthUserName = GetGitUserName(solution.RepositoryUrl);
 
             var message = new SolutionCheckQueueMessage()
             {
@@ -51,6 +49,17 @@ namespace CodeInTasks.Application.Enqueuers
             var taskModel = await taskRepository.GetAsync(taskId);
 
             return taskModel ?? throw new EntityNotFoundException(nameof(TaskModel), taskId);
+        }
+
+        private static string GetGitUserName(string repositoryUrl)
+        {
+            var url = new Uri(repositoryUrl);
+
+            var nameSegment = url.Segments[1];
+
+            var name = nameSegment[..^1];
+
+            return name;
         }
     }
 }
