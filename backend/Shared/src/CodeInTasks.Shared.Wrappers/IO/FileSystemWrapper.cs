@@ -36,5 +36,10 @@
         {
             return File.OpenWrite(path);
         }
+
+        public void CopyFile(string sourcePath, string destinationPath, bool overwrite)
+        {
+            File.Copy(sourcePath, destinationPath, overwrite);
+        }
     }
 }

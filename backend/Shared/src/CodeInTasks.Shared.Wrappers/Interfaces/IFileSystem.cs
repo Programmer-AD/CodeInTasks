@@ -12,5 +12,7 @@
 
         void DeleteFile(string path);
         void DeleteDirectory(string path, bool recursive);
+
+        void CopyFile(string sourcePath, string destinationPath, bool overwrite);
     }
 }
