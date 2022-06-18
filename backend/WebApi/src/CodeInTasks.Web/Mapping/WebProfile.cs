@@ -39,7 +39,7 @@ namespace CodeInTasks.Web.Mapping
         private void CreateUserMaps()
         {
             CreateMap<UserCreateModel, UserCreateDto>();
-            CreateMap<UserViewDto, UserViewModel>();
+            CreateMap<UserData, UserViewModel>();
 
             CreateMap<UserSignInResultDto, UserSignInResultModel>();
         }

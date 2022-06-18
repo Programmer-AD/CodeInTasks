@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.Domain.Enums;
 using CodeInTasks.Infrastructure.Persistance.IdentityModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -70,15 +71,15 @@ namespace CodeInTasks.Infrastructure.Identity
             }
         }
 
-        public async Task<UserViewDto> GetUserInfoAsync(Guid userId)
+        public async Task<UserData> GetUserInfoAsync(Guid userId)
         {
             var user = await GetUserByIdAsync(userId);
             var roles = await userManager.GetRolesAsync(user);
 
-            var userViewDto = mapper.Map<UserViewDto>(user.UserData);
-            userViewDto.Roles = roles.Select(x => Enum.Parse<RoleEnum>(x));
+            var userData = user.UserData;
+            userData.Roles = roles.Select(x => Enum.Parse<RoleEnum>(x));
 
-            return userViewDto;
+            return userData;
         }
 
         public async Task SetBanAsync(Guid userId, bool isBanned)

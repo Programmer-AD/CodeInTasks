@@ -1,6 +1,4 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.User;
-
-namespace CodeInTasks.Web.Models.User
+﻿namespace CodeInTasks.Web.Models.User
 {
     public class UserViewModel
     {

@@ -8,7 +8,7 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure
         Task SetRoleAsync(Guid userId, RoleEnum role, bool isHave);
         Task SetBanAsync(Guid userId, bool isBanned);
 
-        Task<UserViewDto> GetUserInfoAsync(Guid userId);
+        Task<UserData> GetUserInfoAsync(Guid userId);
         Task<UserSignInResultDto> SignInAsync(string email, string password);
     }
 }

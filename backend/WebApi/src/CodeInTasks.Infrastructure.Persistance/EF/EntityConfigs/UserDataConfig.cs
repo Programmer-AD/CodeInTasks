@@ -7,6 +7,8 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<UserData> builder)
         {
+            builder.Ignore(x => x.Roles);
+
             builder.Property(x => x.Name)
                 .HasMaxLength(DomainConstants.UserData_Name_MaxLength)
                 .IsRequired();
