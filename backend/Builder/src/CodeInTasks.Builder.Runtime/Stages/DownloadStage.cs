@@ -67,7 +67,7 @@ namespace CodeInTasks.Builder.Runtime.Stages
 
             try
             {
-                await downloadFunc(repositoryUrl, repositoryAuth, RuntimeConstants.Git_MaxDownloadSizeBytes);
+                await downloadFunc(repositoryUrl, repositoryAuth, RuntimeConstants.Download_MaxSizeBytes);
 
                 return null;
             }

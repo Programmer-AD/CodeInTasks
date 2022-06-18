@@ -126,7 +126,7 @@ namespace CodeInTasks.Builder.Runtime
         private static string GetGitRepositoryFolder(Guid solutionId)
         {
             var idString = solutionId.ToString("N");
-            var result = Path.Combine(RuntimeConstants.DownloadFolder, idString);
+            var result = Path.Combine(RuntimeConstants.Download_Folder, idString);
 
             return result;
         }

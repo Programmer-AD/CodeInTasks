@@ -7,6 +7,10 @@
         public const string Download_ErrorAdditionalInfo_TestRepository = "TEST_REPOSITORY";
         public const string Download_ErrorAdditionalInfo_SolutionRepository = "SOLUTION_REPOSITORY";
 
+        public const string Build_Configuration_NoConfig = "BUILD_NO_CONFIG";
+        public const string Build_Configuration_TooLargeConfig = "BUILD_TOO_LARGE_CONFIG";
+        public const string Build_Configuration_WrongConfig = "BUILD_WRONG_CONFIG";
+
         public const string Build_Timeout = "BUILD_TIMEOUT";
         public const string Build_Error = "BUILD_ERROR";
 
