@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.Json;
-using CodeInTasks.Shared.Wrappers.Interfaces;
 
 namespace CodeInTasks.Shared.Wrappers.Serialization
 {
@@ -15,6 +14,22 @@ namespace CodeInTasks.Shared.Wrappers.Serialization
             return result;
         }
 
+        public bool TryDeserialize<T>(string value, out T result)
+        {
+            try
+            {
+                result = Deserialize<T>(value);
+
+                return true;
+            }
+            catch (JsonException)
+            {
+                result = default;
+
+                return false;
+            }
+        }
+
         public string Serialize<T>(T value)
         {
             var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(value, serializerOptions);
@@ -22,5 +37,7 @@ namespace CodeInTasks.Shared.Wrappers.Serialization
 
             return jsonString;
         }
+
+
     }
 }
