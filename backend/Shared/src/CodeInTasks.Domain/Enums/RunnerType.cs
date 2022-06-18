@@ -2,6 +2,6 @@
 {
     public enum RunnerType : short
     {
-        Dotnet_6_0
+        Dotnet_6
     }
 }

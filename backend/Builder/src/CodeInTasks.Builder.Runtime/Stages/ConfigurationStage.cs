@@ -1,4 +1,5 @@
-﻿using CodeInTasks.Shared.Wrappers.Interfaces;
+﻿using CodeInTasks.Domain.Enums;
+using CodeInTasks.Shared.Wrappers.Interfaces;
 
 namespace CodeInTasks.Builder.Runtime.Stages
 {
@@ -32,7 +33,7 @@ namespace CodeInTasks.Builder.Runtime.Stages
 
                 CheckoutSolutionFiles(gitRepository, config);
 
-                //TODO: make copying of Dockerfile and other files due to runner
+                CopyDockerfile(arguments.FolderPath, arguments.RunnerType);
 
                 RemoveGitFolder(arguments.FolderPath);
 
@@ -85,7 +86,27 @@ namespace CodeInTasks.Builder.Runtime.Stages
         private static void CheckoutSolutionFiles(IGitRepository gitRepository, TaskConfig config)
         {
             var lastCommitId = gitRepository.GetLastCommitId();
+
             gitRepository.CheckoutPaths(lastCommitId, config.SolutionPaths);
+        }
+
+        private void CopyDockerfile(string folderPath, RunnerType runnerType)
+        {
+            var sourceFileName = GetDockerfileName(runnerType);
+            var sourcePath = Path.Combine(RuntimeConstants.DockerfilesFolder, sourceFileName);
+
+            var destinationPath = Path.Combine(folderPath, RuntimeConstants.Docker_DockerfileName);
+
+            fileSystem.CopyFile(sourcePath, destinationPath, overwrite: true);
+        }
+
+        private static string GetDockerfileName(RunnerType runnerType)
+        {
+            var runnerName = Enum.GetName(runnerType);
+
+            var result = $"{runnerName.ToLower()}.dockerfile";
+
+            return result;
         }
 
         private void RemoveGitFolder(string folderPath)

@@ -8,6 +8,8 @@
         public const string Download_Folder = "./data/tmp";
         public const long Download_MaxSizeBytes = 4 * 1024 * 1024; //4 MB
 
+        public const string DockerfilesFolder = "./dockerfiles";
+
         public static readonly TimeSpan BuildTimeout = TimeSpan.FromSeconds(20);
         public static readonly TimeSpan RunTimeout = TimeSpan.FromSeconds(10);
 
@@ -18,6 +20,8 @@
         public const int DockerProvider_ContainerMemoryLimitMB = 256;
 
         public const int Docker_ApplicationErrorExitCode = 1;
+        public const string Docker_DockerfileName = "Dockerfile";
+
         public const string Git_FolderName = ".git";
     }
 }

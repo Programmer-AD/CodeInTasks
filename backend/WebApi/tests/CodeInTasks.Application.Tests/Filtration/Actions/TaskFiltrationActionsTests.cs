@@ -80,7 +80,7 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void RunnerFilter_WhenCategoriesIsNotEmpty_SetFilterExpression()
         {
-            filterDto.Runners = new[] { RunnerType.Dotnet_6_0 };
+            filterDto.Runners = new[] { RunnerType.Dotnet_6 };
 
 
             TaskFiltrationActions.RunnerFilter(filterDto, pipelineResult);
