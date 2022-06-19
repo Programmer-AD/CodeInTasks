@@ -1,6 +1,8 @@
 ﻿using CodeInTasks.Builder.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace CodeInTasks.Builder
 {
@@ -11,6 +13,12 @@ namespace CodeInTasks.Builder
             services.AddServices();
 
             services.AddSingleton<PrimaryHostedService>();
+
+            services.AddLogging(options =>
+            {
+                options.AddConsole();
+                options.AddNLog(config);
+            });
 
             return services;
         }

@@ -3,6 +3,7 @@ using CodeInTasks.Infrastructure.Mapping;
 using CodeInTasks.Web.Filters;
 using CodeInTasks.Web.Filters.ExceptionHandling;
 using CodeInTasks.Web.Mapping;
+using NLog.Extensions.Logging;
 
 namespace CodeInTasks.Web
 {
@@ -17,6 +18,12 @@ namespace CodeInTasks.Web
             {
                 options.Filters.Add<ExceptionHandlerFilterAttribute>();
                 options.Filters.Add<ChangeSaverFilterAttribute>();
+            });
+
+            services.AddLogging(options =>
+            {
+                options.AddConsole();
+                options.AddNLog(config);
             });
 
             return services;

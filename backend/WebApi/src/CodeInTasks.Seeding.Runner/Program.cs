@@ -22,7 +22,7 @@ namespace CodeInTasks.Seeding.Runner
             var config = context.Configuration;
 
             services
-                .AddSeedingRunner()
+                .AddSeedingRunner(config)
                 .AddSeeding(config)
                 .AddInfrastructure(config);
         }
