@@ -42,6 +42,8 @@ namespace CodeInTasks.Seeding
 
             await SeedAdminAccountAsync();
 
+            await SeedBuilderAccountAsync();
+
             await dbContext.SaveChangesAsync();
         }
 
@@ -111,11 +113,11 @@ namespace CodeInTasks.Seeding
         {
             logger.LogInformation("Seeding admin account");
 
-            var anyUserExist = await userManager.Users.AnyAsync();
+            var admins = await userManager.GetUsersInRoleAsync(RoleNames.Admin);
 
-            if (anyUserExist)
+            if (admins.Any())
             {
-                logger.LogWarning("Some user already exists. Skipping");
+                logger.LogWarning("Admin already exists. Skipping");
 
                 return;
             }
@@ -125,7 +127,7 @@ namespace CodeInTasks.Seeding
 
         private async Task CreateAdminAsync()
         {
-            logger.LogInformation("Creating admin user");
+            logger.LogInformation("Creating admin account");
 
             var email = seedingOptions.AdminEmail;
             var password = seedingOptions.AdminPassword;
@@ -152,6 +154,55 @@ namespace CodeInTasks.Seeding
             catch (Exception exception)
             {
                 logger.LogCritical(exception, "Admin account not seeded, no need to start without it");
+                throw;
+            }
+        }
+
+        private async Task SeedBuilderAccountAsync()
+        {
+            logger.LogInformation("Seeding builder account");
+
+            var builders = await userManager.GetUsersInRoleAsync(RoleNames.Builder);
+
+            if (builders.Any())
+            {
+                logger.LogWarning("Builder already exists. Skipping");
+
+                return;
+            }
+
+            await CreateBuilderAsync();
+        }
+
+        private async Task CreateBuilderAsync()
+        {
+            logger.LogInformation("Creating builder account");
+
+            var email = seedingOptions.BuilderEmail;
+            var password = seedingOptions.BuilderPassword;
+            const string name = "Builder";
+
+            try
+            {
+                await identityService.CreateUserAsync(new() { Email = email, Password = password, Name = name });
+
+                var user = await userManager.FindByEmailAsync(email);
+
+                var result = await userManager.AddToRoleAsync(user, RoleNames.Builder);
+
+                if (result.Succeeded)
+                {
+                    logger.LogInformation("Builder seeded successfully");
+                }
+                else
+                {
+                    throw new IdentityException(result.Errors.Select(x => x.Code));
+                }
+
+            }
+            catch (Exception exception)
+            {
+                logger.LogCritical(exception, "Builder account not seeded, no need to start without it");
                 throw;
             }
         }
