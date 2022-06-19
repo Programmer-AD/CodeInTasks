@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace CodeInTasks.Seeding.Runner
@@ -7,18 +8,20 @@ namespace CodeInTasks.Seeding.Runner
     {
         private readonly IHostApplicationLifetime appLifetime;
         private readonly ILogger<SeedingHostedService> logger;
-        private readonly Seeder seeder;
+
+        //ServiceProvider instead of Seeder because Seeder is scoped
+        private readonly IServiceProvider serviceProvider;
 
         private int exitCode = -1;
 
         public SeedingHostedService(
             IHostApplicationLifetime appLifetime,
             ILogger<SeedingHostedService> logger,
-            Seeder seeder)
+            IServiceProvider serviceProvider)
         {
             this.appLifetime = appLifetime;
             this.logger = logger;
-            this.seeder = seeder;
+            this.serviceProvider = serviceProvider;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -58,6 +61,10 @@ namespace CodeInTasks.Seeding.Runner
 
         private Task RunAsync()
         {
+            using var scope = serviceProvider.CreateScope();
+
+            var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
+
             return seeder.SeedAsync();
         }
     }
