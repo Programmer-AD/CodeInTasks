@@ -26,7 +26,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
             builder.Property(x => x.TestRepositoryAuthPassword)
                 .HasMaxLength(DomainConstants.RepositoryAuthPassword_MaxLength);
 
-            builder.HasOne(x => x.Creator).WithMany();
+            builder.HasOne(x => x.Creator).WithMany().OnDelete(DeleteBehavior.NoAction);
 
             builder.HasIndex(x => x.CreateDate).IsClustered(false);
         }

@@ -1,6 +1,6 @@
 using CodeInTasks.Application;
 using CodeInTasks.Infrastructure;
-using CodeInTasks.Web.Filters;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CodeInTasks.Web
 {
@@ -31,7 +31,14 @@ namespace CodeInTasks.Web
 
         public static WebApplication Setup(this WebApplication app)
         {
-            app.UseExceptionHandler();
+            app.UseExceptionHandler(app => app.Run(context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+                context.Response.ContentType = Text.Plain;
+
+                return context.Response.WriteAsync("Internal server error");
+            }));
 
             app.UseRouting();
 

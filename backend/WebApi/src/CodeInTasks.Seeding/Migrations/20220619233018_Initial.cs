@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -112,8 +111,7 @@ namespace CodeInTasks.Seeding.Migrations
                         name: "FK_TaskModel_UserData_CreatorId",
                         column: x => x.CreatorId,
                         principalTable: "UserData",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -226,14 +224,12 @@ namespace CodeInTasks.Seeding.Migrations
                         name: "FK_Solution_TaskModel_TaskId",
                         column: x => x.TaskId,
                         principalTable: "TaskModel",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Solution_UserData_SenderId",
                         column: x => x.SenderId,
                         principalTable: "UserData",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

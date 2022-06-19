@@ -52,7 +52,7 @@ namespace CodeInTasks.Builder
                 }
                 catch (Exception exception)
                 {
-                    exitCode = -1;
+                    exitCode = 1;
 
                     logger.LogCritical(exception, "Unhandled exception!");
                 }

@@ -8,7 +8,9 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasOne(x => x.UserData).WithOne().HasForeignKey((User user) => user.Id);
+            builder.HasOne(x => x.UserData).WithOne()
+                .HasForeignKey((User user) => user.Id)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Navigation(x => x.UserData).AutoInclude();
         }

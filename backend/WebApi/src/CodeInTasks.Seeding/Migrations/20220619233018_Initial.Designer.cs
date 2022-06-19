@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeInTasks.Seeding.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220619010617_Initial")]
+    [Migration("20220619233018_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -363,13 +363,13 @@ namespace CodeInTasks.Seeding.Migrations
                     b.HasOne("CodeInTasks.Domain.Models.UserData", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("CodeInTasks.Domain.Models.TaskModel", "Task")
                         .WithMany()
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Sender");
@@ -382,7 +382,7 @@ namespace CodeInTasks.Seeding.Migrations
                     b.HasOne("CodeInTasks.Domain.Models.UserData", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Creator");

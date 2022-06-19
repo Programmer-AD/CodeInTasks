@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
 WORKDIR /app-src
-COPY ./backend/Shared/src ./Shared/src
-COPY ./backend/WebApi/src ./WebApi/src
+COPY ./ ./
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
     dotnet restore ./WebApi/src/CodeInTasks.Web
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \

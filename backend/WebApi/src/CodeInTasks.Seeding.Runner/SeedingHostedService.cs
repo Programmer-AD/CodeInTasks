@@ -12,7 +12,7 @@ namespace CodeInTasks.Seeding.Runner
         //ServiceProvider instead of Seeder because Seeder is scoped
         private readonly IServiceProvider serviceProvider;
 
-        private int exitCode = -1;
+        private int exitCode = 1;
 
         public SeedingHostedService(
             IHostApplicationLifetime appLifetime,
@@ -59,13 +59,15 @@ namespace CodeInTasks.Seeding.Runner
             });
         }
 
-        private Task RunAsync()
+        private async Task RunAsync()
         {
-            using var scope = serviceProvider.CreateScope();
+            var scope = serviceProvider.CreateScope();
 
             var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
 
-            return seeder.SeedAsync();
+            await seeder.SeedAsync();
+
+            scope.Dispose();
         }
     }
 }

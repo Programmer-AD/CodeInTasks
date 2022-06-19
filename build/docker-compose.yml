@@ -6,11 +6,11 @@ services:
     build: 
       context: ../backend
       dockerfile: ../build/webapi.dockerfile
-    restart: on-failure
+    restart: "on-failure"
     ports:
       - "41080:80"
     volumes:
-      - codeintasks_webapi_logs_volume:/app/logs
+      - codeintasks_webapi_volume:/app/logs
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
     depends_on:
@@ -22,11 +22,11 @@ services:
     build: 
       context: ../backend
       dockerfile: ../build/builder.dockerfile
-    restart: on-failure
+    restart: "on-failure"
     volumes:
       - codeintasks_builder_volume:/app/data
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
+      - DOTNET_ENVIRONMENT=Docker
     depends_on:
       - webapi
       - redis
@@ -36,11 +36,11 @@ services:
     build: 
       context: ../backend
       dockerfile: ../build/seeding_runner.dockerfile
-    restart: no
+    restart: "no"
     volumes:
       - codeintasks_seeding_runner_volume:/app/logs
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
+      - DOTNET_ENVIRONMENT=Docker
     depends_on:
       - mssql
 

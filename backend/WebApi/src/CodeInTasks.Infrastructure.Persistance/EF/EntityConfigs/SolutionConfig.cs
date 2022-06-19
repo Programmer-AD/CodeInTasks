@@ -20,9 +20,9 @@ namespace CodeInTasks.Infrastructure.Persistance.EF.EntityConfigs
             builder.Property(x => x.ResultAdditionalInfo)
                 .HasMaxLength(DomainConstants.Solution_ResultAdditionalInfo_MaxLength);
 
-            builder.HasOne(x => x.Task).WithMany();
+            builder.HasOne(x => x.Task).WithMany().OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(x => x.Sender).WithMany();
+            builder.HasOne(x => x.Sender).WithMany().OnDelete(DeleteBehavior.NoAction);
 
             builder.HasIndex(x => x.SendTime).IsClustered(false);
         }
