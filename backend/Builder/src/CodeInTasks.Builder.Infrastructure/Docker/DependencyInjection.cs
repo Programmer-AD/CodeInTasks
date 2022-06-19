@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CodeInTasks.Builder.Infrastructure.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeInTasks.Builder.Infrastructure.Docker
 {

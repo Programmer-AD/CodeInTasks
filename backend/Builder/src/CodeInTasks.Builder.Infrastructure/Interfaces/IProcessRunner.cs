@@ -1,4 +1,6 @@
-﻿namespace CodeInTasks.Builder.Infrastructure.Docker
+﻿using CodeInTasks.Builder.Infrastructure.Docker;
+
+namespace CodeInTasks.Builder.Infrastructure.Interfaces
 {
     internal interface IProcessRunner
     {

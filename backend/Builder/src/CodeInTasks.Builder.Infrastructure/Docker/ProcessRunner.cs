@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text;
+using CodeInTasks.Builder.Infrastructure.Interfaces;
 
 namespace CodeInTasks.Builder.Infrastructure.Docker
 {

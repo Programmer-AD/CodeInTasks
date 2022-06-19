@@ -1,4 +1,5 @@
-﻿using CodeInTasks.Builder.Runtime.Abstractions;
+﻿using CodeInTasks.Builder.Infrastructure.Interfaces;
+using CodeInTasks.Builder.Runtime.Abstractions;
 
 namespace CodeInTasks.Builder.Infrastructure.Docker
 {
