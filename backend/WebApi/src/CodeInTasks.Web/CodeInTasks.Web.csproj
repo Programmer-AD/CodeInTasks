@@ -3,7 +3,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CodeInTasks.Application\CodeInTasks.Application.csproj" />
 		<ProjectReference Include="..\CodeInTasks.Infrastructure\CodeInTasks.Infrastructure.csproj" />
-		<ProjectReference Include="..\CodeInTasks.Seeding\CodeInTasks.Seeding.csproj" />
 		<ProjectReference Include="..\CodeInTasks.Web.Models\CodeInTasks.Web.Models.csproj" />
 	</ItemGroup>
 

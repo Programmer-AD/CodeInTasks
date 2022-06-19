@@ -8,8 +8,9 @@ namespace CodeInTasks.Builder.Infrastructure.Web
     {
         public static void AddSolutionStatusUpdater(this IServiceCollection services, IConfiguration config)
         {
-            var solutionStatusUpdater = config.GetValue<SolutionStatusUpdaterConfig>(BuilderConfigConstants.SolutionStatusUpdaterConfigSection);
-            services.AddSingleton(solutionStatusUpdater);
+            var solutionStatusUpdaterConfig = new SolutionStatusUpdaterConfig();
+            config.Bind(BuilderConfigConstants.SolutionStatusUpdaterConfigSection, solutionStatusUpdaterConfig);
+            services.AddSingleton(solutionStatusUpdaterConfig);
 
             services.AddSingleton<IAuthKeeper, AuthKeeper>();
 

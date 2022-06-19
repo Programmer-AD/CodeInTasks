@@ -13,7 +13,8 @@ namespace CodeInTasks.Infrastructure.Identity
     {
         internal static void AddIdentity(this IServiceCollection services, IConfiguration config)
         {
-            var jwtAuthOptions = config.GetValue<JwtAuthOptions>(ConfigConstants.JwtAuthOptionsSection);
+            var jwtAuthOptions = new JwtAuthOptions();
+            config.Bind(ConfigConstants.JwtAuthOptionsSection, jwtAuthOptions);
             services.AddSingleton(jwtAuthOptions);
 
             services.AddIdentity<User, Role>(ConfigureIdentityOptions)

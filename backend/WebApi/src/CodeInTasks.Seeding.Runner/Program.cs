@@ -4,14 +4,17 @@ using Microsoft.Extensions.Hosting;
 
 namespace CodeInTasks.Seeding.Runner
 {
-    internal class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            Host.CreateDefaultBuilder(args)
-                .ConfigureServices(ConfigureServices)
-                .Build()
-                .Run();
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureServices(ConfigureServices);
         }
 
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
@@ -19,8 +22,8 @@ namespace CodeInTasks.Seeding.Runner
             var config = context.Configuration;
 
             services
-                .AddHostedService<SeedingHostedService>()
-                .AddSeeding()
+                .AddSeedingRunner()
+                .AddSeeding(config)
                 .AddInfrastructure(config);
         }
     }

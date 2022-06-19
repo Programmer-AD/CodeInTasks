@@ -6,6 +6,8 @@
 
         public const string MigrationAssemblyName = "CodeInTasks.Seeding";
 
+        public const string SeedingOptionsSection = "Seeding";
+
         public const string SqlConnectionString = "SQL";
         public const string RedisConnectionString = "Redis";
     }

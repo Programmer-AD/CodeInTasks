@@ -1,4 +1,5 @@
 ﻿using CodeInTasks.Application.Mapping;
+using CodeInTasks.Infrastructure.Mapping;
 using CodeInTasks.Web.Filters;
 using CodeInTasks.Web.Filters.ExceptionHandling;
 using CodeInTasks.Web.Mapping;
@@ -26,6 +27,7 @@ namespace CodeInTasks.Web
             services.AddAutoMapper(mapperConfig =>
             {
                 mapperConfig.AddProfile<ApplicationProfile>();
+                mapperConfig.AddProfile<InfrastructureProfile>();
                 mapperConfig.AddProfile<WebProfile>();
             });
         }
