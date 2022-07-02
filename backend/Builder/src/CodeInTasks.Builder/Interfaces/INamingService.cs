@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Builder.Interfaces
 {
-    internal interface INamingService
+    public interface INamingService
     {
         string GetBuilderName();
     }

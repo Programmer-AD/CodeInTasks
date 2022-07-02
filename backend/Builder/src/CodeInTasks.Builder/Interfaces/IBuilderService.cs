@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Builder.Interfaces
 {
-    internal interface IBuilderService
+    public interface IBuilderService
     {
         Task RunAsync(CancellationToken cancellationToken);
     }

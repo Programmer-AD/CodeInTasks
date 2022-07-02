@@ -6,7 +6,7 @@ namespace CodeInTasks.Builder.Tests.Services
     [TestFixture]
     public class NamingServiceTests
     {
-        private const string ExistingName = "some_name";
+        private const string existingName = "some_name";
 
         private string tempSaveFileName;
 
@@ -92,13 +92,13 @@ namespace CodeInTasks.Builder.Tests.Services
         public void GetBuilderName_WhenNameExists_ReturnExistingName()
         {
             SetNameExists(true);
-            SetExistingName(ExistingName);
+            SetExistingName(existingName);
 
 
             var name = namingService.GetBuilderName();
 
 
-            name.Should().Be(ExistingName);
+            name.Should().Be(existingName);
         }
 
         private void SetupFileStreams()

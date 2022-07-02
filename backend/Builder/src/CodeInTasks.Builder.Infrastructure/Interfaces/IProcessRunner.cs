@@ -2,7 +2,7 @@
 
 namespace CodeInTasks.Builder.Infrastructure.Interfaces
 {
-    internal interface IProcessRunner
+    public interface IProcessRunner
     {
         Task<ProcessRunnerResult> RunProcessAsync(ProcessRunnerArguments arguments);
     }

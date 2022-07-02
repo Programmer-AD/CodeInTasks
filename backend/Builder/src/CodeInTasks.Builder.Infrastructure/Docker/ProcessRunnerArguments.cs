@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Builder.Infrastructure.Docker
 {
-    internal record struct ProcessRunnerArguments(
+    public record struct ProcessRunnerArguments(
         string FileName,
         string Arguments,
         TimeSpan Timeout)

@@ -2,7 +2,7 @@
 
 namespace CodeInTasks.Builder.Infrastructure.Interfaces
 {
-    internal interface IAuthKeeper
+    public interface IAuthKeeper
     {
         ValueTask<AuthenticationHeaderValue> GetAuthenticationHeaderAsync();
     }

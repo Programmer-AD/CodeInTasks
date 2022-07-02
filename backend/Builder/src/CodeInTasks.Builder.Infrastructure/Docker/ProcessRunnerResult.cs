@@ -1,6 +1,6 @@
 ﻿namespace CodeInTasks.Builder.Infrastructure.Docker
 {
-    internal class ProcessRunnerResult
+    public class ProcessRunnerResult
     {
         public int ExitCode { get; set; }
         public bool IsKilled { get; set; }
