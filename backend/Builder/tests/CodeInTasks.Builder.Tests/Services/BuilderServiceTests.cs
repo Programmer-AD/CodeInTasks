@@ -9,7 +9,7 @@ namespace CodeInTasks.Builder.Tests.Services
     [TestFixture]
     public class BuilderServiceTests
     {
-        private const int timeoutMilliseconds = 20;
+        private const int timeoutMilliseconds = 5;
         private static readonly Message<SolutionCheckQueueMessage> message = new("some_id", new());
 
         private CancellationTokenSource cancellationSource;
@@ -47,7 +47,7 @@ namespace CodeInTasks.Builder.Tests.Services
         [Test]
         public async Task RunAsync_WhenCancellationRequested_StopsWithoutException()
         {
-            const int timeoutReserve = 10;
+            const int timeoutReserve = 5;
 
             var timeoutTask = Task.Delay(timeoutMilliseconds + timeoutReserve)
                 .ContinueWith(task => throw new TimeoutException());
