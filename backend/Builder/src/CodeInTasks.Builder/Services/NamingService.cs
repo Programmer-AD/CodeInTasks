@@ -34,11 +34,9 @@ namespace CodeInTasks.Builder.Services
 
                 return !string.IsNullOrEmpty(builderName);
             }
-            else
-            {
-                builderName = string.Empty;
-                return false;
-            }
+
+            builderName = string.Empty;
+            return false;
         }
 
         private static string GetNewBuilderName()
