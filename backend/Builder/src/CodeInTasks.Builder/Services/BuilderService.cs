@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CodeInTasks.Builder.Services
 {
-    internal class BuilderService : IBuilderService
+    public class BuilderService : IBuilderService
     {
         private readonly INamingService namingService;
         private readonly IMessageQueue<SolutionCheckQueueMessage> messageQueue;
