@@ -58,7 +58,7 @@ namespace CodeInTasks.Infrastructure.Identity
 
                 var result = new UserSignInResultDto()
                 {
-                    Email = email,
+                    UserId = user.Id,
                     ExpirationDate = expires,
                     Token = tokenString
                 };
