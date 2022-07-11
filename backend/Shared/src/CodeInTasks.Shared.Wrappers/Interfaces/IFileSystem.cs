@@ -7,8 +7,8 @@
 
         void CreateDirectory(string path);
 
-        FileStream OpenRead(string filePath);
-        FileStream OpenWrite(string filePath);
+        Stream OpenRead(string filePath);
+        Stream OpenWrite(string filePath);
 
         void DeleteFile(string path);
         void DeleteDirectory(string path, bool recursive);

@@ -27,12 +27,12 @@
             Directory.CreateDirectory(path);
         }
 
-        public FileStream OpenRead(string path)
+        public Stream OpenRead(string path)
         {
             return File.OpenRead(path);
         }
 
-        public FileStream OpenWrite(string path)
+        public Stream OpenWrite(string path)
         {
             return File.OpenWrite(path);
         }

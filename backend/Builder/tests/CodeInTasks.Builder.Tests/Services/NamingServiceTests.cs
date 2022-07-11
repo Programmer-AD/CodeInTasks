@@ -6,9 +6,10 @@ namespace CodeInTasks.Builder.Tests.Services
     [TestFixture]
     public class NamingServiceTests
     {
+        private const int bufferSize = 256;
         private const string existingName = "some_name";
 
-        private string tempSaveFileName;
+        private byte[] buffer;
 
         private Mock<IFileSystem> fileSystemMock;
         private NamingService namingService;
@@ -16,22 +17,13 @@ namespace CodeInTasks.Builder.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            tempSaveFileName = Path.GetTempFileName();
+            buffer = new byte[bufferSize];
 
             fileSystemMock = new();
 
             namingService = new(fileSystemMock.Object);
 
             SetupFileStreams();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (File.Exists(tempSaveFileName))
-            {
-                File.Delete(tempSaveFileName);
-            }
         }
 
         [Test]
@@ -105,11 +97,11 @@ namespace CodeInTasks.Builder.Tests.Services
         {
             fileSystemMock
                 .Setup(x => x.OpenRead(It.IsAny<string>()))
-                .Returns(() => File.OpenRead(tempSaveFileName));
+                .Returns(GetBufferReadStream);
 
             fileSystemMock
                 .Setup(x => x.OpenWrite(It.IsAny<string>()))
-                .Returns(() => File.OpenWrite(tempSaveFileName));
+                .Returns(GetBufferWriteStream);
         }
 
         private void SetNameExists(bool exists)
@@ -121,7 +113,8 @@ namespace CodeInTasks.Builder.Tests.Services
 
         private void SetExistingName(string name)
         {
-            using var writer = new StreamWriter(tempSaveFileName);
+            using var stream = GetBufferWriteStream();
+            using var writer = new StreamWriter(stream);
 
             writer.Write(name);
         }
@@ -135,10 +128,27 @@ namespace CodeInTasks.Builder.Tests.Services
 
         private string GetSavedName()
         {
-            using var reader = new StreamReader(tempSaveFileName);
+            using var stream = GetBufferReadStream();
+            using var reader = new StreamReader(stream);
 
             var result = reader.ReadToEnd();
 
+            return result;
+        }
+
+        private Stream GetBufferReadStream()
+        {
+            return new MemoryStream(buffer, 0, GetUsedBufferLength());
+        }
+
+        private Stream GetBufferWriteStream()
+        {
+            return new MemoryStream(buffer);
+        }
+
+        private int GetUsedBufferLength()
+        {
+            var result = Array.FindIndex(buffer, x => x is 0);
             return result;
         }
     }
