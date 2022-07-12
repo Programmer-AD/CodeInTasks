@@ -5,14 +5,14 @@ import TaskFilterModel from "../models/task/task-filter-model";
 import TaskUpdateModel from "../models/task/task-update-model";
 import TaskViewModel from "../models/task/task-view-model";
 
-export default interface TaskServiceInterface {
-    getAsync(taskId: string): Observable<TaskViewModel>;
+export default abstract class TaskServiceInterface {
+    public abstract getAsync(taskId: string): Observable<TaskViewModel>;
 
-    getFilteredAsync(filterModel: TaskFilterModel): Observable<TaskViewModel[]>;
+    public abstract getFilteredAsync(filterModel: TaskFilterModel): Observable<TaskViewModel[]>;
 
-    addAsync(createModel: TaskCreateModel): Observable<TaskCreateResultModel>;
+    public abstract addAsync(createModel: TaskCreateModel): Observable<TaskCreateResultModel>;
 
-    updateAsync(updateModel: TaskUpdateModel): Observable<void>;
+    public abstract updateAsync(updateModel: TaskUpdateModel): Observable<void>;
 
-    deleteAsync(taskId: string): Observable<void>;
+    public abstract deleteAsync(taskId: string): Observable<void>;
 }
