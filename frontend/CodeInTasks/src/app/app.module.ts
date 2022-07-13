@@ -14,7 +14,7 @@ import apiServiceProviders from './web-api/service-providers';
     AppRoutingModule
   ],
   providers: [
-    ...apiServiceProviders
+    apiServiceProviders,
   ],
   bootstrap: [AppComponent]
 })

@@ -21,7 +21,7 @@ namespace CodeInTasks.Web.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("/signIn")]
+        [HttpPost("signIn")]
         public async Task<ActionResult<UserSignInResultModel>> SignInAsync(UserSignInModel signInModel)
         {
             var email = signInModel.Email;

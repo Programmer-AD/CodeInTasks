@@ -12,7 +12,7 @@ export default abstract class TaskServiceInterface {
 
     public abstract addAsync(createModel: TaskCreateModel): Observable<TaskCreateResultModel>;
 
-    public abstract updateAsync(updateModel: TaskUpdateModel): Observable<void>;
+    public abstract updateAsync(taskId: string, updateModel: TaskUpdateModel): Observable<unknown>;
 
-    public abstract deleteAsync(taskId: string): Observable<void>;
+    public abstract deleteAsync(taskId: string): Observable<unknown>;
 }
