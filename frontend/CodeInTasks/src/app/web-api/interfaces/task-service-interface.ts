@@ -1,11 +1,7 @@
 import { Observable } from "rxjs";
-import TaskCreateModel from "../models/task/task-create-model";
-import TaskCreateResultModel from "../models/task/task-create-result-model";
-import TaskFilterModel from "../models/task/task-filter-model";
-import TaskUpdateModel from "../models/task/task-update-model";
-import TaskViewModel from "../models/task/task-view-model";
+import { TaskCreateModel, TaskCreateResultModel, TaskFilterModel, TaskUpdateModel, TaskViewModel } from "../models/task"
 
-export default abstract class TaskServiceInterface {
+export abstract class TaskServiceInterface {
     public abstract getAsync(taskId: string): Observable<TaskViewModel>;
 
     public abstract getFilteredAsync(filterModel: TaskFilterModel): Observable<TaskViewModel[]>;

@@ -1,7 +1,7 @@
-import TaskSolutionResult from "../../enums/task-solution-result";
-import TaskSolutionStatus from "../../enums/task-solution-status";
+import { TaskSolutionResult, TaskSolutionStatus } from "../../enums";
 
-export default class SolutionViewModel {
+
+export class SolutionViewModel {
     public id: string = null!;
     public repositoryUrl: string = null!;
 

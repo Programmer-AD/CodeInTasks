@@ -1,10 +1,6 @@
 import { Provider } from "@angular/core"
-import SolutionServiceInterface from "./interfaces/solution-service-interface";
-import TaskServiceInterface from "./interfaces/task-service-interface";
-import UserServiceInterface from "./interfaces/user-service-interface";
-import SolutionService from "./services/solution.service";
-import TaskService from "./services/task.service";
-import UserService from "./services/user.service";
+import { SolutionServiceInterface, TaskServiceInterface, UserServiceInterface } from "./interfaces";
+import { SolutionService, TaskService, UserService } from "./services";
 
 const serviceProviders : Provider[] = [
     {provide: SolutionServiceInterface, useClass: SolutionService},

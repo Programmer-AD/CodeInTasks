@@ -1,7 +1,7 @@
-import RunnerType from "../../enums/runner-type";
-import TaskCategory from "../../enums/task-category";
+import { RunnerType, TaskCategory } from "../../enums";
 
-export default class TaskUpdateModel {
+
+export class TaskUpdateModel {
     public title: string = null!;
     public description: string = null!;
 

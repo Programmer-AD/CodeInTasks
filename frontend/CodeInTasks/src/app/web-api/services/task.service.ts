@@ -1,15 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import TaskServiceInterface from '../interfaces/task-service-interface';
-import TaskCreateModel from '../models/task/task-create-model';
-import TaskCreateResultModel from '../models/task/task-create-result-model';
-import TaskFilterModel from '../models/task/task-filter-model';
-import TaskUpdateModel from '../models/task/task-update-model';
-import TaskViewModel from '../models/task/task-view-model';
+import { TaskServiceInterface } from '../interfaces';
+import { TaskCreateModel, TaskCreateResultModel, TaskFilterModel, TaskUpdateModel, TaskViewModel } from '../models';
 
 @Injectable()
-export default class TaskService implements TaskServiceInterface {
+export class TaskService implements TaskServiceInterface {
   private static readonly basePath = "/api/task";
 
   constructor(private httpClient: HttpClient) { }

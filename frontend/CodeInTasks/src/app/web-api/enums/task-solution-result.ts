@@ -1,4 +1,4 @@
-enum TaskSolutionResult {
+export enum TaskSolutionResult {
     unknown,
 
     downloadError,
@@ -8,5 +8,3 @@ enum TaskSolutionResult {
     failed,
     completed
 }
-
-export default TaskSolutionResult;

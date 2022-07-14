@@ -1,5 +1,3 @@
-enum RunnerType {
-    Dotnet_6
+export enum RunnerType {
+    dotnet_6
 }
-
-export default RunnerType;

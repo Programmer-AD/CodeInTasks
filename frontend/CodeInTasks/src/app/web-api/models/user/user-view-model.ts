@@ -1,6 +1,6 @@
-import RoleEnum from "../../enums/role-enum";
+import { RoleEnum } from "../../enums";
 
-export default class UserViewModel {
+export class UserViewModel {
     public userId: string = null!;
     public name: string = null!;
     public roles: RoleEnum[] = [];

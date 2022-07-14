@@ -1,6 +1,6 @@
-import TaskSolutionResult from "../../enums/task-solution-result";
+import { TaskSolutionResult } from "../../enums";
 
-export default class SolutionFilterModel {
+export class SolutionFilterModel {
     public results: (TaskSolutionResult | null)[] = [];
     public taskId: string | null = null;
 

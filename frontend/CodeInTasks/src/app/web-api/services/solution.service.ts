@@ -1,14 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import SolutionServiceInterface from '../interfaces/solution-service-interface';
-import SolutionCreateModel from '../models/solution/solution-create-model';
-import SolutionCreateResultModel from '../models/solution/solution-create-result-model';
-import SolutionFilterModel from '../models/solution/solution-filter-model';
-import SolutionViewModel from '../models/solution/solution-view-model';
+import { SolutionServiceInterface } from '../interfaces';
+import { SolutionCreateModel, SolutionCreateResultModel, SolutionFilterModel, SolutionViewModel } from '../models';
 
 @Injectable()
-export default class SolutionService implements SolutionServiceInterface {
+export class SolutionService implements SolutionServiceInterface {
   private static readonly basePath = "/api/solution";
 
   constructor(private httpClient: HttpClient) { }

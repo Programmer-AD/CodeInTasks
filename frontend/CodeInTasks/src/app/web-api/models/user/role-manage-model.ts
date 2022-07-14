@@ -1,7 +1,7 @@
-import RoleEnum from "../../enums/role-enum";
+import { RoleEnum } from "../../enums";
 
-export default class RoleManageModel {
+export class RoleManageModel {
     public userId: string = null!;
     public role: RoleEnum = null!;
-    public isSetted : boolean = null!;
+    public isSetted: boolean = null!;
 }

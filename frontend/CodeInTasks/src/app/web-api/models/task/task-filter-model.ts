@@ -1,7 +1,6 @@
-import RunnerType from "../../enums/runner-type";
-import TaskCategory from "../../enums/task-category";
+import { RunnerType, TaskCategory } from "../../enums";
 
-export default class TaskFilterModel {
+export class TaskFilterModel {
     public categories: TaskCategory[] = [];
     public runners: RunnerType[] = [];
 

@@ -1,16 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
-import UserServiceInterface from '../interfaces/user-service-interface';
-import BanManageModel from '../models/user/ban-manage-model';
-import RoleManageModel from '../models/user/role-manage-model';
-import UserCreateModel from '../models/user/user-create-model';
-import UserSignInModel from '../models/user/user-sign-in-model';
-import UserSignInResultModel from '../models/user/user-sign-in-result-model';
-import UserViewModel from '../models/user/user-view-model';
+import { UserServiceInterface } from '../interfaces';
+import { BanManageModel, RoleManageModel, UserCreateModel, UserSignInModel, UserSignInResultModel, UserViewModel } from '../models';
 
 @Injectable()
-export default class UserService implements UserServiceInterface {
+export class UserService implements UserServiceInterface {
   private static readonly basePath = "/api/user";
 
   private accessTokenValue: string | null = null;
