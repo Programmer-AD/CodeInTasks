@@ -4,10 +4,7 @@ namespace CodeInTasks.Application.Filtration.Actions
 {
     internal static class TaskFiltrationActions
     {
-        internal static readonly IEnumerable<FiltrationAction<TaskFilterDto, TaskModel>> Actions
-            = new FiltrationAction<TaskFilterDto, TaskModel>[] { CreatorFilter, CategoryFilter, RunnerFilter, Ordering };
-
-        internal static void CreatorFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void CreatorFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
             var creatorId = filterDto.CreatorId;
 
@@ -17,7 +14,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        internal static void CategoryFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void CategoryFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
             var categories = filterDto.Categories;
 
@@ -27,7 +24,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        internal static void RunnerFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void RunnerFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
             var runners = filterDto.Runners;
 
@@ -37,7 +34,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        internal static void Ordering(TaskFilterDto _, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void Ordering(TaskFilterDto _, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
             pipelineResult.OrderFunction = taskQueryable => taskQueryable.OrderByDescending(x => x.CreateDate);
         }

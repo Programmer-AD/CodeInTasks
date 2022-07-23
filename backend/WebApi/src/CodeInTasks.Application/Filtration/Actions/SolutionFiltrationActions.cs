@@ -4,10 +4,7 @@ namespace CodeInTasks.Application.Filtration.Actions
 {
     internal static class SolutionFiltrationActions
     {
-        internal static readonly IEnumerable<FiltrationAction<SolutionFilterDto, Solution>> Actions
-            = new FiltrationAction<SolutionFilterDto, Solution>[] { SenderFilter, TaskFilter, ResultsFilter, Ordering };
-
-        internal static void SenderFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void SenderFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
         {
             var senderId = filterDto.SenderId;
 
@@ -17,7 +14,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        internal static void TaskFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void TaskFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
         {
             var taskId = filterDto.TaskId;
 
@@ -27,7 +24,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        internal static void ResultsFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void ResultsFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
         {
             var results = filterDto.Results;
 
@@ -37,7 +34,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        internal static void Ordering(SolutionFilterDto _, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void Ordering(SolutionFilterDto _, FiltrationPipelineResult<Solution> pipelineResult)
         {
             pipelineResult.OrderFunction = solutionQueryable => solutionQueryable.OrderByDescending(x => x.SendTime);
         }

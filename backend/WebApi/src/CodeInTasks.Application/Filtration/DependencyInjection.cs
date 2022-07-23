@@ -9,11 +9,20 @@ namespace CodeInTasks.Application.Filtration
     {
         internal static void AddFiltration(this IServiceCollection services)
         {
-            services.AddSingleton<IFiltrationPipeline<SolutionFilterDto, Solution>>(
-                _ => new FiltrationPipeline<SolutionFilterDto, Solution>(SolutionFiltrationActions.Actions));
+            services.AddSingleton(
+                _ => MakePipelineFromActionContainer<SolutionFilterDto, Solution>(typeof(SolutionFiltrationActions)));
 
-            services.AddSingleton<IFiltrationPipeline<TaskFilterDto, TaskModel>>(
-                _ => new FiltrationPipeline<TaskFilterDto, TaskModel>(TaskFiltrationActions.Actions));
+            services.AddSingleton(
+                _ => MakePipelineFromActionContainer<TaskFilterDto, TaskModel>(typeof(TaskFiltrationActions)));
+        }
+
+        private static IFiltrationPipeline<TFilterDto, TEntity> MakePipelineFromActionContainer<TFilterDto, TEntity>(Type containerType)
+        {
+            var actions = FiltrationActionsHelper.GetActions<TFilterDto, TEntity>(containerType);
+
+            var pipeline = new FiltrationPipeline<TFilterDto, TEntity>(actions);
+
+            return pipeline;
         }
     }
 }
