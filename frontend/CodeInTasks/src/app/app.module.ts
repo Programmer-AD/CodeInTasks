@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import apiServiceProviders from './web-api/service-providers';
+import { interceptorProviders } from './web-api/interceptors/interceptor-providers';
+import { serviceProviders } from './web-api/services/service-providers';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import apiServiceProviders from './web-api/service-providers';
     AppRoutingModule
   ],
   providers: [
-    apiServiceProviders,
+    serviceProviders,
+    interceptorProviders
   ],
   bootstrap: [AppComponent]
 })

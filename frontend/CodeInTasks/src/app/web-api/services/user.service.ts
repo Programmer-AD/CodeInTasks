@@ -32,7 +32,7 @@ export class UserService implements UserServiceInterface {
 
   public signInAsync(signInModel: UserSignInModel): Observable<UserSignInResultModel> {
     return this.httpClient.post<UserSignInResultModel>(`${UserService.basePath}/signIn`, signInModel)
-      .pipe(map(this.saveSignInResult.bind(this)));
+      .pipe(map(this.saveSignInResult));
   }
 
   public signOutAsync(): Observable<unknown> {
@@ -59,7 +59,7 @@ export class UserService implements UserServiceInterface {
     return this.httpClient.put(`${UserService.basePath}/ban`, banManageModel);
   }
 
-  private saveSignInResult(signInResult: UserSignInResultModel) : UserSignInResultModel {
+  private saveSignInResult(signInResult: UserSignInResultModel): UserSignInResultModel {
     this.accessToken = signInResult.token;
     this.currentUser = signInResult.user;
     this.tokenExpires = signInResult.expirationDate;
