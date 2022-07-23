@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, map, Observable } from 'rxjs';
 import { UserServiceInterface } from '../interfaces';
 import { BanManageModel, RoleManageModel, UserCreateModel, UserSignInModel, UserSignInResultModel, UserViewModel } from '../models';
 
@@ -9,6 +9,7 @@ export class UserService implements UserServiceInterface {
   private static readonly basePath = "/api/user";
 
   private accessTokenValue: string | null = null;
+  private tokenExpires: Date | null = null;
   private currentUserValue: UserViewModel | null = null;
 
   constructor(private httpClient: HttpClient) { }
@@ -30,11 +31,13 @@ export class UserService implements UserServiceInterface {
   }
 
   public signInAsync(signInModel: UserSignInModel): Observable<UserSignInResultModel> {
-    return this.httpClient.post<UserSignInResultModel>(`${UserService.basePath}/signIn`, signInModel);
+    return this.httpClient.post<UserSignInResultModel>(`${UserService.basePath}/signIn`, signInModel)
+      .pipe(map(this.saveSignInResult.bind(this)));
   }
 
   public signOutAsync(): Observable<unknown> {
     this.accessToken = null;
+    this.tokenExpires = null;
     this.currentUser = null;
 
     return EMPTY;
@@ -54,5 +57,13 @@ export class UserService implements UserServiceInterface {
 
   public setBanAsync(banManageModel: BanManageModel): Observable<unknown> {
     return this.httpClient.put(`${UserService.basePath}/ban`, banManageModel);
+  }
+
+  private saveSignInResult(signInResult: UserSignInResultModel) : UserSignInResultModel {
+    this.accessToken = signInResult.token;
+    this.currentUser = signInResult.user;
+    this.tokenExpires = signInResult.expirationDate;
+
+    return signInResult;
   }
 }
