@@ -58,9 +58,9 @@ namespace CodeInTasks.Infrastructure.Identity
 
                 var result = new UserSignInResultDto()
                 {
-                    UserId = user.Id,
+                    Token = tokenString,
                     ExpirationDate = expires,
-                    Token = tokenString
+                    User = await MapUserData(user),
                 };
 
                 return result;
@@ -74,10 +74,7 @@ namespace CodeInTasks.Infrastructure.Identity
         public async Task<UserData> GetUserInfoAsync(Guid userId)
         {
             var user = await GetUserByIdAsync(userId);
-            var roles = await userManager.GetRolesAsync(user);
-
-            var userData = user.UserData;
-            userData.Roles = roles.Select(x => Enum.Parse<RoleEnum>(x));
+            var userData = await MapUserData(user);
 
             return userData;
         }
@@ -125,6 +122,16 @@ namespace CodeInTasks.Infrastructure.Identity
             var user = await userManager.FindByIdAsync(idString);
 
             return user ?? throw new EntityNotFoundException(nameof(User), userId);
+        }
+
+        private async Task<UserData> MapUserData(User user)
+        {
+            var roles = await userManager.GetRolesAsync(user);
+
+            var userData = user.UserData;
+            userData.Roles = roles.Select(x => Enum.Parse<RoleEnum>(x));
+
+            return userData;
         }
 
         private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
