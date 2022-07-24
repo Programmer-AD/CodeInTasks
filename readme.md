@@ -5,7 +5,7 @@ Site with coding tasks with such types:
 - Implement functions
 - Add part of functions
 - Fix bug
-- Add tests
+- Add tests (planned)
 
 \* Task can contain description of required actions or just provide code
 
@@ -28,6 +28,6 @@ Functions by roles descibed [here](./docs/roleFunctions.md)
 
 ### Frontend
 
-- Angular 13
+- Angular 14
 - Karma test runner
 - Jasmine test framework
