@@ -5,10 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { interceptorProviders } from './web-api/interceptors/interceptor-providers';
 import { serviceProviders } from './web-api/services/service-providers';
+import { AppHeaderComponent } from './common/app-header/app-header.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppHeaderComponent,
   ],
   imports: [
     BrowserModule,
