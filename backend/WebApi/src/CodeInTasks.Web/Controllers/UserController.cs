@@ -29,9 +29,9 @@ namespace CodeInTasks.Web.Controllers
 
             var signInResult = await identityService.SignInAsync(email, password);
 
-            if (signInResult.IsSucceeded)
+            if (signInResult != null)
             {
-                var result = mapper.Map<UserSignInResultModel>(signInModel);
+                var result = mapper.Map<UserSignInResultModel>(signInResult);
 
                 return Ok(result);
             }
@@ -53,7 +53,7 @@ namespace CodeInTasks.Web.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("info/{username}")]
+        [HttpGet("{userId}")]
         public async Task<ActionResult<UserViewModel>> GetUserInfoAsync(Guid userId)
         {
             var userViewDto = await identityService.GetUserInfoAsync(userId);
@@ -98,7 +98,8 @@ namespace CodeInTasks.Web.Controllers
         private bool CanSetRole(RoleEnum role)
         {
             return User.IsInRole(RoleNames.Admin)
-                || User.IsInRole(RoleNames.Manager) && role == RoleEnum.Creator;
+                || User.IsInRole(RoleNames.Manager)
+                && role == RoleEnum.Creator;
         }
     }
 }
