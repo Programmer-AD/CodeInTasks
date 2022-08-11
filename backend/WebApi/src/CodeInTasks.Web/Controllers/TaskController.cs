@@ -98,7 +98,8 @@ namespace CodeInTasks.Web.Controllers
             var userId = User.GetUserId();
 
             var result = User.IsInRole(RoleNames.Manager)
-                || User.IsInRole(RoleNames.Creator) && await taskService.IsOwnerAsync(taskId, userId);
+                || User.IsInRole(RoleNames.Creator)
+                && await taskService.IsOwnerAsync(taskId, userId);
 
             return result;
         }

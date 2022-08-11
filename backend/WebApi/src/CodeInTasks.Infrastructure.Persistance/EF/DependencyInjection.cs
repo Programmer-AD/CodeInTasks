@@ -7,7 +7,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
 {
     internal static class DependencyInjection
     {
-        internal static void AddEfPersistance(this IServiceCollection services, IConfiguration config)
+        public static void AddEfPersistance(this IServiceCollection services, IConfiguration config)
         {
             var sqlConnectionString = config.GetConnectionString(ConfigConstants.SqlConnectionString);
             var migrationAssemblyName = ConfigConstants.MigrationAssemblyName;

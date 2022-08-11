@@ -1,4 +1,5 @@
-﻿using CodeInTasks.Application.Enqueuers;
+﻿using CodeInTasks.Application.AccessDecorators;
+using CodeInTasks.Application.Enqueuers;
 using CodeInTasks.Application.Filtration;
 using CodeInTasks.Application.Services;
 using Microsoft.Extensions.Configuration;
@@ -11,6 +12,7 @@ namespace CodeInTasks.Application
         public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration config)
         {
             services.AddServices();
+            services.AddAccessDecorators();
             services.AddEnqueuers();
             services.AddFiltration();
 

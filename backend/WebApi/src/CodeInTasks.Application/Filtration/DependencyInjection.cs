@@ -7,7 +7,7 @@ namespace CodeInTasks.Application.Filtration
 {
     internal static class DependencyInjection
     {
-        internal static void AddFiltration(this IServiceCollection services)
+        public static void AddFiltration(this IServiceCollection services)
         {
             services.AddSingleton(
                 _ => MakePipelineFromActionContainer<SolutionFilterDto, Solution>(typeof(SolutionFiltrationActions)));

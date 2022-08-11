@@ -11,7 +11,7 @@ namespace CodeInTasks.Infrastructure.Identity
 {
     internal static class DependencyInjection
     {
-        internal static void AddIdentity(this IServiceCollection services, IConfiguration config)
+        public static void AddIdentity(this IServiceCollection services, IConfiguration config)
         {
             var jwtAuthOptions = new JwtAuthOptions();
             config.Bind(ConfigConstants.JwtAuthOptionsSection, jwtAuthOptions);
