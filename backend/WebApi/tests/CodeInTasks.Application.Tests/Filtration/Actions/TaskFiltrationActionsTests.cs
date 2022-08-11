@@ -1,29 +1,29 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Task;
-using CodeInTasks.Application.Filtration;
+﻿using CodeInTasks.Application.Filtration;
 using CodeInTasks.Application.Filtration.Actions;
+using CodeInTasks.WebApi.Models.Task;
 
 namespace CodeInTasks.Application.Tests.Filtration.Actions
 {
     [TestFixture]
     public class TaskFiltrationActionsTests
     {
-        private TaskFilterDto filterDto;
+        private TaskFilterModel filterModel;
         private FiltrationPipelineResult<TaskModel> pipelineResult;
 
         [SetUp]
         public void SetUp()
         {
-            filterDto = new();
+            filterModel = new();
             pipelineResult = new();
         }
 
         [Test]
         public void CreatorFilter_WhenCreatorIdIsNull_DontSetFilterExpression()
         {
-            filterDto.CreatorId = null;
+            filterModel.CreatorId = null;
 
 
-            TaskFiltrationActions.CreatorFilter(filterDto, pipelineResult);
+            TaskFiltrationActions.CreatorFilter(filterModel, pipelineResult);
 
 
             pipelineResult.FilterExpression.Should().BeNull();
@@ -32,10 +32,10 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void CreatorFilter_WhenCreatorIdNotNull_SetFilterExpression()
         {
-            filterDto.CreatorId = Guid.NewGuid();
+            filterModel.CreatorId = Guid.NewGuid();
 
 
-            TaskFiltrationActions.CreatorFilter(filterDto, pipelineResult);
+            TaskFiltrationActions.CreatorFilter(filterModel, pipelineResult);
 
 
             pipelineResult.FilterExpression.Should().NotBeNull();
@@ -44,10 +44,10 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void CategoryFilter_WhenCategoriesIsEmpty_DontSetFilterExpression()
         {
-            filterDto.Categories = Array.Empty<TaskCategory>();
+            filterModel.Categories = Array.Empty<TaskCategory>();
 
 
-            TaskFiltrationActions.CategoryFilter(filterDto, pipelineResult);
+            TaskFiltrationActions.CategoryFilter(filterModel, pipelineResult);
 
 
             pipelineResult.FilterExpression.Should().BeNull();
@@ -56,10 +56,10 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void CategoryFilter_WhenCategoriesIsNotEmpty_SetFilterExpression()
         {
-            filterDto.Categories = new[] { TaskCategory.Implement };
+            filterModel.Categories = new[] { TaskCategory.Implement };
 
 
-            TaskFiltrationActions.CategoryFilter(filterDto, pipelineResult);
+            TaskFiltrationActions.CategoryFilter(filterModel, pipelineResult);
 
 
             pipelineResult.FilterExpression.Should().NotBeNull();
@@ -68,10 +68,10 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void RunnerFilter_WhenRunnersIsEmpty_DontSetFilterExpression()
         {
-            filterDto.Runners = Array.Empty<RunnerType>();
+            filterModel.Runners = Array.Empty<RunnerType>();
 
 
-            TaskFiltrationActions.RunnerFilter(filterDto, pipelineResult);
+            TaskFiltrationActions.RunnerFilter(filterModel, pipelineResult);
 
 
             pipelineResult.FilterExpression.Should().BeNull();
@@ -80,10 +80,10 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void RunnerFilter_WhenCategoriesIsNotEmpty_SetFilterExpression()
         {
-            filterDto.Runners = new[] { RunnerType.Dotnet_6 };
+            filterModel.Runners = new[] { RunnerType.Dotnet_6 };
 
 
-            TaskFiltrationActions.RunnerFilter(filterDto, pipelineResult);
+            TaskFiltrationActions.RunnerFilter(filterModel, pipelineResult);
 
 
             pipelineResult.FilterExpression.Should().NotBeNull();
@@ -92,7 +92,7 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
         [Test]
         public void Ordering_SetsOrderFunction()
         {
-            TaskFiltrationActions.Ordering(filterDto, pipelineResult);
+            TaskFiltrationActions.Ordering(filterModel, pipelineResult);
 
 
             pipelineResult.OrderFunction.Should().NotBeNull();

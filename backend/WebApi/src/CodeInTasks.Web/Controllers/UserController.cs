@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.User;
 using CodeInTasks.WebApi.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,9 +42,9 @@ namespace CodeInTasks.Web.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(UserCreateModel userCreateModel)
         {
-            var userCreateDto = mapper.Map<UserCreateDto>(userCreateModel);
+            var userCreateModel = mapper.Map<UserCreateModel>(userCreateModel);
 
-            await userService.CreateAsync(userCreateDto);
+            await userService.CreateAsync(userCreateModel);
 
             return Ok();
         }
@@ -54,9 +53,9 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserViewModel>> GetAsync(Guid userId)
         {
-            var userViewDto = await userService.GetAsync(userId);
+            var userViewModel = await userService.GetAsync(userId);
 
-            var userViewModel = mapper.Map<UserViewModel>(userViewDto);
+            var userViewModel = mapper.Map<UserViewModel>(userViewModel);
 
             return Ok(userViewModel);
         }

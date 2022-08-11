@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
-using CodeInTasks.Application.Abstractions;
-using CodeInTasks.Application.Abstractions.Dtos.User;
 using CodeInTasks.Application.Abstractions.Interfaces.Services;
 using CodeInTasks.Domain.Enums;
 using CodeInTasks.Domain.Models;
 using CodeInTasks.Web.Controllers;
 using CodeInTasks.WebApi.Models.User;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Tests.Controllers
@@ -20,10 +14,8 @@ namespace CodeInTasks.Web.Tests.Controllers
     {
         private static readonly Guid userId = Guid.NewGuid();
         private static readonly UserSignInModel userSignInModel = new();
-        private static readonly UserSignInResultDto userSignInResultDto = new();
         private static readonly UserSignInResultModel userSignInResultModel = new();
         private static readonly UserCreateModel userCreateModel = new();
-        private static readonly UserCreateDto userCreateDto = new();
         private static readonly UserData userData = new();
         private static readonly UserViewModel userViewModel = new();
         private static readonly BanManageModel banManageModel = new();
@@ -79,7 +71,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.RegisterAsync(userCreateModel);
 
 
-            userServiceMock.Verify(x => x.CreateAsync(It.IsAny<UserCreateDto>()), Times.Once);
+            userServiceMock.Verify(x => x.CreateAsync(It.IsAny<UserCreateModel>()), Times.Once);
         }
 
         [Test]
@@ -112,12 +104,12 @@ namespace CodeInTasks.Web.Tests.Controllers
         private void SetupMappings()
         {
             mapperMock
-                .Setup(x => x.Map<UserSignInResultModel>(It.IsAny<UserSignInResultDto>()))
+                .Setup(x => x.Map<UserSignInResultModel>(It.IsAny<UserSignInResultModel>()))
                 .Returns(userSignInResultModel);
 
             mapperMock
-                .Setup(x => x.Map<UserCreateDto>(It.IsAny<UserCreateModel>()))
-                .Returns(userCreateDto);
+                .Setup(x => x.Map<UserCreateModel>(It.IsAny<UserCreateModel>()))
+                .Returns(userCreateModel);
 
             mapperMock
                 .Setup(x => x.Map<UserViewModel>(It.IsAny<UserData>()))
@@ -126,7 +118,7 @@ namespace CodeInTasks.Web.Tests.Controllers
 
         private void SetupServiceSignInResult(bool success)
         {
-            var result = success ? userSignInResultDto : null;
+            var result = success ? userSignInResultModel : null;
 
             userServiceMock
                 .Setup(x => x.SignInAsync(It.IsAny<string>(), It.IsAny<string>()))

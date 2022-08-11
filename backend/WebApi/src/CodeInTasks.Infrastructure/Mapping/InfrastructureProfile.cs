@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Infrastructure.Mapping
 {
@@ -12,7 +12,7 @@ namespace CodeInTasks.Infrastructure.Mapping
 
         private void CreateUserMaps()
         {
-            CreateMap<UserCreateDto, UserData>();
+            CreateMap<UserCreateModel, UserData>();
         }
     }
 }

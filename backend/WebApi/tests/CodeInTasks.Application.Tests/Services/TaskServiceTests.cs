@@ -1,11 +1,10 @@
 ﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
 using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 using CodeInTasks.Application.Services;
-using CodeInTasks.Shared.TestHelpers;
+using CodeInTasks.WebApi.Models.Task;
 
 namespace CodeInTasks.Application.Tests.Services
 {
@@ -15,13 +14,13 @@ namespace CodeInTasks.Application.Tests.Services
         private static readonly Guid taskId = Guid.NewGuid();
         private static readonly Guid userId = Guid.NewGuid();
         private static readonly TaskModel taskModel = new();
-        private static readonly TaskCreateDto taskCreateDto = new();
-        private static readonly TaskUpdateDto taskUpdateDto = new();
-        private static readonly TaskFilterDto filterDto = new();
+        private static readonly TaskCreateModel taskCreateModel = new();
+        private static readonly TaskUpdateModel taskUpdateModel = new();
+        private static readonly TaskFilterModel filterModel = new();
 
 
         private Mock<IRepository<TaskModel>> taskRepositoryMock;
-        private Mock<IFiltrationPipeline<TaskFilterDto, TaskModel>> filtrationPipelineMock;
+        private Mock<IFiltrationPipeline<TaskFilterModel, TaskModel>> filtrationPipelineMock;
         private Mock<IMapper> mapperMock;
 
         private TaskService taskService;
@@ -43,9 +42,9 @@ namespace CodeInTasks.Application.Tests.Services
         }
 
         [Test]
-        public async Task AddAsync_AddToRepository()
+        public async Task AddAsync_AdModelRepository()
         {
-            await taskService.AddAsync(taskCreateDto);
+            await taskService.AddAsync(taskCreateModel);
 
 
             taskRepositoryMock.Verify(x => x.AddAsync(It.IsAny<TaskModel>()));
@@ -86,16 +85,16 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task GetFilteredAsync_UseFiltrationPipeline()
         {
-            await taskService.GetFilteredAsync(filterDto);
+            await taskService.GetFilteredAsync(filterModel);
 
 
-            filtrationPipelineMock.Verify(x => x.GetResult(It.IsAny<TaskFilterDto>()), Times.Once);
+            filtrationPipelineMock.Verify(x => x.GetResult(It.IsAny<TaskFilterModel>()), Times.Once);
         }
 
         [Test]
         public async Task GetFilteredAsync_GetFilteredFromRepository()
         {
-            await taskService.GetFilteredAsync(filterDto);
+            await taskService.GetFilteredAsync(filterModel);
 
 
             taskRepositoryMock.Verify(x => x.GetFilteredAsync(It.IsAny<RepositoryFilter<TaskModel>>()), Times.Once);
@@ -139,7 +138,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntity(false);
 
 
-            await taskService.Invoking(x => x.UpdateAsync(taskUpdateDto))
+            await taskService.Invoking(x => x.UpdateAsync(taskUpdateModel))
                 .Should().ThrowAsync<EntityNotFoundException>();
         }
 
@@ -149,7 +148,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntity(false);
 
 
-            await CallHelpers.ForceCallAsync<EntityNotFoundException>(() => taskService.UpdateAsync(taskUpdateDto));
+            await CallHelpers.ForceCallAsync<EntityNotFoundException>(() => taskService.UpdateAsync(taskUpdateModel));
 
 
             taskRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<TaskModel>()), Times.Never);
@@ -161,7 +160,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntity(true);
 
 
-            await taskService.Invoking(x => x.UpdateAsync(taskUpdateDto))
+            await taskService.Invoking(x => x.UpdateAsync(taskUpdateModel))
                 .Should().NotThrowAsync();
         }
 
@@ -171,7 +170,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntity(true);
 
 
-            await taskService.UpdateAsync(taskUpdateDto);
+            await taskService.UpdateAsync(taskUpdateModel);
 
 
             taskRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<TaskModel>()), Times.Once);
@@ -190,7 +189,7 @@ namespace CodeInTasks.Application.Tests.Services
         private void SetupMappings()
         {
             mapperMock
-                .Setup(x => x.Map<TaskModel>(It.IsAny<TaskCreateDto>()))
+                .Setup(x => x.Map<TaskModel>(It.IsAny<TaskCreateModel>()))
                 .Returns(taskModel);
         }
 

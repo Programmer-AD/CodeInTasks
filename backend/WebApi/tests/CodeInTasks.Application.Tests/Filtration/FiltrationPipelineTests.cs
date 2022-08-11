@@ -8,7 +8,7 @@ namespace CodeInTasks.Application.Tests.Filtration
     [TestFixture]
     public class FiltrationPipelineTests
     {
-        private static readonly object filterDto = new();
+        private static readonly object filterModel = new();
 
         private List<FiltrationAction<object, TestModel>> filtrationActions;
 
@@ -25,7 +25,7 @@ namespace CodeInTasks.Application.Tests.Filtration
         [Test]
         public void GetResult_WhenNoActionsProvidden_ReturnsEmptyResult()
         {
-            var result = filtrationPipeline.GetResult(filterDto);
+            var result = filtrationPipeline.GetResult(filterModel);
 
 
             result.Should().NotBeNull();
@@ -45,7 +45,7 @@ namespace CodeInTasks.Application.Tests.Filtration
             }
 
 
-            var result = filtrationPipeline.GetResult(filterDto);
+            var result = filtrationPipeline.GetResult(filterModel);
 
 
             invokedCount.Should().Be(actionCount);
@@ -64,7 +64,7 @@ namespace CodeInTasks.Application.Tests.Filtration
             }
 
 
-            var result = filtrationPipeline.GetResult(filterDto);
+            var result = filtrationPipeline.GetResult(filterModel);
 
 
             keptActionOrder.Should().BeTrue();
@@ -81,7 +81,7 @@ namespace CodeInTasks.Application.Tests.Filtration
             filtrationActions.Add(OrderAction);
 
 
-            var result = filtrationPipeline.GetResult(filterDto);
+            var result = filtrationPipeline.GetResult(filterModel);
 
 
             result.FilterExpression.Should().NotBeNull();

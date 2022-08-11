@@ -1,12 +1,12 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Task;
+﻿using CodeInTasks.WebApi.Models.Task;
 
 namespace CodeInTasks.Application.Filtration.Actions
 {
     internal static class TaskFiltrationActions
     {
-        public static void CreatorFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void CreatorFilter(TaskFilterModel filterModel, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
-            var creatorId = filterDto.CreatorId;
+            var creatorId = filterModel.CreatorId;
 
             if (creatorId.HasValue)
             {
@@ -14,9 +14,9 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        public static void CategoryFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void CategoryFilter(TaskFilterModel filterModel, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
-            var categories = filterDto.Categories;
+            var categories = filterModel.Categories;
 
             if (categories.Any())
             {
@@ -24,9 +24,9 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        public static void RunnerFilter(TaskFilterDto filterDto, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void RunnerFilter(TaskFilterModel filterModel, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
-            var runners = filterDto.Runners;
+            var runners = filterModel.Runners;
 
             if (runners.Any())
             {
@@ -34,7 +34,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        public static void Ordering(TaskFilterDto _, FiltrationPipelineResult<TaskModel> pipelineResult)
+        public static void Ordering(TaskFilterModel _, FiltrationPipelineResult<TaskModel> pipelineResult)
         {
             pipelineResult.OrderFunction = taskQueryable => taskQueryable.OrderByDescending(x => x.CreateDate);
         }

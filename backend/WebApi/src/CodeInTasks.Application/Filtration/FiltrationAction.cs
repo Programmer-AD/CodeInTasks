@@ -1,4 +1,4 @@
 ﻿namespace CodeInTasks.Application.Filtration
 {
-    internal delegate void FiltrationAction<TFilterDto, TEntity>(TFilterDto filterDto, FiltrationPipelineResult<TEntity> pipelineResult);
+    internal delegate void FiltrationAction<TFilterModel, TEntity>(TFilterModel filterModel, FiltrationPipelineResult<TEntity> pipelineResult);
 }

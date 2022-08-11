@@ -1,11 +1,11 @@
 ﻿using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
 using CodeInTasks.Application.Abstractions.Interfaces.Enqueuers;
 using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 using CodeInTasks.Application.Services;
+using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Application.Tests.Services
 {
@@ -13,16 +13,15 @@ namespace CodeInTasks.Application.Tests.Services
     public class SolutionServiceTests
     {
         private static readonly Guid solutionId = Guid.NewGuid();
-        private static readonly SolutionCreateDto solutionCreateDto = new();
+        private static readonly SolutionCreateModel solutionCreateModel = new();
         private static readonly Solution solution = new();
-        private static readonly SolutionQueueDto solutionQueueDto = new();
-        private static readonly SolutionStatusUpdateDto statusUpdateDto = new();
-        private static readonly SolutionFilterDto filterDto = new();
+        private static readonly SolutionStatusUpdateModel statusUpdateModel = new();
+        private static readonly SolutionFilterModel filterModel = new();
 
 
         private Mock<IRepository<Solution>> solutionRepositoryMock;
         private Mock<ISolutionCheckEnqueuer> checkQueueMock;
-        private Mock<IFiltrationPipeline<SolutionFilterDto, Solution>> filtrationPipelineMock;
+        private Mock<IFiltrationPipeline<SolutionFilterModel, Solution>> filtrationPipelineMock;
         private Mock<IMapper> mapperMock;
 
         private SolutionService solutionService;
@@ -51,17 +50,17 @@ namespace CodeInTasks.Application.Tests.Services
             SetSolutionAlreadyQueued(true);
 
 
-            await solutionService.Invoking(x => x.AddAsync(solutionCreateDto))
+            await solutionService.Invoking(x => x.AddAsync(solutionCreateModel))
                 .Should().ThrowAsync<SolutionAlreadyQueuedException>();
         }
 
         [Test]
-        public async Task AddAsync_WhenSolutionAlreadyQueued_DontAddToRepository()
+        public async Task AddAsync_WhenSolutionAlreadyQueued_DontAdModelRepository()
         {
             SetSolutionAlreadyQueued(true);
 
 
-            await CallHelpers.ForceCallAsync<SolutionAlreadyQueuedException>(() => solutionService.AddAsync(solutionCreateDto));
+            await CallHelpers.ForceCallAsync<SolutionAlreadyQueuedException>(() => solutionService.AddAsync(solutionCreateModel));
 
 
             solutionRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Solution>()), Times.Never);
@@ -73,10 +72,10 @@ namespace CodeInTasks.Application.Tests.Services
             SetSolutionAlreadyQueued(true);
 
 
-            await CallHelpers.ForceCallAsync<SolutionAlreadyQueuedException>(() => solutionService.AddAsync(solutionCreateDto));
+            await CallHelpers.ForceCallAsync<SolutionAlreadyQueuedException>(() => solutionService.AddAsync(solutionCreateModel));
 
 
-            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<SolutionQueueDto>()), Times.Never);
+            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<SolutionQueueModel>()), Times.Never);
         }
 
         [Test]
@@ -85,17 +84,17 @@ namespace CodeInTasks.Application.Tests.Services
             SetSolutionAlreadyQueued(false);
 
 
-            await solutionService.Invoking(x => x.AddAsync(solutionCreateDto))
+            await solutionService.Invoking(x => x.AddAsync(solutionCreateModel))
                 .Should().NotThrowAsync();
         }
 
         [Test]
-        public async Task AddAsync_AddToRepository()
+        public async Task AddAsync_AdModelRepository()
         {
             SetSolutionAlreadyQueued(false);
 
 
-            await solutionService.AddAsync(solutionCreateDto);
+            await solutionService.AddAsync(solutionCreateModel);
 
 
             solutionRepositoryMock.Verify(x => x.AddAsync(It.IsAny<Solution>()), Times.Once);
@@ -107,25 +106,25 @@ namespace CodeInTasks.Application.Tests.Services
             SetSolutionAlreadyQueued(false);
 
 
-            await solutionService.AddAsync(solutionCreateDto);
+            await solutionService.AddAsync(solutionCreateModel);
 
 
-            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<SolutionQueueDto>()), Times.Once);
+            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<SolutionQueueModel>()), Times.Once);
         }
 
         [Test]
         public async Task GetFilteredAsync_UseFiltrationPipeline()
         {
-            await solutionService.GetFilteredAsync(filterDto);
+            await solutionService.GetFilteredAsync(filterModel);
 
 
-            filtrationPipelineMock.Verify(x => x.GetResult(It.IsAny<SolutionFilterDto>()), Times.Once);
+            filtrationPipelineMock.Verify(x => x.GetResult(It.IsAny<SolutionFilterModel>()), Times.Once);
         }
 
         [Test]
         public async Task GetFilteredAsync_GetFilteredFromRepository()
         {
-            await solutionService.GetFilteredAsync(filterDto);
+            await solutionService.GetFilteredAsync(filterModel);
 
 
             solutionRepositoryMock.Verify(x => x.GetFilteredAsync(It.IsAny<RepositoryFilter<Solution>>()), Times.Once);
@@ -169,7 +168,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntityById(false);
 
 
-            await solutionService.Invoking(x => x.UpdateStatusAsync(statusUpdateDto))
+            await solutionService.Invoking(x => x.UpdateStatusAsync(statusUpdateModel))
                 .Should().ThrowAsync<EntityNotFoundException>();
         }
 
@@ -179,7 +178,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntityById(false);
 
 
-            await CallHelpers.ForceCallAsync<EntityNotFoundException>(() => solutionService.UpdateStatusAsync(statusUpdateDto));
+            await CallHelpers.ForceCallAsync<EntityNotFoundException>(() => solutionService.UpdateStatusAsync(statusUpdateModel));
 
 
             solutionRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Solution>()), Times.Never);
@@ -191,7 +190,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntityById(true);
 
 
-            await solutionService.Invoking(x => x.UpdateStatusAsync(statusUpdateDto))
+            await solutionService.Invoking(x => x.UpdateStatusAsync(statusUpdateModel))
                 .Should().NotThrowAsync();
         }
 
@@ -201,7 +200,7 @@ namespace CodeInTasks.Application.Tests.Services
             SetCanFoundEntityById(true);
 
 
-            await solutionService.UpdateStatusAsync(statusUpdateDto);
+            await solutionService.UpdateStatusAsync(statusUpdateModel);
 
 
             solutionRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Solution>()), Times.Once);
@@ -211,12 +210,12 @@ namespace CodeInTasks.Application.Tests.Services
         private void SetupMappings()
         {
             mapperMock
-                .Setup(x => x.Map<Solution>(It.IsAny<SolutionCreateDto>()))
+                .Setup(x => x.Map<Solution>(It.IsAny<SolutionCreateModel>()))
                 .Returns(solution);
 
             mapperMock
-                .Setup(x => x.Map<SolutionQueueDto>(It.IsAny<Solution>()))
-                .Returns(solutionQueueDto);
+                .Setup(x => x.Map<SolutionQueueModel>(It.IsAny<Solution>()))
+                .Returns(solutionQueueModel);
         }
 
         private void SetSolutionAlreadyQueued(bool isQueued)

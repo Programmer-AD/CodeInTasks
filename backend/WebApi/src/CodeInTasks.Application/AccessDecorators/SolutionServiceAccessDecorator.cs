@@ -1,5 +1,5 @@
 ﻿using CodeInTasks.Application.Abstractions;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
+using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Application.AccessDecorators
 {
@@ -16,9 +16,9 @@ namespace CodeInTasks.Application.AccessDecorators
             this.currentUser = currentUser;
         }
 
-        public Task<Guid> AddAsync(SolutionCreateDto solutionCreateDto)
+        public Task<Guid> AddAsync(SolutionCreateModel solutionCreateModel)
         {
-            return solutionService.AddAsync(solutionCreateDto);
+            return solutionService.AddAsync(solutionCreateModel);
         }
 
         public Task<Solution> GetAsync(Guid solutionId)
@@ -26,16 +26,16 @@ namespace CodeInTasks.Application.AccessDecorators
             return solutionService.GetAsync(solutionId);
         }
 
-        public Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterDto filterDto)
+        public Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterModel filterModel)
         {
-            return solutionService.GetFilteredAsync(filterDto);
+            return solutionService.GetFilteredAsync(filterModel);
         }
 
-        public Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto)
+        public Task UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
             if (currentUser.IsInRole(RoleNames.Builder))
             {
-                return solutionService.UpdateStatusAsync(statusUpdateDto);
+                return solutionService.UpdateStatusAsync(statusUpdateModel);
             }
             else
             {

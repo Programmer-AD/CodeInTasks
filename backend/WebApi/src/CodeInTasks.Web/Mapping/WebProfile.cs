@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
-using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.Application.Abstractions.Models.Solution;
+using CodeInTasks.Application.Abstractions.Models.Task;
+using CodeInTasks.Application.Abstractions.Models.User;
 using CodeInTasks.Domain.Models;
 using CodeInTasks.WebApi.Models.Solution;
 using CodeInTasks.WebApi.Models.Task;
@@ -13,35 +13,9 @@ namespace CodeInTasks.Web.Mapping
     {
         public WebProfile()
         {
-            CreateSolutionMaps();
-            CreateTaskMaps();
-            CreateUserMaps();
-        }
-
-        private void CreateSolutionMaps()
-        {
-            CreateMap<SolutionCreateModel, SolutionCreateDto>();
             CreateMap<Solution, SolutionViewModel>();
-
-            CreateMap<SolutionFilterModel, SolutionFilterDto>();
-            CreateMap<SolutionStatusUpdateModel, SolutionStatusUpdateDto>();
-        }
-
-        private void CreateTaskMaps()
-        {
-            CreateMap<TaskCreateModel, TaskCreateDto>();
             CreateMap<TaskModel, TaskViewModel>();
-
-            CreateMap<TaskFilterModel, TaskFilterDto>();
-            CreateMap<TaskUpdateModel, TaskUpdateDto>();
-        }
-
-        private void CreateUserMaps()
-        {
-            CreateMap<UserCreateModel, UserCreateDto>();
             CreateMap<UserData, UserViewModel>();
-
-            CreateMap<UserSignInResultDto, UserSignInResultModel>();
         }
     }
 }

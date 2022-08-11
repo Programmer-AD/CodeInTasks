@@ -1,6 +1,6 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
-using CodeInTasks.Application.Filtration.Actions;
+﻿using CodeInTasks.Application.Filtration.Actions;
+using CodeInTasks.WebApi.Models.Solution;
+using CodeInTasks.WebApi.Models.Task;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeInTasks.Application.Filtration
@@ -10,17 +10,17 @@ namespace CodeInTasks.Application.Filtration
         public static void AddFiltration(this IServiceCollection services)
         {
             services.AddSingleton(
-                _ => MakePipelineFromActionContainer<SolutionFilterDto, Solution>(typeof(SolutionFiltrationActions)));
+                _ => MakePipelineFromActionContainer<SolutionFilterModel, Solution>(typeof(SolutionFiltrationActions)));
 
             services.AddSingleton(
-                _ => MakePipelineFromActionContainer<TaskFilterDto, TaskModel>(typeof(TaskFiltrationActions)));
+                _ => MakePipelineFromActionContainer<TaskFilterModel, TaskModel>(typeof(TaskFiltrationActions)));
         }
 
-        private static IFiltrationPipeline<TFilterDto, TEntity> MakePipelineFromActionContainer<TFilterDto, TEntity>(Type containerType)
+        private static IFiltrationPipeline<TFilterModel, TEntity> MakePipelineFromActionContainer<TFilterModel, TEntity>(Type containerType)
         {
-            var actions = FiltrationActionsHelper.GetActions<TFilterDto, TEntity>(containerType);
+            var actions = FiltrationActionsHelper.GetActions<TFilterModel, TEntity>(containerType);
 
-            var pipeline = new FiltrationPipeline<TFilterDto, TEntity>(actions);
+            var pipeline = new FiltrationPipeline<TFilterModel, TEntity>(actions);
 
             return pipeline;
         }

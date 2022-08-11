@@ -1,14 +1,12 @@
-﻿using CodeInTasks.Application.Filtration.Actions;
+﻿using System.Linq.Expressions;
 using CodeInTasks.Application.Filtration;
-using System.Linq.Expressions;
-
-// Let correct TFilterDto and TEntity be int
-using TFilterDto = System.Int32;
+using CodeInTasks.Application.Filtration.Actions;
 using TEntity = System.Int32;
-
-// Let incorrect TFilterDto and TEntity be float
-using TOtherFilterDto = System.Single;
+// Let correct TFilterModel and TEntity be int
+using TFilterModel = System.Int32;
 using TOtherEntity = System.Single;
+// Let incorrect TFilterModel and TEntity be float
+using TOtherFilterModel = System.Single;
 
 
 namespace CodeInTasks.Application.Tests.Filtration.Actions
@@ -22,7 +20,7 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
             var containerType = typeof(TestActionContainer);
 
 
-            var actions = FiltrationActionsHelper.GetActions<TFilterDto, TEntity>(containerType);
+            var actions = FiltrationActionsHelper.GetActions<TFilterModel, TEntity>(containerType);
 
 
             actions.Should().HaveCount(2)
@@ -37,17 +35,17 @@ namespace CodeInTasks.Application.Tests.Filtration.Actions
 
         private class TestActionContainer
         {
-            public static void CorrectMethod(TFilterDto filter, FiltrationPipelineResult<TEntity> result) { }
-            public static void OtherCorrectMethod(TFilterDto otherFilterName, FiltrationPipelineResult<TEntity> otherResultName) { }
+            public static void CorrectMethod(TFilterModel filter, FiltrationPipelineResult<TEntity> result) { }
+            public static void OtherCorrectMethod(TFilterModel otherFilterName, FiltrationPipelineResult<TEntity> otherResultName) { }
 
-            private static void HiddenMethod(TFilterDto filter, FiltrationPipelineResult<TEntity> result) { }
-            public void NonStaticMethod(TFilterDto filter, FiltrationPipelineResult<TEntity> result) { }
+            private static void HiddenMethod(TFilterModel filter, FiltrationPipelineResult<TEntity> result) { }
+            public void NonStaticMethod(TFilterModel filter, FiltrationPipelineResult<TEntity> result) { }
 
-            public static void WrongArgumentMethod1(TOtherFilterDto otherFilter, FiltrationPipelineResult<TOtherEntity> result) { }
-            public static void WrongArgumentMethod2(TFilterDto filter, TEntity result) { }
-            public static void LessArgumentMethod(TFilterDto filter) { }
-            public static void MoreArgumentMethod(TFilterDto filter, FiltrationPipelineResult<TEntity> result, string more) { }
-            public static void MoreArgumentDefaultMethod(TFilterDto filter, FiltrationPipelineResult<TEntity> result, string more = "12") { }
+            public static void WrongArgumentMethod1(TOtherFilterModel otherFilter, FiltrationPipelineResult<TOtherEntity> result) { }
+            public static void WrongArgumentMethod2(TFilterModel filter, TEntity result) { }
+            public static void LessArgumentMethod(TFilterModel filter) { }
+            public static void MoreArgumentMethod(TFilterModel filter, FiltrationPipelineResult<TEntity> result, string more) { }
+            public static void MoreArgumentDefaultMethod(TFilterModel filter, FiltrationPipelineResult<TEntity> result, string more = "12") { }
         }
     }
 }

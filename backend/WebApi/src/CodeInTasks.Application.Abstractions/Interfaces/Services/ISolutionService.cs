@@ -1,13 +1,13 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
+﻿using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Application.Abstractions.Interfaces.Services
 {
     public interface ISolutionService
     {
-        Task<Guid> AddAsync(SolutionCreateDto solutionCreateDto);
-        Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto);
+        Task<Guid> AddAsync(SolutionCreateModel solutionCreateModel);
+        Task UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel);
 
         Task<Solution> GetAsync(Guid solutionId);
-        Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterDto filterDto);
+        Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterModel filterModel);
     }
 }

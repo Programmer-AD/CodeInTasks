@@ -1,21 +1,21 @@
 ﻿namespace CodeInTasks.Application.Filtration
 {
-    internal class FiltrationPipeline<TFilterDto, TEntity> : IFiltrationPipeline<TFilterDto, TEntity>
+    internal class FiltrationPipeline<TFilterModel, TEntity> : IFiltrationPipeline<TFilterModel, TEntity>
     {
-        private readonly IEnumerable<FiltrationAction<TFilterDto, TEntity>> filtrationActions;
+        private readonly IEnumerable<FiltrationAction<TFilterModel, TEntity>> filtrationActions;
 
-        public FiltrationPipeline(IEnumerable<FiltrationAction<TFilterDto, TEntity>> filtrationActions)
+        public FiltrationPipeline(IEnumerable<FiltrationAction<TFilterModel, TEntity>> filtrationActions)
         {
             this.filtrationActions = filtrationActions;
         }
 
-        public IFiltrationPipelineResult<TEntity> GetResult(TFilterDto filterDto)
+        public IFiltrationPipelineResult<TEntity> GetResult(TFilterModel filterModel)
         {
             var result = new FiltrationPipelineResult<TEntity>();
 
             foreach (var action in filtrationActions)
             {
-                action(filterDto, result);
+                action(filterModel, result);
             }
 
             return result;

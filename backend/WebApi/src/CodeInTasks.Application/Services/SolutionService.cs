@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
+using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Application.Services
 {
@@ -7,13 +7,13 @@ namespace CodeInTasks.Application.Services
     {
         private readonly IRepository<Solution> solutionRepository;
         private readonly ISolutionCheckEnqueuer checkEnqueuer;
-        private readonly IFiltrationPipeline<SolutionFilterDto, Solution> filtrationPipeline;
+        private readonly IFiltrationPipeline<SolutionFilterModel, Solution> filtrationPipeline;
         private readonly IMapper mapper;
 
         public SolutionService(
             IRepository<Solution> solutionRepository,
             ISolutionCheckEnqueuer checkEnqueuer,
-            IFiltrationPipeline<SolutionFilterDto, Solution> filtrationPipeline,
+            IFiltrationPipeline<SolutionFilterModel, Solution> filtrationPipeline,
             IMapper mapper)
         {
             this.solutionRepository = solutionRepository;
@@ -22,29 +22,29 @@ namespace CodeInTasks.Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<Guid> AddAsync(SolutionCreateDto solutionCreateDto)
+        public async Task<Guid> AddAsync(SolutionCreateModel solutionCreateModel)
         {
-            var solution = mapper.Map<Solution>(solutionCreateDto);
+            var solution = mapper.Map<Solution>(solutionCreateModel);
             await AssertSolutionNotQueuedAsync(solution);
 
             var solutionId = await solutionRepository.AddAsync(solution);
 
             solution.Id = solutionId;
-            var queueDto = mapper.Map<SolutionQueueDto>(solution);
-            await checkEnqueuer.EnqueueSolutionCheck(queueDto);
+            var queueModel = mapper.Map<SolutionQueueModel>(solution);
+            await checkEnqueuer.EnqueueSolutionCheck(queueModel);
 
             return solutionId;
         }
 
-        public Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterDto filterDto)
+        public Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterModel filterModel)
         {
-            var pipelineResult = filtrationPipeline.GetResult(filterDto);
+            var pipelineResult = filtrationPipeline.GetResult(filterModel);
             var filter = new RepositoryFilter<Solution>()
             {
                 FiltrationPredicate = pipelineResult.FilterExpression,
                 OrderFunction = pipelineResult.OrderFunction,
-                Take = filterDto.TakeCount,
-                Skip = filterDto.TakeOffset
+                Take = filterModel.TakeCount,
+                Skip = filterModel.TakeOffset
             };
 
             var resultTask = solutionRepository.GetFilteredAsync(filter);
@@ -59,12 +59,12 @@ namespace CodeInTasks.Application.Services
             return resultTask;
         }
 
-        public async Task UpdateStatusAsync(SolutionStatusUpdateDto statusUpdateDto)
+        public async Task UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
-            var solutionId = statusUpdateDto.Id;
+            var solutionId = statusUpdateModel.Id;
             var solution = await GetSolutionAsync(solutionId);
 
-            mapper.Map(statusUpdateDto, solution);
+            mapper.Map(statusUpdateModel, solution);
 
             await solutionRepository.UpdateAsync(solution);
         }

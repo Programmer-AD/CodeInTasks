@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
 using CodeInTasks.WebApi.Models.Task;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,8 +31,8 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetFilteredAsync(TaskFilterModel filterModel)
         {
-            var filterDto = mapper.Map<TaskFilterDto>(filterModel);
-            var taskModels = await taskService.GetFilteredAsync(filterDto);
+            var filterModel = mapper.Map<TaskFilterModel>(filterModel);
+            var taskModels = await taskService.GetFilteredAsync(filterModel);
 
             var taskViewModels = mapper.Map<IEnumerable<TaskViewModel>>(taskModels);
             return Ok(taskViewModels);
@@ -42,10 +41,10 @@ namespace CodeInTasks.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<TaskCreateResultModel>> AddAsync(TaskCreateModel taskCreateModel)
         {
-            var taskCreateDto = mapper.Map<TaskCreateDto>(taskCreateModel);
-            taskCreateDto.CreatorId = User.GetUserId();
+            var taskCreateModel = mapper.Map<TaskCreateModel>(taskCreateModel);
+            taskCreateModel.CreatorId = User.GetUserId();
 
-            var taskId = await taskService.AddAsync(taskCreateDto);
+            var taskId = await taskService.AddAsync(taskCreateModel);
 
             var result = new TaskCreateResultModel { TaskId = taskId };
             return Ok(result);
@@ -54,10 +53,10 @@ namespace CodeInTasks.Web.Controllers
         [HttpPut("{taskId}")]
         public async Task<ActionResult> UpdateAsync(Guid taskId, TaskUpdateModel taskUpdateModel)
         {
-            var taskUpdateDto = mapper.Map<TaskUpdateDto>(taskUpdateModel);
-            taskUpdateDto.Id = taskId;
+            var taskUpdateModel = mapper.Map<TaskUpdateModel>(taskUpdateModel);
+            taskUpdateModel.Id = taskId;
 
-            await taskService.UpdateAsync(taskUpdateDto);
+            await taskService.UpdateAsync(taskUpdateModel);
 
             return Ok();
         }

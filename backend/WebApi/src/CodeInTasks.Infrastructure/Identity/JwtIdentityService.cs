@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.User;
 using CodeInTasks.Domain.Enums;
 using CodeInTasks.Infrastructure.Persistance.IdentityModels;
+using CodeInTasks.WebApi.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -25,15 +25,15 @@ namespace CodeInTasks.Infrastructure.Identity
             this.authOptions = authOptions;
         }
 
-        public async Task CreateUserAsync(UserCreateDto userCreateDto)
+        public async Task CreateUserAsync(UserCreateModel userCreateModel)
         {
-            var password = userCreateDto.Password;
+            var password = userCreateModel.Password;
 
-            var userData = mapper.Map<UserData>(userCreateDto);
+            var userData = mapper.Map<UserData>(userCreateModel);
             var user = new User()
             {
-                UserName = userCreateDto.Email,
-                Email = userCreateDto.Email,
+                UserName = userCreateModel.Email,
+                Email = userCreateModel.Email,
                 UserData = userData,
             };
 
@@ -41,7 +41,7 @@ namespace CodeInTasks.Infrastructure.Identity
             AssertResultSucceeded(result);
         }
 
-        public async Task<UserSignInResultDto> SignInAsync(string email, string password)
+        public async Task<UserSignInResultModel> SignInAsync(string email, string password)
         {
             var user = await GetUserByUserNameAsync(email);
 
@@ -56,7 +56,7 @@ namespace CodeInTasks.Infrastructure.Identity
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenString = tokenHandler.WriteToken(jwtToken);
 
-                var result = new UserSignInResultDto()
+                var result = new UserSignInResultModel()
                 {
                     Token = tokenString,
                     ExpirationDate = expires,
@@ -94,7 +94,7 @@ namespace CodeInTasks.Infrastructure.Identity
             var user = await GetUserByIdAsync(userId);
             var roleName = RoleNames.FromEnum(role);
 
-            var settingTask = isHave ? userManager.AddToRoleAsync(user, roleName) : userManager.RemoveFromRoleAsync(user, roleName);
+            var settingTask = isHave ? userManager.AdModelRoleAsync(user, roleName) : userManager.RemoveFromRoleAsync(user, roleName);
 
             var result = await settingTask;
             AssertResultSucceeded(result);

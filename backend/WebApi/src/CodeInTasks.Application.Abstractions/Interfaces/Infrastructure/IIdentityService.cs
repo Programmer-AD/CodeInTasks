@@ -1,14 +1,14 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.User;
+﻿using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Application.Abstractions.Interfaces.Infrastructure
 {
     public interface IIdentityService
     {
-        Task CreateUserAsync(UserCreateDto userCreateDto);
+        Task CreateUserAsync(UserCreateModel userCreateModel);
         Task SetRoleAsync(Guid userId, RoleEnum role, bool isHave);
         Task SetBanAsync(Guid userId, bool isBanned);
 
         Task<UserData> GetUserInfoAsync(Guid userId);
-        Task<UserSignInResultDto> SignInAsync(string email, string password);
+        Task<UserSignInResultModel> SignInAsync(string email, string password);
     }
 }

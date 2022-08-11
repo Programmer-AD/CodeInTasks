@@ -1,9 +1,7 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
-
-namespace CodeInTasks.Application.Abstractions.Interfaces.Enqueuers
+﻿namespace CodeInTasks.Application.Abstractions.Interfaces.Enqueuers
 {
     public interface ISolutionCheckEnqueuer
     {
-        Task EnqueueSolutionCheck(SolutionQueueDto solution);
+        Task EnqueueSolutionCheck(Solution solution);
     }
 }

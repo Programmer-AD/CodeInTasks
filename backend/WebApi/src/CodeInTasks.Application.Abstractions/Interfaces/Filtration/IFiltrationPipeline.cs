@@ -1,7 +1,7 @@
 ﻿namespace CodeInTasks.Application.Abstractions.Interfaces.Filtration
 {
-    public interface IFiltrationPipeline<TFilterDto, TEntity>
+    public interface IFiltrationPipeline<TFilterModel, TEntity>
     {
-        IFiltrationPipelineResult<TEntity> GetResult(TFilterDto filterDto);
+        IFiltrationPipelineResult<TEntity> GetResult(TFilterModel filterModel);
     }
 }

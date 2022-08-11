@@ -1,5 +1,4 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
-using CodeInTasks.Shared.Queues.Abstractions.Interfaces;
+﻿using CodeInTasks.Shared.Queues.Abstractions.Interfaces;
 using CodeInTasks.Shared.Queues.Messages;
 
 namespace CodeInTasks.Application.Enqueuers
@@ -17,14 +16,14 @@ namespace CodeInTasks.Application.Enqueuers
             this.taskRepository = taskRepository;
         }
 
-        public async Task EnqueueSolutionCheck(SolutionQueueDto solution)
+        public async Task EnqueueSolutionCheck(SolutionQueueModel solution)
         {
             var message = await MakeMessageAsync(solution);
 
             await messageQueue.PublishAsync(message);
         }
 
-        private async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueDto solution)
+        private async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueModel solution)
         {
             var taskId = solution.TaskId;
             var task = await GetTaskAsync(taskId);

@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
+using CodeInTasks.WebApi.Models.Task;
 
 namespace CodeInTasks.Application.Services
 {
     internal class TaskService : ITaskService
     {
         private readonly IRepository<TaskModel> taskRepository;
-        private readonly IFiltrationPipeline<TaskFilterDto, TaskModel> filtrationPipeline;
+        private readonly IFiltrationPipeline<TaskFilterModel, TaskModel> filtrationPipeline;
         private readonly IMapper mapper;
 
         public TaskService(
             IRepository<TaskModel> taskRepository,
-            IFiltrationPipeline<TaskFilterDto, TaskModel> filtrationPipeline,
+            IFiltrationPipeline<TaskFilterModel, TaskModel> filtrationPipeline,
             IMapper mapper)
         {
             this.taskRepository = taskRepository;
@@ -19,9 +19,9 @@ namespace CodeInTasks.Application.Services
             this.mapper = mapper;
         }
 
-        public Task<Guid> AddAsync(TaskCreateDto taskCreateDto)
+        public Task<Guid> AddAsync(TaskCreateModel taskCreateModel)
         {
-            var taskModel = mapper.Map<TaskModel>(taskCreateDto);
+            var taskModel = mapper.Map<TaskModel>(taskCreateModel);
 
             var resultTask = taskRepository.AddAsync(taskModel);
 
@@ -38,15 +38,15 @@ namespace CodeInTasks.Application.Services
             }
         }
 
-        public Task<IEnumerable<TaskModel>> GetFilteredAsync(TaskFilterDto filterDto)
+        public Task<IEnumerable<TaskModel>> GetFilteredAsync(TaskFilterModel filterModel)
         {
-            var pipelineResult = filtrationPipeline.GetResult(filterDto);
+            var pipelineResult = filtrationPipeline.GetResult(filterModel);
             var filter = new RepositoryFilter<TaskModel>()
             {
                 FiltrationPredicate = pipelineResult.FilterExpression,
                 OrderFunction = pipelineResult.OrderFunction,
-                Take = filterDto.TakeCount,
-                Skip = filterDto.TakeOffset
+                Take = filterModel.TakeCount,
+                Skip = filterModel.TakeOffset
             };
 
             var resultTask = taskRepository.GetFilteredAsync(filter);
@@ -61,12 +61,12 @@ namespace CodeInTasks.Application.Services
             return resultTask;
         }
 
-        public async Task UpdateAsync(TaskUpdateDto taskUpdateDto)
+        public async Task UpdateAsync(TaskUpdateModel taskUpdateModel)
         {
-            var taskId = taskUpdateDto.Id;
+            var taskId = taskUpdateModel.Id;
             var taskModel = await GetTaskAsync(taskId);
 
-            mapper.Map(taskUpdateDto, taskModel);
+            mapper.Map(taskUpdateModel, taskModel);
 
             await taskRepository.UpdateAsync(taskModel);
         }

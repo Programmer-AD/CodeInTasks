@@ -1,4 +1,4 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.User;
+﻿using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Application.Services
 {
@@ -11,9 +11,9 @@ namespace CodeInTasks.Application.Services
             this.identityService = identityService;
         }
 
-        public Task CreateAsync(UserCreateDto userCreateDto)
+        public Task CreateAsync(UserCreateModel userCreateModel)
         {
-            return identityService.CreateUserAsync(userCreateDto);
+            return identityService.CreateUserAsync(userCreateModel);
         }
 
         public Task<UserData> GetAsync(Guid userId)
@@ -31,7 +31,7 @@ namespace CodeInTasks.Application.Services
             return identityService.SetRoleAsync(userId, role, isHave);
         }
 
-        public Task<UserSignInResultDto> SignInAsync(string email, string password)
+        public Task<UserSignInResultModel> SignInAsync(string email, string password)
         {
             return identityService.SignInAsync(email, password);
         }

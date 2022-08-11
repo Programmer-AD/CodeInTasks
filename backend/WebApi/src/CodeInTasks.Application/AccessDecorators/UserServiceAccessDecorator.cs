@@ -1,5 +1,5 @@
 ﻿using CodeInTasks.Application.Abstractions;
-using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Application.AccessDecorators
 {
@@ -16,9 +16,9 @@ namespace CodeInTasks.Application.AccessDecorators
             this.currentUser = currentUser;
         }
 
-        public Task CreateAsync(UserCreateDto userCreateDto)
+        public Task CreateAsync(UserCreateModel userCreateModel)
         {
-            return userService.CreateAsync(userCreateDto);
+            return userService.CreateAsync(userCreateModel);
         }
 
         public Task<UserData> GetAsync(Guid userId)
@@ -50,7 +50,7 @@ namespace CodeInTasks.Application.AccessDecorators
             }
         }
 
-        public Task<UserSignInResultDto> SignInAsync(string email, string password)
+        public Task<UserSignInResultModel> SignInAsync(string email, string password)
         {
             return userService.SignInAsync(email, password);
         }

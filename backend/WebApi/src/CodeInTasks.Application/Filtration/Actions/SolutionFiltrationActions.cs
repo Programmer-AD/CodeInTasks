@@ -1,12 +1,12 @@
-﻿using CodeInTasks.Application.Abstractions.Dtos.Solution;
+﻿using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Application.Filtration.Actions
 {
     internal static class SolutionFiltrationActions
     {
-        public static void SenderFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void SenderFilter(SolutionFilterModel filterModel, FiltrationPipelineResult<Solution> pipelineResult)
         {
-            var senderId = filterDto.SenderId;
+            var senderId = filterModel.SenderId;
 
             if (senderId.HasValue)
             {
@@ -14,9 +14,9 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        public static void TaskFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void TaskFilter(SolutionFilterModel filterModel, FiltrationPipelineResult<Solution> pipelineResult)
         {
-            var taskId = filterDto.TaskId;
+            var taskId = filterModel.TaskId;
 
             if (taskId.HasValue)
             {
@@ -24,9 +24,9 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        public static void ResultsFilter(SolutionFilterDto filterDto, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void ResultsFilter(SolutionFilterModel filterModel, FiltrationPipelineResult<Solution> pipelineResult)
         {
-            var results = filterDto.Results;
+            var results = filterModel.Results;
 
             if (results.Any())
             {
@@ -34,7 +34,7 @@ namespace CodeInTasks.Application.Filtration.Actions
             }
         }
 
-        public static void Ordering(SolutionFilterDto _, FiltrationPipelineResult<Solution> pipelineResult)
+        public static void Ordering(SolutionFilterModel _, FiltrationPipelineResult<Solution> pipelineResult)
         {
             pipelineResult.OrderFunction = solutionQueryable => solutionQueryable.OrderByDescending(x => x.SendTime);
         }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
 using CodeInTasks.WebApi.Models.Solution;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +21,10 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult<SolutionCreateResultModel>> AddAsync(
             SolutionCreateModel solutionCreateModel)
         {
-            var solutionCreateDto = mapper.Map<SolutionCreateDto>(solutionCreateModel);
-            solutionCreateDto.SenderId = User.GetUserId();
+            var solutionCreateModel = mapper.Map<SolutionCreateModel>(solutionCreateModel);
+            solutionCreateModel.SenderId = User.GetUserId();
 
-            var solutionId = await solutionService.AddAsync(solutionCreateDto);
+            var solutionId = await solutionService.AddAsync(solutionCreateModel);
 
             var result = new SolutionCreateResultModel { SolutionId = solutionId };
             return Ok(result);
@@ -46,9 +45,9 @@ namespace CodeInTasks.Web.Controllers
         public async Task<ActionResult<IEnumerable<SolutionViewModel>>> GetFilteredAsync(
             SolutionFilterModel filterModel)
         {
-            var solutionFilterDto = mapper.Map<SolutionFilterDto>(filterModel);
+            var solutionFilterModel = mapper.Map<SolutionFilterModel>(filterModel);
 
-            var solutions = await solutionService.GetFilteredAsync(solutionFilterDto);
+            var solutions = await solutionService.GetFilteredAsync(solutionFilterModel);
 
             var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutions);
             return Ok(solutionViewModels);
@@ -57,9 +56,9 @@ namespace CodeInTasks.Web.Controllers
         [HttpPatch]
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
-            var statusUpdateDto = mapper.Map<SolutionStatusUpdateDto>(statusUpdateModel);
+            var statusUpdateModel = mapper.Map<SolutionStatusUpdateModel>(statusUpdateModel);
 
-            await solutionService.UpdateStatusAsync(statusUpdateDto);
+            await solutionService.UpdateStatusAsync(statusUpdateModel);
 
             return Ok();
         }

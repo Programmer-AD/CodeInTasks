@@ -1,5 +1,5 @@
 ﻿using CodeInTasks.Application.Abstractions;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
+using CodeInTasks.WebApi.Models.Task;
 
 namespace CodeInTasks.Application.AccessDecorators
 {
@@ -16,11 +16,11 @@ namespace CodeInTasks.Application.AccessDecorators
             this.currentUser = currentUser;
         }
 
-        public Task<Guid> AddAsync(TaskCreateDto taskCreateDto)
+        public Task<Guid> AddAsync(TaskCreateModel taskCreateModel)
         {
             if (currentUser.IsInRole(RoleNames.Creator))
             {
-                return taskService.AddAsync(taskCreateDto);
+                return taskService.AddAsync(taskCreateModel);
             }
             else
             {
@@ -47,9 +47,9 @@ namespace CodeInTasks.Application.AccessDecorators
             return taskService.GetAsync(taskId);
         }
 
-        public Task<IEnumerable<TaskModel>> GetFilteredAsync(TaskFilterDto filterDto)
+        public Task<IEnumerable<TaskModel>> GetFilteredAsync(TaskFilterModel filterModel)
         {
-            return taskService.GetFilteredAsync(filterDto);
+            return taskService.GetFilteredAsync(filterModel);
         }
 
         public Task<bool> IsOwnerAsync(Guid taskId, Guid userId)
@@ -57,13 +57,13 @@ namespace CodeInTasks.Application.AccessDecorators
             return taskService.IsOwnerAsync(taskId, userId);
         }
 
-        public async Task UpdateAsync(TaskUpdateDto taskUpdateDto)
+        public async Task UpdateAsync(TaskUpdateModel taskUpdateModel)
         {
-            var canManageTask = await CanManageTaskAsync(taskUpdateDto.Id);
+            var canManageTask = await CanManageTaskAsync(taskUpdateModel.Id);
 
             if (canManageTask)
             {
-                await taskService.UpdateAsync(taskUpdateDto);
+                await taskService.UpdateAsync(taskUpdateModel);
             }
             else
             {

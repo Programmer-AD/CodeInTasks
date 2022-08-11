@@ -18,12 +18,12 @@ namespace CodeInTasks.Application.Tests.Services
                 .ReturnsAsync(result);
         }
 
-        public static void SetupFiltrationPipelineMock<TFilterDto, TEntity>(Mock<IFiltrationPipeline<TFilterDto, TEntity>> filtrationPipelineMock)
+        public static void SetupFiltrationPipelineMock<TFilterModel, TEntity>(Mock<IFiltrationPipeline<TFilterModel, TEntity>> filtrationPipelineMock)
         {
             var pipelineResultMock = new Mock<IFiltrationPipelineResult<TEntity>>();
 
             filtrationPipelineMock
-                .Setup(x => x.GetResult(It.IsAny<TFilterDto>()))
+                .Setup(x => x.GetResult(It.IsAny<TFilterModel>()))
                 .Returns(pipelineResultMock.Object);
         }
     }

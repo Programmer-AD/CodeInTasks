@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using CodeInTasks.Application.Abstractions.Dtos.Solution;
-using CodeInTasks.Application.Abstractions.Dtos.Task;
-using CodeInTasks.Application.Abstractions.Dtos.User;
+using CodeInTasks.WebApi.Models.Solution;
+using CodeInTasks.WebApi.Models.Task;
+using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Application.Mapping
 {
@@ -16,22 +16,22 @@ namespace CodeInTasks.Application.Mapping
 
         private void CreateSolutionMaps()
         {
-            CreateMap<SolutionCreateDto, Solution>();
+            CreateMap<SolutionCreateModel, Solution>();
 
-            CreateMap<SolutionStatusUpdateDto, Solution>();
-            CreateMap<Solution, SolutionQueueDto>();
+            CreateMap<SolutionStatusUpdateModel, Solution>();
+            CreateMap<Solution, SolutionQueueModel>();
         }
 
         private void CreateTaskMaps()
         {
-            CreateMap<TaskCreateDto, TaskModel>();
+            CreateMap<TaskCreateModel, TaskModel>();
 
-            CreateMap<TaskUpdateDto, TaskModel>();
+            CreateMap<TaskUpdateModel, TaskModel>();
         }
 
         private void CreateUserMaps()
         {
-            CreateMap<UserCreateDto, UserData>();
+            CreateMap<UserCreateModel, UserData>();
         }
     }
 }
