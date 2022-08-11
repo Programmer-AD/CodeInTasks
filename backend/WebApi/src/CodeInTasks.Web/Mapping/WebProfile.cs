@@ -3,9 +3,9 @@ using CodeInTasks.Application.Abstractions.Dtos.Solution;
 using CodeInTasks.Application.Abstractions.Dtos.Task;
 using CodeInTasks.Application.Abstractions.Dtos.User;
 using CodeInTasks.Domain.Models;
-using CodeInTasks.Web.Models.Solution;
-using CodeInTasks.Web.Models.Task;
-using CodeInTasks.Web.Models.User;
+using CodeInTasks.WebApi.Models.Solution;
+using CodeInTasks.WebApi.Models.Task;
+using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Web.Mapping
 {

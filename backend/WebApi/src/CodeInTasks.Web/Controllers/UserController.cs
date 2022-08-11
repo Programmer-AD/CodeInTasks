@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.User;
-using CodeInTasks.Web.Models.User;
+using CodeInTasks.WebApi.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

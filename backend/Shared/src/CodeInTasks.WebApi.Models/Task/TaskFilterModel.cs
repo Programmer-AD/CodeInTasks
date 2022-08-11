@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Web.Models.Task
+﻿namespace CodeInTasks.WebApi.Models.Task
 {
     public class TaskFilterModel
     {

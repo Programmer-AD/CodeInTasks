@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using CodeInTasks.Builder.Infrastructure.Interfaces;
 using CodeInTasks.Builder.Runtime.Abstractions;
-using CodeInTasks.Web.Models.User;
+using CodeInTasks.WebApi.Models.User;
 
 namespace CodeInTasks.Builder.Infrastructure.Web
 {

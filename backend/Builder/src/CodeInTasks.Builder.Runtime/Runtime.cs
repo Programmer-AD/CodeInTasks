@@ -1,6 +1,6 @@
 ﻿using CodeInTasks.Domain.Enums;
 using CodeInTasks.Shared.Queues.Messages;
-using CodeInTasks.Web.Models.Solution;
+using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Builder.Runtime
 {

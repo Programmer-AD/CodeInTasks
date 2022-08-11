@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Web.Models.User
+﻿namespace CodeInTasks.WebApi.Models.User
 {
     public class RoleManageModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using CodeInTasks.Builder.Runtime.Abstractions;
-using CodeInTasks.Web.Models.Solution;
+using CodeInTasks.WebApi.Models.Solution;
 
 namespace CodeInTasks.Builder.Infrastructure.Web
 {

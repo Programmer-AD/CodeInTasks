@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Web.Models.Solution
+﻿namespace CodeInTasks.WebApi.Models.Solution
 {
     public class SolutionCreateResultModel
     {

@@ -1,4 +1,4 @@
-﻿namespace CodeInTasks.Web.Models
+﻿namespace CodeInTasks.WebApi.Models
 {
     public static class ModelConstants
     {

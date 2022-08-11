@@ -9,7 +9,7 @@ using CodeInTasks.Application.Abstractions.Interfaces.Services;
 using CodeInTasks.Domain.Enums;
 using CodeInTasks.Domain.Models;
 using CodeInTasks.Web.Controllers;
-using CodeInTasks.Web.Models.User;
+using CodeInTasks.WebApi.Models.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
