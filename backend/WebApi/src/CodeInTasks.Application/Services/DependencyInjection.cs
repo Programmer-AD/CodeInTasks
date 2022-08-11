@@ -8,6 +8,7 @@ namespace CodeInTasks.Application.Services
         {
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ISolutionService, SolutionService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

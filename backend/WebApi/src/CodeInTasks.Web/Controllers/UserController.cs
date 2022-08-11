@@ -11,12 +11,12 @@ namespace CodeInTasks.Web.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IIdentityService identityService;
+        private readonly IUserService userService;
         private readonly IMapper mapper;
 
-        public UserController(IIdentityService identityService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper)
         {
-            this.identityService = identityService;
+            this.userService = userService;
             this.mapper = mapper;
         }
 
@@ -27,7 +27,7 @@ namespace CodeInTasks.Web.Controllers
             var email = signInModel.Email;
             var password = signInModel.Password;
 
-            var signInResult = await identityService.SignInAsync(email, password);
+            var signInResult = await userService.SignInAsync(email, password);
 
             if (signInResult != null)
             {
@@ -47,7 +47,7 @@ namespace CodeInTasks.Web.Controllers
         {
             var userCreateDto = mapper.Map<UserCreateDto>(userCreateModel);
 
-            await identityService.CreateUserAsync(userCreateDto);
+            await userService.CreateAsync(userCreateDto);
 
             return Ok();
         }
@@ -56,7 +56,7 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserViewModel>> GetUserInfoAsync(Guid userId)
         {
-            var userViewDto = await identityService.GetUserInfoAsync(userId);
+            var userViewDto = await userService.GetAsync(userId);
 
             var userViewModel = mapper.Map<UserViewModel>(userViewDto);
 
@@ -73,7 +73,7 @@ namespace CodeInTasks.Web.Controllers
                 var role = roleManageModel.Role;
                 var isSetted = roleManageModel.IsSetted;
 
-                await identityService.SetRoleAsync(userId, role, isSetted);
+                await userService.SetRoleAsync(userId, role, isSetted);
 
                 return Ok();
             }
@@ -90,7 +90,7 @@ namespace CodeInTasks.Web.Controllers
             var userId = banManageModel.UserId;
             var isBanned = banManageModel.IsBanned;
 
-            await identityService.SetBanAsync(userId, isBanned);
+            await userService.SetBanAsync(userId, isBanned);
 
             return Ok();
         }

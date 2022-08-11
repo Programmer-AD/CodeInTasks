@@ -8,6 +8,7 @@ namespace CodeInTasks.Application.AccessDecorators
         {
             services.Decorate<ITaskService, TaskServiceAccessDecorator>();
             services.Decorate<ISolutionService, SolutionServiceAccessDecorator>();
+            services.Decorate<IUserService, UserServiceAccessDecorator>();
         }
     }
 }
