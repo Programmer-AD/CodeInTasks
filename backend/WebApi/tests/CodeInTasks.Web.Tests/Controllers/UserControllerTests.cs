@@ -4,7 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.User;
-using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
+using CodeInTasks.Application.Abstractions.Interfaces.Services;
 using CodeInTasks.Domain.Enums;
 using CodeInTasks.Domain.Models;
 using CodeInTasks.Infrastructure.Identity;
@@ -28,7 +28,7 @@ namespace CodeInTasks.Web.Tests.Controllers
         private static readonly UserViewModel userViewModel = new();
         private static readonly BanManageModel banManageModel = new();
 
-        private Mock<IIdentityService> identityServiceMock;
+        private Mock<IUserService> userServiceMock;
         private Mock<IMapper> mapperMock;
 
         private UserController userController;
@@ -36,11 +36,11 @@ namespace CodeInTasks.Web.Tests.Controllers
         [SetUp]
         public void SetUp()
         {
-            identityServiceMock = new();
+            userServiceMock = new();
             mapperMock = new();
 
             userController = new(
-                identityServiceMock.Object,
+                userServiceMock.Object,
                 mapperMock.Object);
 
             SetupMappings();
@@ -78,7 +78,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.RegisterAsync(userCreateModel);
 
 
-            identityServiceMock.Verify(x => x.CreateUserAsync(It.IsAny<UserCreateDto>()), Times.Once);
+            userServiceMock.Verify(x => x.CreateAsync(It.IsAny<UserCreateDto>()), Times.Once);
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.GetUserInfoAsync(userId);
 
 
-            identityServiceMock.Verify(x => x.GetUserInfoAsync(It.IsAny<Guid>()), Times.Once);
+            userServiceMock.Verify(x => x.GetAsync(It.IsAny<Guid>()), Times.Once);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.SetRoleAsync(roleManageModel);
 
 
-            identityServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), roleToSet, It.IsAny<bool>()), Times.Once);
+            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), roleToSet, It.IsAny<bool>()), Times.Once);
         }
 
         [TestCaseSource(nameof(ManagerSettableRoles))]
@@ -116,7 +116,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.SetRoleAsync(roleManageModel);
 
 
-            identityServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), roleToSet, It.IsAny<bool>()), Times.Once);
+            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), roleToSet, It.IsAny<bool>()), Times.Once);
         }
 
         [TestCaseSource(nameof(ManagerUnsettableRoles))]
@@ -129,7 +129,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.SetRoleAsync(roleManageModel);
 
 
-            identityServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), It.IsAny<RoleEnum>(), It.IsAny<bool>()), Times.Never);
+            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), It.IsAny<RoleEnum>(), It.IsAny<bool>()), Times.Never);
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace CodeInTasks.Web.Tests.Controllers
             await userController.SetBanAsync(banManageModel);
 
 
-            identityServiceMock.Verify(x => x.SetBanAsync(It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once);
+            userServiceMock.Verify(x => x.SetBanAsync(It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once);
         }
 
         private void SetupMappings()
@@ -160,15 +160,15 @@ namespace CodeInTasks.Web.Tests.Controllers
         {
             var result = success ? userSignInResultDto : null;
 
-            identityServiceMock
+            userServiceMock
                 .Setup(x => x.SignInAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(result);
         }
 
         private void SetupServiceGetUserInfoResult()
         {
-            identityServiceMock
-                .Setup(x => x.GetUserInfoAsync(It.IsAny<Guid>()))
+            userServiceMock
+                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(userData);
         }
 
