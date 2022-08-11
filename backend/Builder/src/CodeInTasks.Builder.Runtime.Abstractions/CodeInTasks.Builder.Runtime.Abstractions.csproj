@@ -9,7 +9,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Abstractions\CodeInTasks.Shared.Queues.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\..\Shared\src\CodeInTasks.Shared.Queues.Messages\CodeInTasks.Shared.Queues.Messages.csproj" />
-	  <ProjectReference Include="..\..\..\WebApi\src\CodeInTasks.Web.Models\CodeInTasks.Web.Models.csproj" />
+	  <ProjectReference Include="..\..\..\Shared\src\CodeInTasks.WebApi.Models\CodeInTasks.WebApi.Models.csproj" />
 	</ItemGroup>
 
 </Project>
