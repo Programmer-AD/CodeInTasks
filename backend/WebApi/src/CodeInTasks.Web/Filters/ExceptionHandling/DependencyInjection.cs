@@ -14,6 +14,7 @@ namespace CodeInTasks.Web.Filters.ExceptionHandling
             new (typeof(EntityNotFoundException), StatusCodes.Status404NotFound, "Entity not found"),
             new (typeof(SolutionAlreadyQueuedException), StatusCodes.Status400BadRequest, "Solution already queued"),
             new (typeof(IdentityException), StatusCodes.Status400BadRequest, "Identity error occured"),
+            new (typeof(AccessDeniedException), StatusCodes.Status403Forbidden, "Access denied"),
         };
     }
 }

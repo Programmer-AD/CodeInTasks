@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using CodeInTasks.Application.Abstractions.Dtos.User;
-using CodeInTasks.Domain.Enums;
 using CodeInTasks.Web.Models.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/user"), ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
@@ -54,7 +52,7 @@ namespace CodeInTasks.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet("{userId}")]
-        public async Task<ActionResult<UserViewModel>> GetUserInfoAsync(Guid userId)
+        public async Task<ActionResult<UserViewModel>> GetAsync(Guid userId)
         {
             var userViewDto = await userService.GetAsync(userId);
 
@@ -63,27 +61,18 @@ namespace CodeInTasks.Web.Controllers
             return Ok(userViewModel);
         }
 
-        [Authorize(Roles = $"{RoleNames.Manager},{RoleNames.Admin}")]
         [HttpPut("role")]
         public async Task<ActionResult> SetRoleAsync(RoleManageModel roleManageModel)
         {
-            if (CanSetRole(roleManageModel.Role))
-            {
-                var userId = roleManageModel.UserId;
-                var role = roleManageModel.Role;
-                var isSetted = roleManageModel.IsSetted;
+            var userId = roleManageModel.UserId;
+            var role = roleManageModel.Role;
+            var isSetted = roleManageModel.IsSetted;
 
-                await userService.SetRoleAsync(userId, role, isSetted);
+            await userService.SetRoleAsync(userId, role, isSetted);
 
-                return Ok();
-            }
-            else
-            {
-                return Forbid();
-            }
+            return Ok();
         }
 
-        [Authorize(Roles = $"{RoleNames.Manager}")]
         [HttpPut("ban")]
         public async Task<ActionResult> SetBanAsync(BanManageModel banManageModel)
         {
@@ -93,13 +82,6 @@ namespace CodeInTasks.Web.Controllers
             await userService.SetBanAsync(userId, isBanned);
 
             return Ok();
-        }
-
-        private bool CanSetRole(RoleEnum role)
-        {
-            return User.IsInRole(RoleNames.Admin)
-                || User.IsInRole(RoleNames.Manager)
-                && role == RoleEnum.Creator;
         }
     }
 }

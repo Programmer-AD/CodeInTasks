@@ -1,6 +1,4 @@
-﻿using CodeInTasks.Domain.Enums;
-
-namespace CodeInTasks.Infrastructure.Identity
+﻿namespace CodeInTasks.Application.Abstractions
 {
     public class RoleNames
     {

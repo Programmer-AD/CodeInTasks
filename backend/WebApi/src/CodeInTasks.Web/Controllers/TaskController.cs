@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Route("api/task")]
     public class TaskController : ControllerBase
     {
         private readonly ITaskService taskService;
@@ -31,8 +30,7 @@ namespace CodeInTasks.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetFilteredAsync(
-            TaskFilterModel filterModel)
+        public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetFilteredAsync(TaskFilterModel filterModel)
         {
             var filterDto = mapper.Map<TaskFilterDto>(filterModel);
             var taskModels = await taskService.GetFilteredAsync(filterDto);
@@ -41,7 +39,6 @@ namespace CodeInTasks.Web.Controllers
             return Ok(taskViewModels);
         }
 
-        [Authorize(Roles = $"{RoleNames.Creator}")]
         [HttpPost]
         public async Task<ActionResult<TaskCreateResultModel>> AddAsync(TaskCreateModel taskCreateModel)
         {
@@ -54,54 +51,23 @@ namespace CodeInTasks.Web.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = $"{RoleNames.Creator},{RoleNames.Manager}")]
         [HttpPut("{taskId}")]
         public async Task<ActionResult> UpdateAsync(Guid taskId, TaskUpdateModel taskUpdateModel)
         {
-            var canManageTask = await CanManageTask(taskId);
+            var taskUpdateDto = mapper.Map<TaskUpdateDto>(taskUpdateModel);
+            taskUpdateDto.Id = taskId;
 
-            if (canManageTask)
-            {
-                var taskUpdateDto = mapper.Map<TaskUpdateDto>(taskUpdateModel);
-                taskUpdateDto.Id = taskId;
+            await taskService.UpdateAsync(taskUpdateDto);
 
-                await taskService.UpdateAsync(taskUpdateDto);
-
-                return Ok();
-            }
-            else
-            {
-                return Forbid();
-            }
+            return Ok();
         }
 
-        [Authorize(Roles = $"{RoleNames.Creator},{RoleNames.Manager}")]
         [HttpDelete("{taskId}")]
         public async Task<ActionResult> DeleteAsync(Guid taskId)
         {
-            var canManageTask = await CanManageTask(taskId);
+            await taskService.DeleteAsync(taskId);
 
-            if (canManageTask)
-            {
-                await taskService.DeleteAsync(taskId);
-
-                return Ok();
-            }
-            else
-            {
-                return Forbid();
-            }
-        }
-
-        private async Task<bool> CanManageTask(Guid taskId)
-        {
-            var userId = User.GetUserId();
-
-            var result = User.IsInRole(RoleNames.Manager)
-                || User.IsInRole(RoleNames.Creator)
-                && await taskService.IsOwnerAsync(taskId, userId);
-
-            return result;
+            return Ok();
         }
     }
 }

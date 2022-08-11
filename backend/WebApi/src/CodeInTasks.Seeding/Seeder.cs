@@ -1,6 +1,6 @@
-﻿using CodeInTasks.Application.Abstractions.Exceptions;
+﻿using CodeInTasks.Application.Abstractions;
+using CodeInTasks.Application.Abstractions.Exceptions;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
-using CodeInTasks.Infrastructure.Identity;
 using CodeInTasks.Infrastructure.Persistance.EF;
 using CodeInTasks.Infrastructure.Persistance.IdentityModels;
 using Microsoft.AspNetCore.Identity;

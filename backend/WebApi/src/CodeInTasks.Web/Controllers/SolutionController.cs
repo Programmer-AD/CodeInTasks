@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeInTasks.Web.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Route("api/solution")]
     public class SolutionController : ControllerBase
     {
         private readonly ISolutionService solutionService;
@@ -19,7 +18,6 @@ namespace CodeInTasks.Web.Controllers
             this.mapper = mapper;
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<ActionResult<SolutionCreateResultModel>> AddAsync(
             SolutionCreateModel solutionCreateModel)
@@ -56,7 +54,6 @@ namespace CodeInTasks.Web.Controllers
             return Ok(solutionViewModels);
         }
 
-        [Authorize(Roles = RoleNames.Builder)]
         [HttpPatch]
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {

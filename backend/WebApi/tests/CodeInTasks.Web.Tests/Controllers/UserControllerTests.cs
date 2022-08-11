@@ -3,11 +3,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using CodeInTasks.Application.Abstractions;
 using CodeInTasks.Application.Abstractions.Dtos.User;
 using CodeInTasks.Application.Abstractions.Interfaces.Services;
 using CodeInTasks.Domain.Enums;
 using CodeInTasks.Domain.Models;
-using CodeInTasks.Infrastructure.Identity;
 using CodeInTasks.Web.Controllers;
 using CodeInTasks.Web.Models.User;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +27,7 @@ namespace CodeInTasks.Web.Tests.Controllers
         private static readonly UserData userData = new();
         private static readonly UserViewModel userViewModel = new();
         private static readonly BanManageModel banManageModel = new();
+        private static readonly RoleManageModel roleManageModel = new();
 
         private Mock<IUserService> userServiceMock;
         private Mock<IMapper> mapperMock;
@@ -73,7 +74,7 @@ namespace CodeInTasks.Web.Tests.Controllers
         }
 
         [Test]
-        public async Task RegisterAsync_CallServiceCreateUserOnce()
+        public async Task RegisterAsync_CallServiceCreateOnce()
         {
             await userController.RegisterAsync(userCreateModel);
 
@@ -82,54 +83,21 @@ namespace CodeInTasks.Web.Tests.Controllers
         }
 
         [Test]
-        public async Task GetUserInfoAsync_CallServiceGetUserInfoOnce()
+        public async Task GetAsync_CallServiceGetOnce()
         {
-            SetupServiceGetUserInfoResult();
-
-
-            await userController.GetUserInfoAsync(userId);
+            await userController.GetAsync(userId);
 
 
             userServiceMock.Verify(x => x.GetAsync(It.IsAny<Guid>()), Times.Once);
         }
 
         [Test]
-        public async Task SetRoleAsync_WhenUserIsAdmin_CallServiceSetRoleForAnyRole([Values] RoleEnum roleToSet)
+        public async Task SetRoleAsync_CallServiceSetRoleOnce()
         {
-            SetUserRole(RoleNames.Admin);
-            var roleManageModel = MakeRoleManageModel(roleToSet);
-
-
             await userController.SetRoleAsync(roleManageModel);
 
 
-            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), roleToSet, It.IsAny<bool>()), Times.Once);
-        }
-
-        [TestCaseSource(nameof(ManagerSettableRoles))]
-        public async Task SetRoleAsync_WhenUserIsManagerAndCanSetRole_CallServiceSetRole(RoleEnum roleToSet)
-        {
-            SetUserRole(RoleNames.Manager);
-            var roleManageModel = MakeRoleManageModel(roleToSet);
-
-
-            await userController.SetRoleAsync(roleManageModel);
-
-
-            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), roleToSet, It.IsAny<bool>()), Times.Once);
-        }
-
-        [TestCaseSource(nameof(ManagerUnsettableRoles))]
-        public async Task SetRoleAsync_WhenUserIsManagerButCantSetRole_NotCallServiceSetRole(RoleEnum roleToSet)
-        {
-            SetUserRole(RoleNames.Manager);
-            var roleManageModel = MakeRoleManageModel(roleToSet);
-
-
-            await userController.SetRoleAsync(roleManageModel);
-
-
-            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), It.IsAny<RoleEnum>(), It.IsAny<bool>()), Times.Never);
+            userServiceMock.Verify(x => x.SetRoleAsync(It.IsAny<Guid>(), It.IsAny<RoleEnum>(), It.IsAny<bool>()), Times.Once);
         }
 
         [Test]
@@ -164,47 +132,5 @@ namespace CodeInTasks.Web.Tests.Controllers
                 .Setup(x => x.SignInAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(result);
         }
-
-        private void SetupServiceGetUserInfoResult()
-        {
-            userServiceMock
-                .Setup(x => x.GetAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(userData);
-        }
-
-        private void SetUserRole(string role)
-        {
-            var claims = new Claim[] { new(ClaimTypes.Role, role) };
-
-            var claimsIdentity = new ClaimsIdentity(claims);
-
-            var controllerContext = new ControllerContext()
-            {
-                HttpContext = new DefaultHttpContext()
-                {
-                    User = new(claimsIdentity)
-                }
-            };
-
-            userController.ControllerContext = controllerContext;
-        }
-
-        private static RoleManageModel MakeRoleManageModel(RoleEnum role)
-        {
-            var result = new RoleManageModel()
-            {
-                UserId = userId,
-                Role = role,
-                IsSetted = true
-            };
-
-            return result;
-        }
-
-        private static readonly IEnumerable<RoleEnum> ManagerSettableRoles
-            = new[] { RoleEnum.Creator };
-
-        private static readonly IEnumerable<RoleEnum> ManagerUnsettableRoles
-            = Enum.GetValues<RoleEnum>().Except(ManagerSettableRoles).ToArray();
     }
 }
