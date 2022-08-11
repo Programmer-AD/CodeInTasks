@@ -1,17 +1,15 @@
-﻿using System;
-using CodeInTasks.Web.Filters.ExceptionHandling;
+﻿using CodeInTasks.Web.Filters.ExceptionHandling;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CodeInTasks.Web.Filters
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class ExceptionHandlerFilterAttribute : Attribute, IAsyncExceptionFilter
+    public class ExceptionHandlerFilter : IAsyncExceptionFilter
     {
         private readonly IReadOnlyDictionary<Type, ExceptionHandleInfo> knownExceptions;
-        private readonly ILogger<ExceptionHandlerFilterAttribute> logger;
+        private readonly ILogger<ExceptionHandlerFilter> logger;
 
-        public ExceptionHandlerFilterAttribute(
-            ILogger<ExceptionHandlerFilterAttribute> logger,
+        public ExceptionHandlerFilter(
+            ILogger<ExceptionHandlerFilter> logger,
             IEnumerable<ExceptionHandleInfo> handleInfos)
         {
             this.logger = logger;

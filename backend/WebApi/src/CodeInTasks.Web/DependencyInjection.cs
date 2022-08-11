@@ -16,8 +16,9 @@ namespace CodeInTasks.Web
             services.AddMapping();
             services.AddControllers(options =>
             {
-                options.Filters.Add<ExceptionHandlerFilterAttribute>();
-                options.Filters.Add<ChangeSaverFilterAttribute>();
+                options.Filters.Add<CurrentUserHolderInitFilter>();
+                options.Filters.Add<ChangeSaverFilter>();
+                options.Filters.Add<ExceptionHandlerFilter>();
             });
 
             services.AddLogging(options =>
