@@ -4,18 +4,18 @@ namespace CodeInTasks.Infrastructure.Identity
 {
     public class CurrentUserHolder : ICurrentUserHolder
     {
-        public ClaimsPrincipal Principal { get; private set; }
+        private ClaimsPrincipal principal;
 
-        public Guid? UserId => Principal?.GetUserId();
+        public Guid? UserId => principal?.GetUserId();
 
         public void Init(ClaimsPrincipal claimsPrincipal)
         {
-            Principal = claimsPrincipal;
+            principal = claimsPrincipal;
         }
 
         public bool IsInRole(string roleName)
         {
-            return Principal.IsInRole(roleName);
+            return principal.IsInRole(roleName);
         }
     }
 }
