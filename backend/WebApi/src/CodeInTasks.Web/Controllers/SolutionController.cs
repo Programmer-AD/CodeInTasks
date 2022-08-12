@@ -18,46 +18,38 @@ namespace CodeInTasks.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<SolutionCreateResultModel>> AddAsync(
-            SolutionCreateModel solutionCreateModel)
+        public async Task<ActionResult<SolutionCreateResultModel>> AddAsync(SolutionCreateModel solutionCreateModel)
         {
-            var solutionCreateModel = mapper.Map<SolutionCreateModel>(solutionCreateModel);
-            solutionCreateModel.SenderId = User.GetUserId();
+            var result = await solutionService.AddAsync(solutionCreateModel);
 
-            var solutionId = await solutionService.AddAsync(solutionCreateModel);
-
-            var result = new SolutionCreateResultModel { SolutionId = solutionId };
             return Ok(result);
         }
 
         [AllowAnonymous]
-        [HttpGet("{id}")]
+        [HttpGet("{solutionId}")]
         public async Task<ActionResult<SolutionViewModel>> GetAsync(Guid solutionId)
         {
             var solution = await solutionService.GetAsync(solutionId);
 
             var solutionViewModel = mapper.Map<SolutionViewModel>(solution);
+
             return Ok(solutionViewModel);
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SolutionViewModel>>> GetFilteredAsync(
-            SolutionFilterModel filterModel)
+        public async Task<ActionResult<IEnumerable<SolutionViewModel>>> GetFilteredAsync(SolutionFilterModel filterModel)
         {
-            var solutionFilterModel = mapper.Map<SolutionFilterModel>(filterModel);
-
-            var solutions = await solutionService.GetFilteredAsync(solutionFilterModel);
+            var solutions = await solutionService.GetFilteredAsync(filterModel);
 
             var solutionViewModels = mapper.Map<IEnumerable<SolutionViewModel>>(solutions);
+
             return Ok(solutionViewModels);
         }
 
         [HttpPatch]
         public async Task<ActionResult> UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel)
         {
-            var statusUpdateModel = mapper.Map<SolutionStatusUpdateModel>(statusUpdateModel);
-
             await solutionService.UpdateStatusAsync(statusUpdateModel);
 
             return Ok();

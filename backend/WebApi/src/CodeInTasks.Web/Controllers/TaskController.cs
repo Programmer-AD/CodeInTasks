@@ -24,6 +24,7 @@ namespace CodeInTasks.Web.Controllers
             var taskModel = await taskService.GetAsync(taskId);
 
             var taskViewModel = mapper.Map<TaskViewModel>(taskModel);
+
             return Ok(taskViewModel);
         }
 
@@ -31,31 +32,24 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetFilteredAsync(TaskFilterModel filterModel)
         {
-            var filterModel = mapper.Map<TaskFilterModel>(filterModel);
             var taskModels = await taskService.GetFilteredAsync(filterModel);
 
             var taskViewModels = mapper.Map<IEnumerable<TaskViewModel>>(taskModels);
+
             return Ok(taskViewModels);
         }
 
         [HttpPost]
         public async Task<ActionResult<TaskCreateResultModel>> AddAsync(TaskCreateModel taskCreateModel)
         {
-            var taskCreateModel = mapper.Map<TaskCreateModel>(taskCreateModel);
-            taskCreateModel.CreatorId = User.GetUserId();
+            var result = await taskService.AddAsync(taskCreateModel);
 
-            var taskId = await taskService.AddAsync(taskCreateModel);
-
-            var result = new TaskCreateResultModel { TaskId = taskId };
             return Ok(result);
         }
 
         [HttpPut("{taskId}")]
-        public async Task<ActionResult> UpdateAsync(Guid taskId, TaskUpdateModel taskUpdateModel)
+        public async Task<ActionResult> UpdateAsync(TaskUpdateModel taskUpdateModel)
         {
-            var taskUpdateModel = mapper.Map<TaskUpdateModel>(taskUpdateModel);
-            taskUpdateModel.Id = taskId;
-
             await taskService.UpdateAsync(taskUpdateModel);
 
             return Ok();

@@ -19,11 +19,20 @@ namespace CodeInTasks.Application.Services
             this.mapper = mapper;
         }
 
-        public Task<Guid> AddAsync(TaskCreateModel taskCreateModel)
+        public Task<TaskCreateResultModel> AddAsync(TaskCreateModel taskCreateModel)
         {
             var taskModel = mapper.Map<TaskModel>(taskCreateModel);
 
-            var resultTask = taskRepository.AddAsync(taskModel);
+            var resultTask = taskRepository.AddAsync(taskModel)
+                .ContinueWith(addTask =>
+                {
+                    var taskId = addTask.Result;
+
+                    return new TaskCreateResultModel()
+                    {
+                        TaskId = taskId,
+                    };
+                });
 
             return resultTask;
         }
@@ -63,7 +72,7 @@ namespace CodeInTasks.Application.Services
 
         public async Task UpdateAsync(TaskUpdateModel taskUpdateModel)
         {
-            var taskId = taskUpdateModel.Id;
+            var taskId = taskUpdateModel.TaskId;
             var taskModel = await GetTaskAsync(taskId);
 
             mapper.Map(taskUpdateModel, taskModel);

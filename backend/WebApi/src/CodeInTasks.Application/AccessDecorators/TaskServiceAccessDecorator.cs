@@ -16,7 +16,7 @@ namespace CodeInTasks.Application.AccessDecorators
             this.currentUser = currentUser;
         }
 
-        public Task<Guid> AddAsync(TaskCreateModel taskCreateModel)
+        public Task<TaskCreateResultModel> AddAsync(TaskCreateModel taskCreateModel)
         {
             if (currentUser.IsInRole(RoleNames.Creator))
             {
@@ -59,7 +59,7 @@ namespace CodeInTasks.Application.AccessDecorators
 
         public async Task UpdateAsync(TaskUpdateModel taskUpdateModel)
         {
-            var canManageTask = await CanManageTaskAsync(taskUpdateModel.Id);
+            var canManageTask = await CanManageTaskAsync(taskUpdateModel.TaskId);
 
             if (canManageTask)
             {

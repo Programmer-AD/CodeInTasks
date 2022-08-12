@@ -2,7 +2,6 @@
 using CodeInTasks.Infrastructure.Mapping;
 using CodeInTasks.Web.Filters;
 using CodeInTasks.Web.Filters.ExceptionHandling;
-using CodeInTasks.Web.Mapping;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -37,7 +36,6 @@ namespace CodeInTasks.Web
             {
                 mapperConfig.AddProfile<ApplicationProfile>();
                 mapperConfig.AddProfile<InfrastructureProfile>();
-                mapperConfig.AddProfile<WebProfile>();
             });
         }
 

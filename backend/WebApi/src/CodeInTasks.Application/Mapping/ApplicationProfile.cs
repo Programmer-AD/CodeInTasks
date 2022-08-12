@@ -17,21 +17,24 @@ namespace CodeInTasks.Application.Mapping
         private void CreateSolutionMaps()
         {
             CreateMap<SolutionCreateModel, Solution>();
-
             CreateMap<SolutionStatusUpdateModel, Solution>();
-            CreateMap<Solution, SolutionQueueModel>();
+
+            CreateMap<Solution, SolutionViewModel>();
         }
 
         private void CreateTaskMaps()
         {
             CreateMap<TaskCreateModel, TaskModel>();
-
             CreateMap<TaskUpdateModel, TaskModel>();
+
+            CreateMap<TaskModel, TaskViewModel>();
         }
 
         private void CreateUserMaps()
         {
             CreateMap<UserCreateModel, UserData>();
+
+            CreateMap<UserData, UserViewModel>();
         }
     }
 }

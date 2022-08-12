@@ -4,7 +4,7 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Services
 {
     public interface ISolutionService
     {
-        Task<Guid> AddAsync(SolutionCreateModel solutionCreateModel);
+        Task<SolutionCreateResultModel> AddAsync(SolutionCreateModel solutionCreateModel);
         Task UpdateStatusAsync(SolutionStatusUpdateModel statusUpdateModel);
 
         Task<Solution> GetAsync(Guid solutionId);

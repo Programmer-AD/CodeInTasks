@@ -75,7 +75,7 @@ namespace CodeInTasks.Application.Tests.Services
             await CallHelpers.ForceCallAsync<SolutionAlreadyQueuedException>(() => solutionService.AddAsync(solutionCreateModel));
 
 
-            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<SolutionQueueModel>()), Times.Never);
+            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<Solution>()), Times.Never);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace CodeInTasks.Application.Tests.Services
             await solutionService.AddAsync(solutionCreateModel);
 
 
-            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<SolutionQueueModel>()), Times.Once);
+            checkQueueMock.Verify(x => x.EnqueueSolutionCheck(It.IsAny<Solution>()), Times.Once);
         }
 
         [Test]
@@ -212,10 +212,6 @@ namespace CodeInTasks.Application.Tests.Services
             mapperMock
                 .Setup(x => x.Map<Solution>(It.IsAny<SolutionCreateModel>()))
                 .Returns(solution);
-
-            mapperMock
-                .Setup(x => x.Map<SolutionQueueModel>(It.IsAny<Solution>()))
-                .Returns(solutionQueueModel);
         }
 
         private void SetSolutionAlreadyQueued(bool isQueued)

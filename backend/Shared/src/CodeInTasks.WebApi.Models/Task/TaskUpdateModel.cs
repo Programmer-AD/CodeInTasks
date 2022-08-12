@@ -2,6 +2,8 @@
 {
     public class TaskUpdateModel
     {
+        public Guid TaskId { get; set; }
+
         [Required]
         [MinLength(DomainConstants.TaskModel_Title_MinLength)]
         [MaxLength(DomainConstants.TaskModel_Title_MaxLength)]

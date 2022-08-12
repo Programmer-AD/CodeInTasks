@@ -4,7 +4,7 @@ namespace CodeInTasks.Application.Abstractions.Interfaces.Services
 {
     public interface ITaskService
     {
-        Task<Guid> AddAsync(TaskCreateModel taskCreateModel);
+        Task<TaskCreateResultModel> AddAsync(TaskCreateModel taskCreateModel);
         Task UpdateAsync(TaskUpdateModel taskUpdateModel);
         Task DeleteAsync(Guid taskId);
 

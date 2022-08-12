@@ -56,11 +56,15 @@ namespace CodeInTasks.Infrastructure.Identity
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenString = tokenHandler.WriteToken(jwtToken);
 
+                var userData = await MapUserData(user);
+
+                var userViewModel = mapper.Map<UserViewModel>(userData);
+
                 var result = new UserSignInResultModel()
                 {
                     Token = tokenString,
                     ExpirationDate = expires,
-                    User = await MapUserData(user),
+                    User = userViewModel
                 };
 
                 return result;
@@ -94,7 +98,7 @@ namespace CodeInTasks.Infrastructure.Identity
             var user = await GetUserByIdAsync(userId);
             var roleName = RoleNames.FromEnum(role);
 
-            var settingTask = isHave ? userManager.AdModelRoleAsync(user, roleName) : userManager.RemoveFromRoleAsync(user, roleName);
+            var settingTask = isHave ? userManager.AddToRoleAsync(user, roleName) : userManager.RemoveFromRoleAsync(user, roleName);
 
             var result = await settingTask;
             AssertResultSucceeded(result);

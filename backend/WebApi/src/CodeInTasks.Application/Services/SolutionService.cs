@@ -22,18 +22,21 @@ namespace CodeInTasks.Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<Guid> AddAsync(SolutionCreateModel solutionCreateModel)
+        public async Task<SolutionCreateResultModel> AddAsync(SolutionCreateModel solutionCreateModel)
         {
             var solution = mapper.Map<Solution>(solutionCreateModel);
             await AssertSolutionNotQueuedAsync(solution);
 
-            var solutionId = await solutionRepository.AddAsync(solution);
+            solution.Id = await solutionRepository.AddAsync(solution);
 
-            solution.Id = solutionId;
-            var queueModel = mapper.Map<SolutionQueueModel>(solution);
-            await checkEnqueuer.EnqueueSolutionCheck(queueModel);
+            await checkEnqueuer.EnqueueSolutionCheck(solution);
 
-            return solutionId;
+            var result = new SolutionCreateResultModel()
+            {
+                SolutionId = solution.Id
+            };
+
+            return result;
         }
 
         public Task<IEnumerable<Solution>> GetFilteredAsync(SolutionFilterModel filterModel)

@@ -16,14 +16,14 @@ namespace CodeInTasks.Application.Enqueuers
             this.taskRepository = taskRepository;
         }
 
-        public async Task EnqueueSolutionCheck(SolutionQueueModel solution)
+        public async Task EnqueueSolutionCheck(Solution solution)
         {
             var message = await MakeMessageAsync(solution);
 
             await messageQueue.PublishAsync(message);
         }
 
-        private async Task<SolutionCheckQueueMessage> MakeMessageAsync(SolutionQueueModel solution)
+        private async Task<SolutionCheckQueueMessage> MakeMessageAsync(Solution solution)
         {
             var taskId = solution.TaskId;
             var task = await GetTaskAsync(taskId);

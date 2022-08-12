@@ -42,8 +42,6 @@ namespace CodeInTasks.Web.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> RegisterAsync(UserCreateModel userCreateModel)
         {
-            var userCreateModel = mapper.Map<UserCreateModel>(userCreateModel);
-
             await userService.CreateAsync(userCreateModel);
 
             return Ok();
@@ -53,9 +51,9 @@ namespace CodeInTasks.Web.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<UserViewModel>> GetAsync(Guid userId)
         {
-            var userViewModel = await userService.GetAsync(userId);
+            var userData = await userService.GetAsync(userId);
 
-            var userViewModel = mapper.Map<UserViewModel>(userViewModel);
+            var userViewModel = mapper.Map<UserViewModel>(userData);
 
             return Ok(userViewModel);
         }

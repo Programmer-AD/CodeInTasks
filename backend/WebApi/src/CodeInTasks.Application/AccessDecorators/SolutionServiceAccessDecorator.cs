@@ -16,7 +16,7 @@ namespace CodeInTasks.Application.AccessDecorators
             this.currentUser = currentUser;
         }
 
-        public Task<Guid> AddAsync(SolutionCreateModel solutionCreateModel)
+        public Task<SolutionCreateResultModel> AddAsync(SolutionCreateModel solutionCreateModel)
         {
             return solutionService.AddAsync(solutionCreateModel);
         }

@@ -7,6 +7,8 @@
 
         public Guid? TaskId { get; set; }
 
+        public Guid? SenderId { get; set; }
+
         [Range(0, int.MaxValue)]
         public int TakeOffset { get; set; }
 
