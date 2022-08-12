@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
+using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 using CodeInTasks.Application.Services;
 using CodeInTasks.WebApi.Models.Task;
@@ -21,6 +22,7 @@ namespace CodeInTasks.Application.Tests.Services
 
         private Mock<IRepository<TaskModel>> taskRepositoryMock;
         private Mock<IFiltrationPipeline<TaskFilterModel, TaskModel>> filtrationPipelineMock;
+        private Mock<ICurrentUserHolder> currentUserHolderMock;
         private Mock<IMapper> mapperMock;
 
         private TaskService taskService;
@@ -30,11 +32,13 @@ namespace CodeInTasks.Application.Tests.Services
         {
             taskRepositoryMock = new();
             filtrationPipelineMock = new();
+            currentUserHolderMock = new();
             mapperMock = new();
 
             taskService = new(
                taskRepositoryMock.Object,
                filtrationPipelineMock.Object,
+               currentUserHolderMock.Object,
                mapperMock.Object);
 
             SetupMappings();
@@ -42,8 +46,11 @@ namespace CodeInTasks.Application.Tests.Services
         }
 
         [Test]
-        public async Task AddAsync_AdModelRepository()
+        public async Task AddAsync_AddToRepository()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
+
+
             await taskService.AddAsync(taskCreateModel);
 
 
@@ -184,7 +191,6 @@ namespace CodeInTasks.Application.Tests.Services
 
             taskRepositoryMock.Verify(x => x.AnyAsync(It.IsAny<Expression<Predicate<TaskModel>>>(), It.IsAny<bool>()), Times.Once);
         }
-
 
         private void SetupMappings()
         {

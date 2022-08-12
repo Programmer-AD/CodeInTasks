@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CodeInTasks.Application.Abstractions.Interfaces.Enqueuers;
 using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
+using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 using CodeInTasks.Application.Services;
 using CodeInTasks.WebApi.Models.Solution;
@@ -22,6 +23,7 @@ namespace CodeInTasks.Application.Tests.Services
         private Mock<IRepository<Solution>> solutionRepositoryMock;
         private Mock<ISolutionCheckEnqueuer> checkQueueMock;
         private Mock<IFiltrationPipeline<SolutionFilterModel, Solution>> filtrationPipelineMock;
+        private Mock<ICurrentUserHolder> currentUserHolderMock;
         private Mock<IMapper> mapperMock;
 
         private SolutionService solutionService;
@@ -32,12 +34,14 @@ namespace CodeInTasks.Application.Tests.Services
             solutionRepositoryMock = new();
             checkQueueMock = new();
             filtrationPipelineMock = new();
+            currentUserHolderMock = new();
             mapperMock = new();
 
             solutionService = new(
                solutionRepositoryMock.Object,
                checkQueueMock.Object,
                filtrationPipelineMock.Object,
+               currentUserHolderMock.Object,
                mapperMock.Object);
 
             SetupMappings();
@@ -47,6 +51,7 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task AddAsync_WhenSolutionAlreadyQueued_ThrowSolutionAlreadyQueuedException()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
             SetSolutionAlreadyQueued(true);
 
 
@@ -55,8 +60,9 @@ namespace CodeInTasks.Application.Tests.Services
         }
 
         [Test]
-        public async Task AddAsync_WhenSolutionAlreadyQueued_DontAdModelRepository()
+        public async Task AddAsync_WhenSolutionAlreadyQueued_DontAddToRepository()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
             SetSolutionAlreadyQueued(true);
 
 
@@ -69,6 +75,7 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task AddAsync_WhenSolutionAlreadyQueued_DontEnqueueSolutionCheck()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
             SetSolutionAlreadyQueued(true);
 
 
@@ -81,6 +88,7 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task AddAsync_WhenSolutionNotQueued_DontThrowException()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
             SetSolutionAlreadyQueued(false);
 
 
@@ -89,8 +97,9 @@ namespace CodeInTasks.Application.Tests.Services
         }
 
         [Test]
-        public async Task AddAsync_AdModelRepository()
+        public async Task AddAsync_AddToRepository()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
             SetSolutionAlreadyQueued(false);
 
 
@@ -103,6 +112,7 @@ namespace CodeInTasks.Application.Tests.Services
         [Test]
         public async Task AddAsync_EnqueueSolutionCheck()
         {
+            ServiceTestHelpers.InitCurrentUserId(currentUserHolderMock);
             SetSolutionAlreadyQueued(false);
 
 

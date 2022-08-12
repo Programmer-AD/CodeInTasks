@@ -7,21 +7,25 @@ namespace CodeInTasks.Application.Services
     {
         private readonly IRepository<TaskModel> taskRepository;
         private readonly IFiltrationPipeline<TaskFilterModel, TaskModel> filtrationPipeline;
+        private readonly ICurrentUserHolder currentUser;
         private readonly IMapper mapper;
 
         public TaskService(
             IRepository<TaskModel> taskRepository,
             IFiltrationPipeline<TaskFilterModel, TaskModel> filtrationPipeline,
+            ICurrentUserHolder currentUser,
             IMapper mapper)
         {
             this.taskRepository = taskRepository;
             this.filtrationPipeline = filtrationPipeline;
+            this.currentUser = currentUser;
             this.mapper = mapper;
         }
 
         public Task<TaskCreateResultModel> AddAsync(TaskCreateModel taskCreateModel)
         {
             var taskModel = mapper.Map<TaskModel>(taskCreateModel);
+            taskModel.CreatorId = currentUser.UserId.Value;
 
             var resultTask = taskRepository.AddAsync(taskModel)
                 .ContinueWith(addTask =>

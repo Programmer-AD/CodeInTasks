@@ -8,23 +8,28 @@ namespace CodeInTasks.Application.Services
         private readonly IRepository<Solution> solutionRepository;
         private readonly ISolutionCheckEnqueuer checkEnqueuer;
         private readonly IFiltrationPipeline<SolutionFilterModel, Solution> filtrationPipeline;
+        private readonly ICurrentUserHolder currentUser;
         private readonly IMapper mapper;
 
         public SolutionService(
             IRepository<Solution> solutionRepository,
             ISolutionCheckEnqueuer checkEnqueuer,
             IFiltrationPipeline<SolutionFilterModel, Solution> filtrationPipeline,
+            ICurrentUserHolder currentUser,
             IMapper mapper)
         {
             this.solutionRepository = solutionRepository;
             this.checkEnqueuer = checkEnqueuer;
             this.filtrationPipeline = filtrationPipeline;
+            this.currentUser = currentUser;
             this.mapper = mapper;
         }
 
         public async Task<SolutionCreateResultModel> AddAsync(SolutionCreateModel solutionCreateModel)
         {
             var solution = mapper.Map<Solution>(solutionCreateModel);
+            solution.SenderId = currentUser.UserId.Value;
+
             await AssertSolutionNotQueuedAsync(solution);
 
             solution.Id = await solutionRepository.AddAsync(solution);

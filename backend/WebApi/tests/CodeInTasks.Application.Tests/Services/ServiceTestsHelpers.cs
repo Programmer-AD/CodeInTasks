@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using CodeInTasks.Application.Abstractions.Interfaces.Filtration;
+using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure;
 using CodeInTasks.Application.Abstractions.Interfaces.Infrastructure.Persistance;
 
 namespace CodeInTasks.Application.Tests.Services
@@ -25,6 +26,15 @@ namespace CodeInTasks.Application.Tests.Services
             filtrationPipelineMock
                 .Setup(x => x.GetResult(It.IsAny<TFilterModel>()))
                 .Returns(pipelineResultMock.Object);
+        }
+
+        public static void InitCurrentUserId(Mock<ICurrentUserHolder> currentUserHolderMock)
+        {
+            var userId = Guid.NewGuid();
+
+            currentUserHolderMock
+                .Setup(x => x.UserId)
+                .Returns(userId);
         }
     }
 }
