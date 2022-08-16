@@ -33,7 +33,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
 
             if (entityExists)
             {
-                entity.IsDeleted = true;
+                entity.DeletedAt = DateTime.UtcNow;
                 dbSet.Update(entity);
             }
 
@@ -80,7 +80,7 @@ namespace CodeInTasks.Infrastructure.Persistance.EF
 
             if (!includeDeleted)
             {
-                source = source.Where(x => !x.IsDeleted);
+                source = source.Where(x => x.DeletedAt == null);
             }
 
             return source;
