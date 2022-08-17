@@ -29,5 +29,4 @@ Functions by roles descibed [here](./docs/roleFunctions.md)
 ### Frontend
 
 - Angular 14
-- Karma test runner
-- Jasmine test framework
+- JEST test framework
