@@ -54,7 +54,7 @@ namespace CodeInTasks.Builder.Tests.Services
         }
 
         [Test]
-        public void GetBuilderName_WhenSaveDirectoryNotExists_CreatesIt()
+        public void GetBuilderName_WhenNameNotExist_SaveNewName()
         {
             SetNameExists(false);
             SetSaveDirectoryExists(false);
@@ -68,7 +68,7 @@ namespace CodeInTasks.Builder.Tests.Services
         }
 
         [Test]
-        public void GetBuilderName_WhenNameNotExist_SaveNewName()
+        public void GetBuilderName_WhenSaveDirectoryNotExists_CreatesIt()
         {
             SetNameExists(false);
             SetSaveDirectoryExists(false);
@@ -77,7 +77,7 @@ namespace CodeInTasks.Builder.Tests.Services
             var _ = namingService.GetBuilderName();
 
 
-            fileSystemMock.Verify(x => x.CreateDirectory(It.IsAny<string>()));
+            fileSystemMock.Verify(x => x.CreateDirectory(It.IsAny<string>()), Times.Once);
         }
 
         [Test]
