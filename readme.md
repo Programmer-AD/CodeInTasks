@@ -1,27 +1,32 @@
 # CodeInTasks
 
-## Description
+Site with coding tasks with such types:
 
-Site with coding tasks 
+- Implement functions
+- Add part of functions
+- Fix bug
+- Add tests (planned)
 
-!TODO: write description
+\* Task can contain description of required actions or just provide code
 
 ## Functions
 
-!TODO: write functions
+Functions by roles descibed [here](./docs/roleFunctions.md)
 
 ## Used technologies
 
 ### Backend
 
-1) .NET 6
-2) ASP.NET 6
-3) NUnit test framework
-4) Moq mocking library
-5) FluentAssertions assertion library
+- .NET 6
+- ASP.NET Core 6
+- EntityFramework Core 6
+- AutoMapper mapping library
+- StackExchange.Redis for work with Redis (as MQ)
+- NUnit test framework
+- Moq mocking library
+- FluentAssertions assertion library
 
 ### Frontend
 
-1) Angular 13
-2) Karma test runner
-3) Jasmine test framework
+- Angular 14
+- JEST test framework

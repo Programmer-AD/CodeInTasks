@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  webapi:
+    image: codeintasks-webapi
+    build: 
+      context: ../backend
+      dockerfile: ../build/webapi.dockerfile
+    restart: "on-failure"
+    ports:
+      - "41080:80"
+    volumes:
+      - codeintasks_webapi_volume:/app/logs
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    depends_on:
+      - mssql
+      - redis
+
+  builder:
+    image: codeintasks-builder
+    build: 
+      context: ../backend
+      dockerfile: ../build/builder.dockerfile
+    restart: "on-failure"
+    volumes:
+      - codeintasks_builder_volume:/app/data
+    environment:
+      - DOTNET_ENVIRONMENT=Docker
+    depends_on:
+      - webapi
+      - redis
+
+  seeding_runner:
+    image: codeintasks-seeding-runner
+    build: 
+      context: ../backend
+      dockerfile: ../build/seeding_runner.dockerfile
+    restart: "no"
+    volumes:
+      - codeintasks_seeding_runner_volume:/app/logs
+    environment:
+      - DOTNET_ENVIRONMENT=Docker
+    depends_on:
+      - mssql
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:latest
+    restart: on-failure
+    expose:
+      - "1433"
+    ports:
+      - "41081:1433"
+    volumes:
+      - mssql_volume:/var/opt/mssql
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=My_Password
+
+  redis:
+    image: redis
+    restart: on-failure
+    expose:
+      - "6379"
+    ports:
+      - "41082:6379"
+    volumes:
+      - redis_volume:/data
+
+volumes:
+  codeintasks_webapi_volume:
+  codeintasks_builder_volume:
+  codeintasks_seeding_runner_volume:
+  mssql_volume:
+  redis_volume:
